@@ -1,14 +1,11 @@
 #functions
+taxones_color<- read.delim("taxones_color.csv")
+
+
 relabunda<- function(x){(as.data.frame(t(t(x)/colSums(x)))*100)}
 
 barplot_genus<- function(tab, taxonomy, metadata){
 
-  library(RColorBrewer)
-  n <- 30
-  qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
-  col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
-  col_vector[6]<-"#02F0CE"
-  col_vector[7]<-"#900C3F"
   library(tidyverse)
   library(ggh4x)
   table_genus<- tab %>%rownames_to_column(
@@ -24,6 +21,10 @@ barplot_genus<- function(tab, taxonomy, metadata){
                     c(1:30))  %>% pivot_longer(
                     ., cols = -Taxon, names_to ="SampleID", 
                     values_to = "relab" ) %>% filter(!SampleID=="all")
+  cols<- table_genus %>% inner_join(taxones_color) %>% arrange(Taxon)
+  col <- as.character(cols$color)
+  names(col) <- as.character(cols$Taxon)
+  
 barplot_genus<- table_genus %>% inner_join(metadata) %>% mutate(
   Pol= case_when(
     Poligono==1~ "POL 1",
@@ -46,18 +47,19 @@ barplot_genus<- table_genus %>% inner_join(metadata) %>% mutate(
         legend.key.size = unit(0.6, 'cm'), #change legend key size
         legend.key.height = unit(0.45, 'cm'), #change legend key height
         legend.key.width = unit(0.5, 'cm'),
-        legend.box = "vertical")
+        legend.box = "vertical")+
+  scale_fill_manual(name = "Taxon",values =col )
 print(barplot_genus)
 }
 
 barplot_genus2<- function(tab, taxonomy, metadata){
   
-  library(RColorBrewer)
-  n <- 30
-  qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
-  col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
-  col_vector[6]<-"#02F0CE"
-  col_vector[7]<-"#900C3F"
+  #library(RColorBrewer)
+  #n <- 50
+  #qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+  #col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+  #col_vector[6]<-"#02F0CE"
+  #col_vector[7]<-"#900C3F"
   library(tidyverse)
   library(ggh4x)
 table_genus<- tab %>%rownames_to_column(
@@ -73,6 +75,10 @@ table_genus<- tab %>%rownames_to_column(
                   c(1:30))  %>% pivot_longer(
                     ., cols = -Taxon, names_to ="SampleID", 
                     values_to = "relab" ) %>% filter(!SampleID=="all")
+cols<- table_genus %>% inner_join(taxones_color) %>% arrange(Taxon)
+col <- as.character(cols$color)
+names(col) <- as.character(cols$Taxon)
+
 barplot_genus<- table_genus %>% inner_join(metadata) %>% mutate(
   Pol= case_when(
     Poligono==1~ "POL 1",
@@ -83,7 +89,7 @@ barplot_genus<- table_genus %>% inner_join(metadata) %>% mutate(
     Poligono==6~ "POL 6"),
   Site= case_when(
     Sitio==1~ "S1",
-    Sitio==2~ "S2"))%>% ggplot(
+    Sitio==2~ "S2"))%>% inner_join(taxones_color) %>% ggplot(
       aes(SampleID, relab, fill=Taxon)) +geom_col() +facet_nested(
         .~Pol+Site, scales = "free_x")+scale_fill_manual(
           values=col_vector)+theme_linedraw()+scale_x_discrete(
@@ -95,7 +101,8 @@ barplot_genus<- table_genus %>% inner_join(metadata) %>% mutate(
         legend.key.size = unit(0.6, 'cm'), #change legend key size
         legend.key.height = unit(0.45, 'cm'), #change legend key height
         legend.key.width = unit(0.5, 'cm'),
-        legend.box = "vertical")
+        legend.box = "vertical")+
+  scale_fill_manual(name = "Taxon",values =col )
 print(barplot_genus)
 }
 

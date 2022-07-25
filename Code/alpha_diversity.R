@@ -1,15 +1,18 @@
 #Alpha diversity
 library(tidyverse)
 library(readxl)
+library(qiime2R)
+library(ggpubr)
 
 metadata<-read_excel("Data/Metadatos.xlsx") %>% mutate_if(is.numeric, as.factor)
-table_single_micop<- read.delim("table_micop_single.txt") 
+table_single_micop<- read.delim("Data/table_micop_single.txt") 
 table_paired_micop<- read.delim("Data/table_micop_paired.txt")
-table_qiime2<- data.frame(read_qza("Data/clustered_table_filter.qza")$data, check.names = F) %>% t() %>% as.data.frame() %>% rownames_to_column(
+table_qiime2<- data.frame(read_qza("Data/clustered_table_filter.qza")$data, 
+                          check.names = F) %>% t() %>% as.data.frame() %>% rownames_to_column(
   var = "SampleID") %>% separate(
     SampleID, c(
       "id_metagenome", "R", "unmap", "Paired"), 
-    sep = "_")%>% inner_join(meta) %>% dplyr::select(
+    sep = "_")%>% inner_join(metadata) %>% dplyr::select(
       -id_metagenome:-Paired, -id_sequence:-id_fisicoq) %>% column_to_rownames(
         var="SampleID") %>% t() %>% as.data.frame()
 
@@ -78,7 +81,11 @@ aq0<- ggboxplot(alphadiv_qiime2_q0,
                          axis.title = element_blank(),
                          axis.text.x = element_blank(),
                          axis.ticks.x = element_blank(),
-                         strip.text.x = element_text(size = 12, face = "bold.italic"))+
+                         strip.text.x = element_text(size = 12, face = "bold.italic"),
+                         panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                         colour = "#E5E8E8"), 
+                         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                         colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Polygon")
 aq1<- ggboxplot(alphadiv_qiime2_q1, 
                 x = "Poligono", y = "value", fill = "Poligono", facet.by = "order") +
@@ -87,7 +94,11 @@ aq1<- ggboxplot(alphadiv_qiime2_q1,
                          axis.title = element_blank(),
                          axis.text.x = element_blank(),
                          axis.ticks.x = element_blank(),
-                         strip.text.x = element_text(size = 12, face = "bold.italic"))+
+                         strip.text.x = element_text(size = 12, face = "bold.italic"),
+                         panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                         colour = "#E5E8E8"), 
+                         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                         colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Polygon")
 
 aq2<- ggboxplot(alphadiv_qiime2_q2 %>% mutate(methods="QIIME 2"), 
@@ -98,7 +109,11 @@ aq2<- ggboxplot(alphadiv_qiime2_q2 %>% mutate(methods="QIIME 2"),
                          axis.title = element_blank(),
                          axis.text.x = element_blank(),
                          axis.ticks.x = element_blank(),
-                         strip.text = element_text(size = 12, face = "bold.italic"))+
+                         strip.text = element_text(size = 12, face = "bold.italic"),
+                         panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                         colour = "#E5E8E8"), 
+                         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                         colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Polygon")
 
 qiime2al<-cowplot::plot_grid(aq0, aq1, aq2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
@@ -131,7 +146,11 @@ as0<- ggboxplot(alphadiv_single_micop_q0,
                          axis.title = element_blank(),
                          axis.text.x = element_blank(),
                          axis.ticks.x = element_blank(),
-                         strip.text.x = element_text(size = 12, face = "bold.italic"))+
+                         strip.text.x = element_text(size = 12, face = "bold.italic"),
+                         panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                         colour = "#E5E8E8"), 
+                         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                         colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Polygon")
 as1<- ggboxplot(alphadiv_single_micop_q1, 
                 x = "Poligono", y = "value", fill = "Poligono") +
@@ -140,7 +159,11 @@ as1<- ggboxplot(alphadiv_single_micop_q1,
                          axis.title = element_blank(),
                          axis.text.x = element_blank(),
                          axis.ticks.x = element_blank(),
-                         strip.text.x = element_text(size = 12, face = "bold.italic"))+
+                         strip.text.x = element_text(size = 12, face = "bold.italic"),
+                         panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                         colour = "#E5E8E8"), 
+                         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                         colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Polygon")
 
 as2<- ggboxplot(alphadiv_single_micop_q2 %>% mutate(methodS="SINGLE MICOP"), 
@@ -152,7 +175,11 @@ as2<- ggboxplot(alphadiv_single_micop_q2 %>% mutate(methodS="SINGLE MICOP"),
                          axis.title = element_blank(),
                          axis.text.x = element_blank(),
                          axis.ticks.x = element_blank(),
-                         strip.text = element_text(size = 12, face = "bold.italic"))+
+                         strip.text = element_text(size = 12, face = "bold.italic"),
+                         panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                         colour = "#E5E8E8"), 
+                         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                         colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Polygon")
 
 singleal<-cowplot::plot_grid(as0, as1, as2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
@@ -184,7 +211,11 @@ ap0<- ggboxplot(alphadiv_paired_micop_q0,
   theme_linedraw()+theme(legend.position = "none", 
                          axis.title = element_blank(),
                          axis.text.x = element_text(size = 12),
-                         strip.text.x = element_text(size = 12, face = "bold.italic"))+
+                         strip.text.x = element_text(size = 12, face = "bold.italic"),
+                         panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                         colour = "#E5E8E8"), 
+                         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                         colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Polygon")
 ap1<- ggboxplot(alphadiv_paired_micop_q1, 
                 x = "Poligono", y = "value", fill = "Poligono") +
@@ -192,7 +223,11 @@ ap1<- ggboxplot(alphadiv_paired_micop_q1,
   theme_linedraw()+theme(legend.position = "none", 
                          axis.title = element_blank(),
                          axis.text.x = element_text(size = 12),
-                         strip.text.x = element_text(size = 12, face = "bold.italic"))+
+                         strip.text.x = element_text(size = 12, face = "bold.italic"),
+                         panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                         colour = "#E5E8E8"), 
+                         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                         colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Polygon")
 
 ap2<- ggboxplot(alphadiv_paired_micop_q2 %>% mutate(methodS="PAIRED MICOP"), 
@@ -203,7 +238,11 @@ ap2<- ggboxplot(alphadiv_paired_micop_q2 %>% mutate(methodS="PAIRED MICOP"),
   theme_linedraw()+theme(legend.position = "none", 
                          axis.title = element_blank(),
                          axis.text.x = element_text(size = 12),
-                         strip.text = element_text(size = 12, face = "bold.italic"))+
+                         strip.text = element_text(size = 12, face = "bold.italic"),
+                         panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                         colour = "#E5E8E8"), 
+                         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                         colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Polygon")
 
 pairedal<-cowplot::plot_grid(ap0, ap1, ap2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
@@ -213,5 +252,11 @@ cowplot::plot_grid(qiime2al, singleal, pairedal, nrow = 3)
 
 all<- cowplot::plot_grid(aq0, aq1, aq2,
                          as0, as1, as2,
-                         ap0, ap1, ap2, align = "hv")
+                         ap0, ap1, ap2, align = "hv", labels = c("a)", "b)", "c)",
+                                                                 "d)", "e)", "f)",
+                                                                 "g)", "h)", "i)"), 
+                          scale = 0.9)
 all
+ggsave("Figures_final/Fig1.exploratory_alpha.pdf",width = 11, height = 7, dpi = 300, plot = all, device = "pdf")
+
+

@@ -10,7 +10,7 @@ source("Code/functions_compositional.R")
 
 #load and format files
 metadata<-read_excel("Data/Metadatos.xlsx") %>% mutate_if(is.numeric, as.factor)
-table_single_micop<- read.delim("table_micop_single.txt") 
+table_single_micop<- read.delim("Data/table_micop_single.txt") 
 table_paired_micop<- read.delim("Data/table_micop_paired.txt")
 table_qiime2<- data.frame(read_qza("Data/clustered_table_filter.qza")$data, check.names = F) %>% t() %>% as.data.frame() %>% rownames_to_column(
                                 var = "SampleID") %>% separate(
@@ -20,7 +20,7 @@ table_qiime2<- data.frame(read_qza("Data/clustered_table_filter.qza")$data, chec
                                     -id_metagenome:-Paired, -id_sequence:-id_fisicoq) %>% column_to_rownames(
                                       var="SampleID") %>% t() %>% as.data.frame()
 taxonomy_qiime2<- data.frame(read_qza("Data/taxonomy_blast_dfc_0.98.qza")$data, check.names = F) %>% dplyr::select(Feature.ID,Taxon)
-taxonomy_single_micop<- read.delim("table_micop_single.txt") %>% rownames_to_column(var = "Feature.ID") %>% dplyr::select(Feature.ID) %>% mutate(Taxon=Feature.ID)
+taxonomy_single_micop<- read.delim("Data/table_micop_single.txt") %>% rownames_to_column(var = "Feature.ID") %>% dplyr::select(Feature.ID) %>% mutate(Taxon=Feature.ID)
 taxonomy_paired_micop<- read.delim("Data/table_micop_paired.txt") %>% rownames_to_column(var = "Feature.ID") %>% dplyr::select(Feature.ID) %>% mutate(Taxon=Feature.ID)
 
 #barplots
@@ -67,7 +67,7 @@ pca_fig_micop_paired<- pca_plot(
                                                                         legend.key.size = unit(2, "cm"))+ guides(fill = guide_legend(override.aes = list(size = 8)))
 
 library(cowplot)
-first<-plot_grid(barplot_qiime2, barplot_micop_single, barplot_micop_paired, ncol = 3)
+first<-plot_grid(barplot_qiime2, barplot_micop_single, barplot_micop_paired, ncol = 3, labels = )
 legds<- get_legend(pca_fig_micop_paired)
 second<- plot_grid(pca_fig_qiime2, pca_fig_micop_single,
                    pca_fig_micop_paired+theme(legend.position = "none"), legds, 
