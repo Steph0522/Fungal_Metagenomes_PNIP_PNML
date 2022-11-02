@@ -141,7 +141,7 @@ wor<-ggplot(data = world) +
   annotation_north_arrow(location = "bl", which_north = "true", 
                          pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"),
                          style = north_arrow_fancy_orienteering) +
-  coord_sf(xlim = c(-100, -94), ylim = c(16, 20)) +
+  coord_sf(xlim = c(-120, -85), ylim = c(10, 30)) +
   geom_point(data = air, mapping = aes(x = Longitude, y = Latitude), 
              size=6, color="red") +
   geom_text(data = air, 
@@ -151,5 +151,6 @@ wor<-ggplot(data = world) +
             size = 4, color = "gray20", 
             fontface = "bold", 
             check_overlap = T)
+wor
 ggsave('fig_map_ok_world.png',
        width = 12, height = 6, dpi = 300, plot = wor)
