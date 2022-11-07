@@ -82,7 +82,7 @@ wat<-ggmap(map) +
             mapping = aes(x = Longitude+0.002,
                           y = Latitude,
                           label =Site),
-            size = 4, color = "black", box.padding = .7, segment.color = NA,
+            size = 4, color = "black", box.padding = .3, segment.color = NA,
             fontface = "bold")+
   scale_fill_viridis_d(option ="turbo", name="Sites")+
   theme(legend.text = element_text(size = 12),
