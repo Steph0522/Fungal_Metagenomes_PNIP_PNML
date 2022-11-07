@@ -41,6 +41,7 @@ library(ggsn)
 sbbox <- make_bbox(lon = c(-98.7, -97.9), lat = c(19.13,19.5), f = .1)
 #sbbox <- make_bbox(lon = c(-98.4, -98.01), lat = c(19.1,19.3), f = .1)
 library(tidyverse)
+library(ggrepel)
 #register_google(key = "AIzaSyBCSQUO78ha22hVG3nABplHQmxnY-psL68")
 
 air<- read.csv("/home/yendi/Documents/corredor_scripts/coord.csv") %>% mutate_at(c(1,2,3,7), as.factor)
@@ -74,17 +75,16 @@ wat<-ggmap(map) +
                  dist = 5, transform = TRUE, 
                  model = "WGS84", height = 0.5, 
                  st.dist = 0.5, dist_unit = "km") +
-  geom_point(data = air, mapping = aes(
-    x = Longitude, y = Latitude, color=Sites), 
-    size=8 ) +
-  geom_text(data = air, 
+  geom_point(data = air%>% group_by(Sites) %>% summarise_if(is.numeric, mean), mapping = aes(
+    x = Longitude, y = Latitude, fill=Sites), 
+    size=4, pch=21 ) +
+  geom_text_repel(data = air %>% group_by(Site) %>% summarise_if(is.numeric, mean), 
             mapping = aes(x = Longitude+0.002,
                           y = Latitude,
                           label =Site),
-            size = 5, color = "#808B96", 
-            fontface = "bold", 
-            check_overlap = T)+
-  scale_color_viridis_d(option ="turbo", name="Sites")+
+            size = 4, color = "black", box.padding = .7, segment.color = NA,
+            fontface = "bold")+
+  scale_fill_viridis_d(option ="turbo", name="Sites")+
   theme(legend.text = element_text(size = 12),
         legend.title = element_text(size = 12),
         axis.title = element_text(size = 16),
@@ -97,7 +97,7 @@ wat<-ggmap(map) +
         axis.title = element_text(size = 8),
         axis.text = element_text(size = 8))
 
-wat
+
 wat2<- wat+theme(legend.position = "none",
                  axis.text = element_text(colour = "black"))+ylab(
                    "Latitude")+xlab("Longitude")
