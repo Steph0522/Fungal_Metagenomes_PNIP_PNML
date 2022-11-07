@@ -7,10 +7,33 @@ library(broom)
 library(geosphere)
 library(reshape2)
 source("Code/functions_beta.R")
+metadata_secas<- read_excel("Data/Metadatos.xlsx", sheet = "secas-marzo")
+fq_secas<- read_excel("Data/fisicoq.xlsx", sheet = "seca")
+fq_secas2<- read.csv("Data/fisicoq-la.csv")
+
+meta_fq_secas<- metadata_secas %>% full_join(fq_secas) #%>%  select(Sites:id_new,pH, MO, N, P) %>% mutate(Season="Dry")
+meta_fq_secas_all<- metadata_secas %>% full_join(fq_secas) %>% full_join(fq_secas2, by = "SampleID")
+
+env.16S=meta_fq_secas_all
+df<- env.16S%>% dplyr::select(SampleID, pH:Mn, moisture, WHC:CONDUC, ARCILLA:ARENA) 
+dfs=data.frame(df[1],scale(df[,2:17], center = T, scale = T)) %>% dplyr::select(
+  SampleID,P,K,Ca,Mg,moisture,WHC, LIMO) %>% 
+  column_to_rownames(var = "SampleID")
+
+dfs_dist<- dist(dfs, method = "euclidean")
+nut.dist<- dfs_dist %>% as.matrix()
+
+nut.dist[upper.tri(nut.dist)] <- NA 
+
+nut.dist.tidy <- nut.dist %>% 
+  melt(as.matrix(distance), varnames = c(
+    "SampleID.x", "SampleID.y"), value.name = "EucDist") %>% drop_na() %>% filter(!EucDist==0) %>% 
+  filter(!is.na(EucDist)) %>% 
+  filter(SampleID.x != SampleID.y) 
 
 
 #Calculating distances between points
-coords<- read_csv("/home/yendi/Documents/corredor_scripts/coord.csv")
+coords<- read_csv("Data/coord.csv")
 
 coords_mat<- coords%>% mutate(P=paste0("P",pol),
                               S=paste0("S", Sitio),
@@ -37,7 +60,7 @@ distance_euclidian<- as.matrix(dist(distance_complete))
 #Loading data
 library(qiime2R)
 library(readxl)
-map<- read.csv("/home/yendi/Documents/corredor_scripts/coord.csv") %>% mutate_at(
+map<- read.csv("Data/coord.csv") %>% mutate_at(
     c(1,2,3,7), as.factor) %>% mutate(SampleID= paste0("P",pol, "S", Sitio,"T", Transecto ))
 metadata<-read_excel("Data/Metadatos.xlsx") %>% mutate_if(is.numeric, as.factor)
 
@@ -85,6 +108,9 @@ bc.pcoa.eigval <- lapply(bc.dist2, pcoa_eigval) #obtain pcoa eigavlues
 #Filter BC so that only pairwise comparisons within time points are considered. Transform dissimilarities to similarities.
 #bc.dist.tidy.filt<- lapply(bc.dist, bc.dist.tidy.filter)
 bc.dist.tidy.filt2<- lapply(bc.dist2, bc.dist.tidy.filter.hill)
+
+
+
 #Calculate the range of BC similarities for plotting
 #max.sim <- max( b.dist.filt$Similarity)#
 #min.sim <- min( b.dist.filt$Similarity)#
@@ -109,18 +135,27 @@ paired_pcoa <- pcoa_plot(bc.pcoa2[[3]])+
   ggtitle("PAIRED MICOP")
   
 kraken_pcoa <- pcoa_plot(bc.pcoa2[[4]])+
+  scale_x_continuous(limits = c(-0.01,0.01))+
+  scale_y_continuous(limits = c(-0.01,0.01))+
   xlab(paste("PCo1 (", bc.pcoa.eigval[[4]]$Eigval[2], "%)", sep = "")) +
   ylab(paste("PCo2 (", bc.pcoa.eigval[[4]]$Eigval[3], "%)", sep = "")) +
   ggtitle("KRAKEN2")
     
-plot_grid(qiime2_pcoa, single_pcoa, paired_pcoa, kraken_pcoa, nrow = 1, align = "hv")
+plot_grid(qiime2_pcoa, single_pcoa, paired_pcoa, kraken_pcoa,
+          qiime2_pcoa, single_pcoa, paired_pcoa, kraken_pcoa, 
+          nrow = 2, align = "hv")
 
 
 #Correaltion test
 #Perform Pearson correlation test and regression to get stats
 
+
+
 cor_test<- lapply(bc.dist.tidy.filt2, cor.b)
 lm_test<- lapply(bc.dist.tidy.filt2, lm.b)
+
+cor_test_e<- lapply(bc.dist.tidy.filt2, cor.e)
+lm_test_e<- lapply(bc.dist.tidy.filt2, lm.e)
 
 stats_qiime2 <- data.frame(label = paste("r = ", signif(cor_test[[1]]$estimate,3), 
                                          "p-value = ", signif(cor_test[[1]]$p.value, 3),
@@ -135,6 +170,18 @@ stats_kraken <- data.frame(label = paste("r = ", signif(cor_test[[4]]$estimate,3
                                          "p-value = ", signif(cor_test[[4]]$p.value, 3),
                                          "\nslope = ", signif(lm_test[[4]]$estimate, 3)))
 
+stats_qiime2_e <- data.frame(label = paste("r = ", signif(cor_test_e[[1]]$estimate,3), 
+                                         "p-value = ", signif(cor_test_e[[1]]$p.value, 3),
+                                         "\nslope = ", signif(lm_test_e[[1]]$estimate, 3)))
+stats_single_e <- data.frame(label = paste("r = ", signif(cor_test_e[[2]]$estimate,3), 
+                                         "p-value = ", signif(cor_test_e[[2]]$p.value, 3),
+                                         "\nslope = ", signif(lm_test_e[[2]]$estimate, 3)))
+stats_paired_e <- data.frame(label = paste("r = ", signif(cor_test_e[[3]]$estimate,3), 
+                                         "p-value = ", signif(cor_test_e[[3]]$p.value, 3),
+                                         "\nslope = ", signif(lm_test_e[[3]]$estimate, 3)))
+stats_kraken_e <- data.frame(label = paste("r = ", signif(cor_test_e[[4]]$estimate,3), 
+                                         "p-value = ", signif(cor_test_e[[4]]$p.value, 3),
+                                         "\nslope = ", signif(lm_test_e[[4]]$estimate, 3)))
 
 
 
@@ -142,26 +189,33 @@ second<- plot_grid(first, leg, nrow = 1, ncol = 2, rel_widths = c(1,0.1),
                    align = "hv", axis = "r" )
 
 plot_distance<- lapply(bc.dist.tidy.filt2, distance.plot0)
+plot_distance_env<- lapply(bc.dist.tidy.filt2, distance.plot1)
+
 leg<- get_legend(qiime2_pcoa)
 first<-plot_grid(qiime2_pcoa+theme(legend.position = "none"), 
                  single_pcoa+theme(legend.position = "none"), 
                  paired_pcoa+theme(legend.position = "none"),  
-                 kraken_pcoa+theme(legend.position = "none"),   
-                 nrow = 1, rel_widths = c(1,1,1,1),
-                 align = "hv", axis = "r" )
+                 kraken_pcoa+theme(legend.position = "none"), nrow = 1)
 third<- plot_grid(
   plot_distance[[1]]+ ggtitle(stats_qiime2$label)+theme(plot.title = element_text(size = 10)), 
   plot_distance[[2]]+ ggtitle(stats_single$label)+theme(plot.title = element_text(size = 10)), 
   plot_distance[[3]]+ ggtitle(stats_paired$label)+theme(plot.title = element_text(size = 10)), 
   plot_distance[[4]]+  ggtitle(stats_kraken$label)+theme(plot.title = element_text(size = 10)), 
   nrow = 1)
+
+fourth<- plot_grid(
+  plot_distance_env[[1]]+  ggtitle(stats_qiime2_e$label)+theme(plot.title = element_text(size = 10)), 
+  plot_distance_env[[2]]+ ggtitle(stats_single_e$label)+theme(plot.title = element_text(size = 10)), 
+  plot_distance_env[[3]]+ ggtitle(stats_paired_e$label)+theme(plot.title = element_text(size = 10)), 
+  plot_distance_env[[4]]+  ggtitle(stats_kraken_e$label)+theme(plot.title = element_text(size = 10)), 
+  nrow = 1)
 #plot_grid(get_legend(b), NA, b,c, d,e, nrow = 3, rel_widths = c(5,5), labels = c("a", NA, "b","c", "d", "e"), label_size = 15)
 
-all<-plot_grid(leg, first, third,  nrow = 3, axis = "lr",align = "hv",
-          rel_heights = c(0.07,1.5,1))
+all<-plot_grid(leg, first, third, fourth, nrow = 4, axis = "lr",align = "hv",
+          rel_heights = c(0.1,1,1, 1))
 
 all
-ggsave("Figures_final/Fig1.jaccard_distance.png",width = 12, height = 7, dpi = 300, plot = all, device = "png")
+ggsave("Figures_final/Fig1.jaccard_distance_all.png",width = 12, height = 10, dpi = 300, plot = all, device = "png")
 
 library(ecodist)
 library(vegan)

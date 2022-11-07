@@ -66,6 +66,8 @@ bc.dist.tidy.filter <-function(bc.dist){
     inner_join(map, by = c("SampleID.y" = "SampleID")) %>% 
     filter(!is.na(value)) %>% dplyr::rename(Distance=value)
   
+  
+  
   b.dist.filt <- bc.dist.tidy %>% 
     filter(Distance > 0)  %>% 
     full_join(distance_dm) %>% dplyr::rename(SpatialDistance = value) %>% 
@@ -85,6 +87,7 @@ bc.dist.tidy.filter.hill <-function(bc.dist){
   b.dist.filt <- bc.dist.tidy %>% 
     filter(Distance > 0)  %>% 
     full_join(distance_dm) %>% dplyr::rename(SpatialDistance = value) %>% 
+    full_join(nut.dist.tidy) %>% 
     mutate(Similarity = 1 - Distance)
   return(b.dist.filt)
 }
@@ -126,7 +129,9 @@ pcoa_plot<-function(pca){
     geom_hline(yintercept = 0, linetype = 2) +
     theme_linedraw()+
     scale_fill_viridis_d(option ="turbo", name="Sites")+#color of points 
-    scale_color_viridis_d(option ="turbo" )+#color of points 
+    scale_color_viridis_d(option ="turbo" )+#color of points +
+    scale_y_continuous(limits = c(-0.2,0.2))+
+    scale_x_continuous(limits = c(-0.2,0.2))+
     theme(axis.text = element_text(colour = "black", size = 12),
           axis.title = element_text(colour = "black", size = 12),
           legend.text = element_text(size = 10),
@@ -134,7 +139,11 @@ pcoa_plot<-function(pca){
           legend.position = "top", 
           legend.box = "horizontal",
           panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank())#+
+          panel.grid.minor = element_blank())
+          #  plot.margin = margin(t = 0,  # Top margin
+         #                        r = 0,  # Right margin
+           #                      b = 0,  # Bottom margin
+            #                       l = 0))# Left margin #+
   #geom_text(data=data.frame(pca$rotation) %>%   #arrows
   #           rownames_to_column(var = "Feature.ID")%>%  
   #          mutate(a=sqrt(PC1^2+PC2^2)) %>% # calculate the distance from the origin
@@ -156,7 +165,13 @@ otu.norm <- function(otu){otu %>% rel_ab() %>% log_norm()}
 cor.b <- function(x){
   cor.test(x$SpatialDistance,x$Similarity, method= "spearman", alternative = "two.sided") %>% tidy()
 }
+cor.e <- function(x){
+  cor.test(x$EucDist,x$Similarity, method= "spearman", alternative = "two.sided") %>% tidy()
+}
+
 lm.b <- function(x){lm(Similarity ~ SpatialDistance, data = x) %>% tidy() %>% filter(term == "SpatialDistance")}
+lm.e <- function(x){lm(Similarity ~ EucDist, data = x) %>% tidy() %>% filter(term == "EucDist")}
+
 
 distance.plot <- function(x){
   x %>% 
@@ -192,4 +207,20 @@ distance.plot0 <- function(x){
                            panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
                                                            colour = "#E5E8E8"))}
 
+distance.plot1 <- function(x){
+  x %>% 
+    ggplot(aes(EucDist, Similarity)) +
+    geom_point(shape = 16, size = 1, alpha = 0.5, color = "#566573") +
+    geom_smooth(method = "lm", color = "black", se = F) +
+    xlab("Enviromental distance") +
+    ylab("Horn similarity") +
+    ylim(.2, max.sim) +
+    xlim(0,8)+
+    theme_linedraw()+theme(legend.position = "none", 
+                           axis.text = element_text(size = 12),
+                           strip.text = element_text(size = 12, face = "bold.italic"),
+                           panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                                           colour = "#E5E8E8"), 
+                           panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                                           colour = "#E5E8E8"))}
 

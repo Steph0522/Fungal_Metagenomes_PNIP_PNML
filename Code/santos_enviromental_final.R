@@ -52,22 +52,22 @@ map <-metadata_secas
 #Environmental distance analysis
 #Remove variables with no variation, z-transform each variable, 
 #and format it as a matrix
-nut.mtx <- ward %>% 
+#nut.mtx <- ward %>% 
   #select(-LIMO, -Fe, -WHC, -id_sequence:-id_fisicoq, -type, -type2, -pH2, -Names, -Sites) %>% 
-  select(SampleID, Ca, Mg, K,P, moisture,WHC,LIMO) %>% 
+ # select(SampleID, Ca, Mg, K,P, moisture,WHC,LIMO) %>% 
   #select(SampleID,pH:ARENA, -type, -type2, -pH2) %>% 
-    gather(key = "Variable", value = "Value", -SampleID) %>% 
-  group_by(Variable) %>% 
-  mutate(zValue = (Value - mean(Value))/sd(Value)) %>% 
-  select(SampleID, Variable, zValue) %>% 
-  spread(key = Variable, value = zValue) %>% 
-  as.data.frame()
-row.names(nut.mtx) <- nut.mtx$SampleID
-nut.mtx <- nut.mtx[,-1]
-nut.mtx <- as.matrix(nut.mtx)
+  #  gather(key = "Variable", value = "Value", -SampleID) %>% 
+  #group_by(Variable) %>% 
+  #mutate(zValue = (Value - mean(Value))/sd(Value)) %>% 
+  #select(SampleID, Variable, zValue) %>% 
+  #spread(key = Variable, value = zValue) %>% 
+  #as.data.frame()
+#row.names(nut.mtx) <- nut.mtx$SampleID
+#nut.mtx <- nut.mtx[,-1]
+#nut.mtx <- as.matrix(nut.mtx)
 
 #Calculate the environmental distance and filter redundant values
-nut.dist2 <- as.matrix(dist(nut.mtx, method = "euclidean"))
+#nut.dist2 <- as.matrix(dist(nut.mtx, method = "euclidean"))
 nut.dist<- dfs_dist %>% as.matrix()
 
 nut.dist[upper.tri(nut.dist)] <- NA 
@@ -215,54 +215,3 @@ top <- plot_grid(NA, environmental.p, NA, rel_widths = c(1,2,1), nrow = 1, label
 
 plot_grid(top, variables.p, nrow = 2, rel_heights = c(1,3), labels = c(NA, "b"), label_size = 15)
 
-
-
-# probando enviromental y bray
-require(reshape2)
-bc.dist<- bc.dist[[1]]
-
-bc.dist[upper.tri(bc.dist)] <- NA 
-bc.dist.tidy<-bc.dist %>% melt(., varnames = c(
-  "SampleID.x", "SampleID.y")) %>% 
-  inner_join(map, by = c("SampleID.x" = "SampleID")) %>% 
-  inner_join(map, by = c("SampleID.y" = "SampleID")) %>% 
-  filter(!is.na(value)) %>% dplyr::rename(Distance=value)
-
-b.dist.filt <- bc.dist.tidy %>% 
-  filter(Distance > 0)  %>% 
-  full_join(distance_dm) %>% dplyr::rename(SpatialDistance = value) %>% 
-  mutate(Similarity = 1 - Distance)
-
-
-dist.filt<- nut.dist.tidy %>% full_join(b.dist.filt)
-
-#Perform correlation analysis and regression 
-cor <- cor.test(dist.filt$Similarity, dist.filt$EucDist, method = "pearson", alternative = "two.sided") %>% tidy()
-lm <- lm(Similarity ~ EucDist, data = dist.filt) %>% tidy() %>% filter(term == "EucDist")
-dist.stats <- data.frame(label = paste("r = ", signif(cor$estimate,3), 
-                                       "\nslope = ", signif(lm$estimate, 3),
-                                       "\nP = ", signif(cor$p.value, 3)))
-
-#Plot
-environmental.p <- dist.filt %>% 
-  ggplot(aes(y=Similarity,x=EucDist)) +
-  geom_point(shape = 16, size = 1, alpha = 0.5, color = "gray25") +
-  geom_text(data = dist.stats, aes(x = 0.1, y = 1, label = label), hjust = 0, size = 3) + 
-  geom_smooth(color = "black", se = F, method = "lm") +
-  scale_color_brewer(name = "Block", palette = "Set1", direction = -1) +
-  xlab("Distance between plots (Km)") +
-  ylab("Environmental distance") +
-  # scale_x_continuous(breaks = seq(0, 18, by = 3)) +
-  theme_bw() +
-  theme(text = element_text(size = 11),
-        legend.position = "top")  +theme_linedraw()+
-  theme(legend.position = "none", 
-        axis.text = element_text(size = 12),
-        strip.text = element_text(size = 12, face = "bold.italic"),
-        panel.grid.major = element_line(size = 0.5, linetype = 'solid',
-                                        panel.grid.minor = element_line(
-                                          size = 0.25, linetype = 'solid',
-                                          color = "#E5E8E8")))
-
-
-environmental.p
