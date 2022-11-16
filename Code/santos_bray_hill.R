@@ -39,7 +39,7 @@ coords_mat<- coords%>% mutate(P=paste0("P",pol),
                               S=paste0("S", Sitio),
                               T=paste0("T", Transecto)) %>% unite(
   "SampleID", 
-  P:T, sep = "") %>% select(
+  P:T, sep = "") %>% dplyr::select(
     SampleID, Longitude, Latitude) %>% column_to_rownames(
       var = "SampleID") %>% as.matrix() 
 

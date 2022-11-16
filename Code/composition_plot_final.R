@@ -171,10 +171,18 @@ pca_fig_fungi<- pca_compositional_sites(
       fill = guide_legend(override.aes = list(size = 8)))
 
 library(cowplot)
+blank_plot<-ggplot() + theme_void()+ggtitle("Sites- Transects")
+leg<- get_title(blank_plot)
+legs<- plot_grid(NULL, NULL, leg, NULL, ncol = 4)
 
-barplots<-plot_grid(barplot_qiime2, barplot_micop_single, 
-                    barplot_micop_paired,barplot_fungi ,ncol = 2, nrow = 2 ,
-                    labels = c("a)", "b)", "c)", "d)"))
+barplots<-plot_grid(barplot_qiime2,
+                    barplot_micop_single+theme(axis.title.y = element_blank()), 
+                    barplot_micop_paired,
+                    barplot_fungi+theme(axis.title.y = element_blank()),
+                    ncol = 2, nrow = 2, rel_widths = c(1,1,2,1) ,
+                    labels = c("A)", "B)", "C)", "D)"), hjust = 0)
+barplot2<- plot_grid(barplots, legs, nrow = 2, rel_heights = c(1,0.04))
+
 pcas<- plot_grid(pca_fig_qiime2+theme(aspect.ratio =6/10), 
                  pca_fig_micop_single+theme(aspect.ratio =6/10),
                     pca_fig_micop_paired+theme(legend.position = "none")+
@@ -189,7 +197,7 @@ legds<- get_legend(pca_fig_micop_paired)
 legd<- plot_grid(NULL, legds, NULL, nrow = 3, ncol = 1)
 pcas_plot<- plot_grid(pcas, legd, ncol = 2, rel_widths = c(1,0.1), align = "hv")
 
-ggsave("barplots_v.png",width = 14, height =12, dpi = 300, plot = barplots, device = "png")
+ggsave("barplots_v.tiff",width = 14, height =12, plot = barplot2, device = "tiff")
 
 ggsave("pcas.png",width = 10, height =7.5, dpi = 300, plot = pcas_plot, device = "png")
 
