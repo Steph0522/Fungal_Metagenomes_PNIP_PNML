@@ -6,7 +6,9 @@ library(cowplot)
 library(broom)
 library(geosphere)
 library(reshape2)
+library(readxl)
 source("Code/functions_beta.R")
+source("Code/funciones_compositional.R")
 metadata_secas<- read_excel("Data/Metadatos.xlsx", sheet = "secas-marzo")
 fq_secas<- read_excel("Data/fisicoq.xlsx", sheet = "seca")
 fq_secas2<- read.csv("Data/fisicoq-la.csv")
@@ -96,7 +98,7 @@ otu <- list(table_single_micop, table_paired_micop, table_qiime2, table_fungi)
 otu_match<- lapply(otu, otu.match) # matching to map
 otu_single<- lapply(otu_match, otu.single) #remove singletons
 otu_norm<- lapply(otu_single, otu.norm)#Normalize
-bc.dist<- lapply(otu_norm, beta_div_dist)#Calculate Bray-Curtis dissimilarities
+#bc.dist<- lapply(otu_norm, beta_div_dist)#Calculate Bray-Curtis dissimilarities
 bc.dist2<- lapply(otu_norm, beta_div_dist_hill, q=1)
 
 bc.pcoa2<- lapply(bc.dist2, pcoa_all)
@@ -142,9 +144,19 @@ kraken_pcoa <- pcoa_plot(bc.pcoa2[[4]])+
   ggtitle("KRAKEN2")
     
 plot_grid(qiime2_pcoa, single_pcoa, paired_pcoa, kraken_pcoa,
-          qiime2_pcoa, single_pcoa, paired_pcoa, kraken_pcoa, 
           nrow = 2, align = "hv")
 
+#permanova's
+perm_qiime2<- permanova_compo(bc.dist2[[1]], metadata = metadata)
+perm_micop_single<- permanova_compo(clr_micop_single, meta)
+perm_micop_paired<- permanova_compo(clr_micop_paired, meta)
+perm_fungi<- permanova_compo(clr_fungi, meta)
+
+#betadisper
+permd_qiime2<- permdisp_compo(clr_qiime2, meta)
+permd_micop_single<- permdisp_compo(clr_micop_single, meta)
+permd_micop_paired<- permdisp_compo(clr_micop_paired, meta)
+permd_fungi<- permdisp_compo(clr_fungi, meta)
 
 #Correaltion test
 #Perform Pearson correlation test and regression to get stats

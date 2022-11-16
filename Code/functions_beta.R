@@ -130,8 +130,8 @@ pcoa_plot<-function(pca){
     theme_linedraw()+
     scale_fill_viridis_d(option ="turbo", name="Sites")+#color of points 
     scale_color_viridis_d(option ="turbo" )+#color of points +
-    scale_y_continuous(limits = c(-0.2,0.2))+
-    scale_x_continuous(limits = c(-0.2,0.2))+
+    #scale_y_continuous(limits = c(-0.2,0.2))+
+    #scale_x_continuous(limits = c(-0.2,0.2))+
     theme(axis.text = element_text(colour = "black", size = 12),
           axis.title = element_text(colour = "black", size = 12),
           legend.text = element_text(size = 10),
