@@ -15,13 +15,14 @@ beta_div_dist <- function(otu, method = "bray") {
 
 beta_div_dist_hill<- function(otu, q=NULL){
   require(hillR)
+  require(hilldiv)
 otu<-otu  
   if (q==0) {
 b<- hilldiv::pair_dis(otu, qvalue = 0, metric = "U")
 return(b[["L1_UqN"]])} 
 if (q==1) {
-b<- hilldiv::pair_dis(otu, qvalue = 1, metric = "U")
-return(b[["L1_UqN"]])}
+b<-1-hill_taxa_parti_pairwise(t(otu), q=1, output = "matrix", pairs = "full" )$local_similarity
+  return(b)}
 if (q==2) {
   b<- hilldiv::pair_dis(otu, qvalue = 2, metric = "C")
 return(b[["L1_CqN"]])
@@ -78,7 +79,8 @@ bc.dist.tidy.filter <-function(bc.dist){
 
 bc.dist.tidy.filter.hill <-function(bc.dist){ 
   require(reshape2)
-  bc.dist.tidy<-bc.dist %>% melt(., varnames = c(
+  bc.dist[upper.tri(bc.dist)] <- NA 
+    bc.dist.tidy<-bc.dist %>% melt(., varnames = c(
     "SampleID.x", "SampleID.y")) %>% 
     inner_join(map, by = c("SampleID.x" = "SampleID")) %>% 
     inner_join(map, by = c("SampleID.y" = "SampleID")) %>% 
@@ -115,7 +117,7 @@ overlap_function<- function(otu){
 }
 
 pcoa_plot<-function(pca){
-  y<-ggordiplots::gg_ordiplot(pca, map$Site, hull = FALSE, 
+  y<-ggordiplots::gg_ordiplot(pca, map$Sites, hull = FALSE, 
                               spiders = TRUE,  ellipse = FALSE,   pt.size = 4,
                               plot =FALSE, label = FALSE)
   z <- y$plot
@@ -196,7 +198,7 @@ distance.plot0 <- function(x){
     geom_point(shape = 16, size = 1, alpha = 0.5, color = "#566573") +
     geom_smooth(method = "lm", color = "black", se = F) +
     xlab("Distance between plots (km)") +
-    ylab("Horn similarity") +
+    ylab("Bray-curtis similarity") +
     ylim(.2, max.sim) +
     xlim(0,60)+
     theme_linedraw()+theme(legend.position = "none", 
@@ -213,7 +215,7 @@ distance.plot1 <- function(x){
     geom_point(shape = 16, size = 1, alpha = 0.5, color = "#566573") +
     geom_smooth(method = "lm", color = "black", se = F) +
     xlab("Enviromental distance") +
-    ylab("Horn similarity") +
+    ylab("Bray-curtis similarity") +
     ylim(.2, max.sim) +
     xlim(0,8)+
     theme_linedraw()+theme(legend.position = "none", 
@@ -224,3 +226,23 @@ distance.plot1 <- function(x){
                            panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
                                                            colour = "#E5E8E8"))}
 
+
+permanova_beta<- function(matrix, metadata){
+tab<-matrix%>% as.data.frame() %>% rownames_to_column(
+    var = "SampleID") %>% inner_join(metadata)
+  library(vegan)
+  perm<- how(nperm = 999)
+  
+  perm<-adonis2(matrix~Sites, data = tab, permutations =perm)
+  print(perm)}
+
+permdisp_beta<- function(matrix, metadata){
+  tab<-matrix%>% as.data.frame() %>% rownames_to_column(
+    var = "SampleID") %>% inner_join(metadata)
+  library(vegan)
+  perm<- how(nperm = 999)
+  permdisp<-suppressWarnings(betadisper(as.dist(matrix), tab$Sites))
+  permdisp2<- suppressWarnings(permutest( permdisp, permutations = 999))
+  
+  print(permdisp2)
+}

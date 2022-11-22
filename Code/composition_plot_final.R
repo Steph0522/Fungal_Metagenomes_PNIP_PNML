@@ -124,31 +124,29 @@ pc2_paired<- PC2.f(pca_micop_paired)
 pc1_fungi<- PC1.f(pca_fungi)
 pc2_fungi<- PC2.f(pca_fungi)
 
-pca_fig_qiime2<- pca_compositional_sites(pca_qiime2 )+
+pca_fig_qiime2<- pca_fig_micop_single <-pca_new(pca = pca_qiime2, scales = 850, taxonomys = taxonomy_qiime2,feature = metadata)+
   labs(title = paste("adonis: F = ", signif(perm_qiime2$F[1], 3), ",",
                      "p-value = ",signif(perm_qiime2$`Pr(>F)`[1], 5), 
-                     "\n betadisper F = ", signif(permd_qiime2$tab$F[1], 2), ",",
+                     "\n betadisper: F = ", signif(permd_qiime2$tab$F[1], 2), ",",
                      "p-value = ",signif(permd_qiime2$tab$`Pr(>F)`[1], 5))) +
   xlab(pc1_qiime2)+ylab(pc2_qiime2)+theme(legend.position = "none", 
                                           title = element_text(size = 12),
                                           axis.title = element_text(size = 16),
                                           plot.title = element_text(hjust = 1, size = 12))
 
-pca_fig_micop_single<- pca_compositional_sites(
-  pca_micop_single)+
-  labs(title = paste("adonis: F = ", signif(perm_micop_single$F[1], 3), ",",
+pca_fig_micop_single <-pca_new(pca = pca_micop_single, scales = 100, taxonomys = taxonomy_single_micop,feature = metadata)+
+    labs(title = paste("adonis: F = ", signif(perm_micop_single$F[1], 3), ",",
                      "p-value = ",signif(perm_micop_single$`Pr(>F)`[1], 5), 
-                     "\n betadisper F = ", signif(permd_micop_single$tab$F[1], 2), ",",
+                     "\n betadisper: F = ", signif(permd_micop_single$tab$F[1], 2), ",",
                      "p-value = ",signif(permd_micop_single$tab$`Pr(>F)`[1], 5))) +
   xlab(pc1_single)+ylab(pc2_single)+theme(legend.position = "none",
                                           title = element_text(size=12), 
                                           axis.title = element_text(size = 16),
                                           plot.title = element_text(hjust = 1, size = 12))
-pca_fig_micop_paired<- pca_compositional_sites(
-  pca_micop_paired)+
+pca_fig_micop_paired <-pca_new(pca = pca_micop_paired, scales = 100, taxonomys = taxonomy_paired_micop,feature = metadata)+
   labs(title = paste("adonis: F = ", signif(perm_micop_paired$F[1], 3), ",",
                      "p-value = ",signif(perm_micop_paired$`Pr(>F)`[1], 5), 
-                     "\n betadisper F = ", signif(permd_micop_paired$tab$F[1], 2), ",",
+                     "\n betadisper: F = ", signif(permd_micop_paired$tab$F[1], 2), ",",
                      "p-value = ",signif(permd_micop_paired$tab$`Pr(>F)`[1], 5)))+
     xlab(pc1_paired)+ylab(pc2_paired)+theme(title = element_text(size = 12))+theme(
       legend.text = element_text(size = 20), legend.title = element_text(size = 20),
@@ -157,11 +155,10 @@ pca_fig_micop_paired<- pca_compositional_sites(
    fill = guide_legend(verride.aes = list(size = 8), 
    shape = guide_legend(override.aes = list(size = 8))))
 
-pca_fig_fungi<- pca_compositional_sites(
-  pca_fungi)+
+pca_fig_fungi <- pca_new(pca = pca_fungi, scales = 4, taxonomys = taxonomy_fungi,feature = metadata)+
   labs(title = paste("adonis: F = ", signif(perm_fungi$F[1], 3), ",",
                      "p-value = ",signif(perm_fungi$`Pr(>F)`[1], 5), 
-                     "\n betadisper F = ", signif(permd_fungi$tab$F[1], 2), ",",
+                     "\n betadisper: F = ", signif(permd_fungi$tab$F[1], 2), ",",
                      "p-value = ",signif(permd_fungi$tab$`Pr(>F)`[1], 5)))+
   xlab(pc1_fungi)+ylab(pc2_fungi)+theme(title = element_text(size = 14))+theme(
     legend.text = element_text(size = 20), legend.title = element_text(size = 20),
@@ -191,8 +188,8 @@ pcas<- plot_grid(pca_fig_qiime2+theme(aspect.ratio =6/10),
                    theme(aspect.ratio =6/10),
                    ncol = 2, nrow = 2, rel_widths = c(1,1,1,1),
                  align = "v",
-                 labels = c("a) QIIME2", "b) SINGLE MICOP",
-                            "c) PAIRED MICOP", "d) KRAKEN2"),hjust = 0)
+                 labels = c("A) QIIME2", "B) SINGLE MICOP",
+                            "C) PAIRED MICOP", "D) KRAKEN2"),hjust = 0)
 legds<- get_legend(pca_fig_micop_paired)
 legd<- plot_grid(NULL, legds, NULL, nrow = 3, ncol = 1)
 pcas_plot<- plot_grid(pcas, legd, ncol = 2, rel_widths = c(1,0.1), align = "hv")

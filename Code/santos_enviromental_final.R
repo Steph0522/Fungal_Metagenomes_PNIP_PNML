@@ -76,7 +76,8 @@ nut.dist[upper.tri(nut.dist)] <- NA
 #Create a long data frame and remove pairwise comparisons between the same sample
 nut.dist.tidy <- nut.dist %>% 
   melt(as.matrix(distance), varnames = c(
-    "SampleID.x", "SampleID.y"), value.name = "EucDist") %>% drop_na() %>% filter(!EucDist==0) %>% 
+    "SampleID.x", "SampleID.y"), value.name = "EucDist") %>% drop_na() %>% filter(
+      !EucDist==0) %>% 
   filter(!is.na(EucDist)) %>% 
   filter(SampleID.x != SampleID.y) %>% 
   inner_join(map, by = c("SampleID.x" = "SampleID")) %>% 
