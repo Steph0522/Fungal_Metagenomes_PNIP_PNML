@@ -124,7 +124,7 @@ pc2_paired<- PC2.f(pca_micop_paired)
 pc1_fungi<- PC1.f(pca_fungi)
 pc2_fungi<- PC2.f(pca_fungi)
 
-pca_fig_qiime2<- pca_fig_micop_single <-pca_new(pca = pca_qiime2, scales = 850, taxonomys = taxonomy_qiime2,feature = metadata)+
+pca_fig_qiime2<- pca_new(pca = pca_qiime2, scales = 850, taxonomys = taxonomy_qiime2,feature = metadata)+
   labs(title = paste("adonis: F = ", signif(perm_qiime2$F[1], 3), ",",
                      "p-value = ",signif(perm_qiime2$`Pr(>F)`[1], 5), 
                      "\n betadisper: F = ", signif(permd_qiime2$tab$F[1], 2), ",",

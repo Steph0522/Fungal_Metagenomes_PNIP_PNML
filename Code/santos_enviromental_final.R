@@ -91,9 +91,9 @@ lm <- lm(EucDist ~ SpatialDistance, data = nut.dist.tidy) %>% tidy() %>% filter(
 #mant<- vegan::mantel(distance_complete,dist(nut.mtx))
 mant2<- vegan::mantel(distance_complete, dfs_dist)
 #mant;mant2
-dist.stats <- data.frame(label = paste("correlation test: r = ", signif(cor$estimate,2), ",",
-                                       "\nlinear regression: slope = ", signif(lm$estimate, 3), ",",
-                                       "p-value = ", signif(cor$p.value, 3),
+dist.stats <- data.frame(label = paste0("correlation: r =", signif(cor$estimate,2), ",",
+                                       "\nregression: slope =", signif(lm$estimate, 3), ",",
+                                       " p-value =", signif(cor$p.value, 3),
                                        "\nmantel test: r =",  signif(mant2$statistic, 2),
                                        ", p-value = ",  signif(mant2$signif, 3)))
 
@@ -215,4 +215,54 @@ variables.p
 top <- plot_grid(NA, environmental.p, NA, rel_widths = c(1,2,1), nrow = 1, labels = c(NA, "a", NA), label_size = 15)
 
 plot_grid(top, variables.p, nrow = 2, rel_heights = c(1,3), labels = c(NA, "b"), label_size = 15)
+
+#pca
+names_cols<- c("P", "K", "Ca", "Mg", "Moisture", "WHC", "Silt")
+colnames(dfs)<-names_cols
+pca_env<- prcomp(dfs, center = F, scale. = F)
+metadatas<- as.data.frame(pca_env$x) %>% rownames_to_column(var = "SampleID") %>% 
+  inner_join(metadata)
+y<-ggordiplots::gg_ordiplot(pca_env, metadatas$Sites, hull = FALSE, 
+                            spiders = TRUE,  ellipse = FALSE,   pt.size = 4,
+                            plot =FALSE, label = FALSE)
+z <- y$plot
+a<-z+geom_label(
+  data = y$df_mean.ord,
+  aes(x = x, y = y, label=Group), 
+  label.padding = unit(0.15, "lines"),label.size = 0.4,
+)+guides(
+  color=guide_legend(title="Sites"))+theme_linedraw() +
+  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2) +
+  theme_linedraw()+
+  scale_fill_viridis_d(option ="turbo", name="Sites")+#color of points 
+  scale_color_viridis_d(option ="turbo" )+#color of points 
+  theme(axis.text = element_text(colour = "black", size = 12),
+        axis.title = element_text(colour = "black", size = 12),
+        legend.text = element_text(size = 10),
+        legend.title = element_text(size = 12), 
+        legend.position = "right", 
+        legend.box = "vertical",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())+
+  ggrepel::geom_label_repel(data=data.frame(pca_env$rotation) %>%   #arrows
+                              rownames_to_column(var = "Feature.ID")%>%  
+                              mutate(a=sqrt(PC1^2+PC2^2)) %>% 
+                              mutate(PC1=PC1*7, PC2=PC2*7),
+                            aes(x=PC1, y=PC2, label=Feature.ID ),
+                            segment.colour = NA, col = 'black', fill= "#EEEEEE",
+                            fontface="bold.italic", size=5) +theme(
+                              legend.position = "top")  +
+  guides(color = guide_legend(nrow =2 , title = "Sites"))+theme(
+    legend.text = element_text(size = 12), legend.title = element_text(size = 14),
+    axis.title = element_text(size = 16),
+    plot.title = element_text(hjust = 1, size = 12))
+
+
+a
+
+vars_env<- plot_grid(environmental.p+theme(aspect.ratio =8/10), a, nrow = 2,
+                    byrow = T, labels =c("A)", "B)"))
+vars_env
+ggsave("Fig.variables_envs.png",width =5, height = 10, dpi = 300, plot = vars_env, device = "png")
 
