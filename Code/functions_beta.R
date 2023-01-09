@@ -165,10 +165,10 @@ otu.single <- function(otu){otu[rowSums(otu>0)>1,]}
 otu.norm <- function(otu){otu %>% rel_ab() %>% log_norm()}
 #bc.dist <-funct beta_div_dist(otu.norm)
 cor.b <- function(x){
-  cor.test(x$SpatialDistance,x$Similarity, method= "spearman", alternative = "two.sided") %>% tidy()
+  cor.test(x$SpatialDistance,x$Similarity, method= "pearson", alternative = "two.sided") %>% tidy()
 }
 cor.e <- function(x){
-  cor.test(x$EucDist,x$Similarity, method= "spearman", alternative = "two.sided") %>% tidy()
+  cor.test(x$EucDist,x$Similarity) %>% tidy()
 }
 
 lm.b <- function(x){lm(Similarity ~ SpatialDistance, data = x) %>% tidy() %>% filter(term == "SpatialDistance")}
