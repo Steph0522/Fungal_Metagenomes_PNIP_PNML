@@ -55,7 +55,7 @@ veg<-veget %>% separate(
           Genus=="Arbutus"~ "Latifoliadas") ) %>% mutate(
             Dominante=case_when(
               Genus=="Quercus"~ "Quercus",
-              Genus=="Arbutus"~ "Arbutus",
+              Genus=="Arbutus"~ "otras Latifoliadas",
               Genus=="Pinus"~ "Pinus",
               Genus=="Abies"~ "Abies",
               Genus=="Juniperus"~ "otras coníferas",
@@ -74,6 +74,10 @@ prop=n/total*100)%>% dplyr::select(-n,-total) %>%  pivot_wider(
       is.numeric, ~replace(., is.na(.), 0)) %>% rename(prop_conif="Coníferas",
                                                        prop_latif="Latifoliadas")
 
+
+prop %>% pivot_longer(
+  cols = -SampleID, names_to = "tipo", values_to = "prop") %>% inner_join(
+    metadata) %>% ggplot(aes())
 ##proporcion generos
 prop_n<-veg %>% group_by(SampleID,Genus) %>% count()
 prop_total<- veg %>% group_by(SampleID) %>% count() %>% rename(total=n)
