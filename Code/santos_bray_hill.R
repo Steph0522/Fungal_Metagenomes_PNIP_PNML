@@ -69,7 +69,7 @@ library(readxl)
 map<- read.csv("Data/coord.csv") %>% mutate_at(
     c(1,2,3,7), as.factor) %>% mutate(SampleID= paste0("P",pol, "S", Sitio,"T", Transecto ))
 metadata<-read_excel("Data/Metadatos.xlsx") %>% mutate_if(is.numeric, as.factor)
-
+map<-metadata
 table_single_micop<- read.delim("Data/table_micop_single.txt") 
 table_paired_micop<- read.delim("Data/table_micop_paired.txt")
 table_qiime2<- data.frame(read_qza("Data/clustered_table_filter.qza")$data, 

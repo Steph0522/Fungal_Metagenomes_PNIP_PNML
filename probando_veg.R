@@ -179,6 +179,10 @@ spp.16S4=data.frame(t(spp.16S4), check.names = F)
 
 #environmental vars
 env.16S= merge(data_propt, data_veg_mean_transform, by=0)%>%rename(SampleID="Row.names")
+#env.16S= merge(data_prop, data_veg_mean, by=0)%>%rename(SampleID="Row.names")
+
+
+#write_tsv(env.16S, "Data/vegetation_data_notransformed.tsv")
 
 #kraken
 mm3=env.16S%>%  inner_join(spp.16S3 %>%rownames_to_column(var = "SampleID") )
@@ -412,7 +416,7 @@ allm2<-mantel(bc.dist2[[2]], dfs_distA)
 allm3<-mantel(bc.dist2[[3]], dfs_distA)
 allm4<-mantel(bc.dist2[[4]], dfs_distA)
 
-mantel(bc.dist2[[1]], dfs_dist)
+vegan::mantel(bc.dist2[[1]], dfs_dist)
 mantel(bc.dist2[[2]], dfs_dist)
 mantel(bc.dist2[[3]], dfs_dist)
 mantel(bc.dist2[[4]], dfs_dist)
@@ -474,4 +478,44 @@ nut.dist.tidy <- nut.dist %>%
                                                            colour = "#E5E8E8"), 
                            panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
                                                            colour = "#E5E8E8"))  
+  
+  
+  
+  #probando genero  y especies
+  data_spet<- spe_data%>%t() %>% rel_ab() %>% log_norm() %>% t()
+  data_gent<- gen_data%>%t() %>% rel_ab() %>% log_norm() %>% t()
+
+  data_spet_dist<- data_spet%>% vegdist(., method = "bray")
+  data_gent_dist<- data_gent %>% vegdist(., method = "bray")
+  
+  
+  
+  mantel(bc.dist2[[1]], data_spet_dist)
+  cor.test(bc.dist2[[1]], as.matrix(data_spet_dist))
+  
+  
+  mantel(bc.dist2[[2]], data_spet_dist)
+  cor.test(bc.dist2[[2]], as.matrix(data_spet_dist))
+  
+  mantel(bc.dist2[[3]], data_spet_dist)
+  cor.test(bc.dist2[[3]], as.matrix(data_spet_dist))
+
+  mantel(bc.dist2[[4]], data_spet_dist)
+  cor.test(bc.dist2[[4]], as.matrix(data_spet_dist))
+  
+  
+  mantel(bc.dist2[[1]], data_gent_dist)
+  cor.test(bc.dist2[[1]], as.matrix(data_gent_dist))
+  
+  
+  mantel(bc.dist2[[2]], data_gent_dist)
+  cor.test(bc.dist2[[2]], as.matrix(data_gent_dist))
+  
+  mantel(bc.dist2[[3]], data_gent_dist)
+  cor.test(bc.dist2[[3]], as.matrix(data_gent_dist))
+
+  mantel(bc.dist2[[4]], data_gent_dist)
+  cor.test(bc.dist2[[4]], as.matrix(data_gent_dist))
+  
+  
   
