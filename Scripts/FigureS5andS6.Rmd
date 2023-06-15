@@ -29,6 +29,14 @@ getwd()
 veget<- read_excel("../Data/vegetacion.xlsx") %>% dplyr::select(
   -DAP, -CopaNS, -CopaEW,-volumenamdera, -distanciacopas, -diamcopa, -basal_area )
 
+veget2<- veget %>% mutate(SampleID=case_when(
+  SampleID=="P6S1T1" ~"P6S2T1",
+  SampleID=="P6S1T2" ~"P6S2T2",
+  SampleID=="P6S1T3" ~"P6S2T3",
+  SampleID=="P6S2T1" ~"P6S1T1",
+  SampleID=="P6S2T2" ~"P6S1T2",
+  SampleID=="P6S2T3" ~"P6S1T3",
+  TRUE~as.character(SampleID)))
 
 metadata_secas<- read_excel("../Data/Metadatos.xlsx", sheet = "secas-marzo")
 metadata<- read_excel("../Data/Metadatos.xlsx", sheet = "secas-marzo")
@@ -36,7 +44,7 @@ metadata<- read_excel("../Data/Metadatos.xlsx", sheet = "secas-marzo")
 
 #declare data
 
-veg<-veget %>% separate(
+veg<-veget2%>% separate(
   Especie, c("Genus", "Specie"), remove =F ) %>%   mutate(
     Genus=case_when(
       Genus=="Quecus"~ "Quercus",
@@ -132,7 +140,7 @@ all<-plot_grid(plot_prop+theme(
   plot_prop_gen+ theme(plot.margin = unit(c(0, 0.2, 0.1, 0.2), "cm")), ncol = 1)
 all
 
-#ggsave("veg_prop.png",width = 6, height = 6, dpi = 300, plot = all, device = "png")
+ggsave("veg_prop.png",width = 6, height = 6, dpi = 300, plot = all, device = "png")
 ```
 
 

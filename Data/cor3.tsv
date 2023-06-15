@@ -1,0 +1,357 @@
+Var1	Var2	cor	cors
+Ca	pH	0.6881475174054109	0.6881475174054109
+Humidity	N	0.6470201555239821	0.6470201555239821
+Mg	K	0.6787644986213623	0.6787644986213623
+pH	Ca	0.6881475174054109	0.6881475174054109
+Mg	Ca	0.6240183605195788	0.6240183605195788
+Silt	Ca	0.6307041893778997	0.6307041893778997
+K	Mg	0.6787644986213623	0.6787644986213623
+Ca	Mg	0.6240183605195788	0.6240183605195788
+Fe	Mg	0.6331198632015379	0.6331198632015379
+Silt	Mg	0.6199296744423471	0.6199296744423471
+Mg	Fe	0.6331198632015379	0.6331198632015379
+N	Humidity	0.6470201555239821	0.6470201555239821
+Silt	WHC	0.6211158387713327	0.6211158387713327
+Ca	Silt	0.6307041893778997	0.6307041893778997
+Mg	Silt	0.6199296744423471	0.6199296744423471
+WHC	Silt	0.6211158387713327	0.6211158387713327
+Endophyte	Animal Endosymbiont-Animal Pathogen-Endophyte-Plant Pathogen-Undefined Saprotroph	0.7481292585601031	0.7481292585601031
+Animal Pathogen	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.804874458144968	0.804874458144968
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	-0.8668901506338013	0.8668901506338013
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.7528891391389126	0.7528891391389126
+Dung Saprotroph-Undefined Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.7082119274679683	0.7082119274679683
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.702811247772301	0.702811247772301
+Dung Saprotroph-Wood Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.7862574210695418	0.7862574210695418
+Endophyte-Plant Pathogen	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.8109882032230146	0.8109882032230146
+Epiphyte	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.7651956173484487	0.7651956173484487
+Fungal Parasite	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.6366492909065271	0.6366492909065271
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.6771307705001431	0.6771307705001431
+Lichenized	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.9002605451367452	0.9002605451367452
+Plant Pathogen	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.8426034722366921	0.8426034722366921
+Plant Pathogen-Undefined Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.8076549945880982	0.8076549945880982
+Undefined Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.6915124708995677	0.6915124708995677
+Wood Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.6136498897608513	0.6136498897608513
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Animal Pathogen	0.804874458144968	0.804874458144968
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Animal Pathogen	-0.8794630753110209	0.8794630753110209
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Animal Pathogen	0.7587236992417519	0.7587236992417519
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Animal Pathogen	0.6304753577473783	0.6304753577473783
+Animal Pathogen-Soil Saprotroph	Animal Pathogen	0.6854190696391844	0.6854190696391844
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Animal Pathogen	0.8198048200610317	0.8198048200610317
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Animal Pathogen	0.7320075630534338	0.7320075630534338
+Dung Saprotroph-Wood Saprotroph	Animal Pathogen	0.7092045854184376	0.7092045854184376
+Ectomycorrhizal	Animal Pathogen	0.7039437962185737	0.7039437962185737
+Endophyte	Animal Pathogen	0.6825368348991692	0.6825368348991692
+Endophyte-Plant Pathogen	Animal Pathogen	0.7601588825131345	0.7601588825131345
+Epiphyte	Animal Pathogen	0.8431801139225874	0.8431801139225874
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Animal Pathogen	0.6373127779593122	0.6373127779593122
+Lichenized	Animal Pathogen	0.8866808061092455	0.8866808061092455
+Plant Pathogen	Animal Pathogen	0.9002968547846067	0.9002968547846067
+Plant Pathogen-Undefined Saprotroph	Animal Pathogen	0.7905921182857979	0.7905921182857979
+Plant Pathogen-Wood Saprotroph	Animal Pathogen	0.7965618048902728	0.7965618048902728
+Undefined Saprotroph	Animal Pathogen	0.9175685118891072	0.9175685118891072
+Wood Saprotroph	Animal Pathogen	0.8398640711832034	0.8398640711832034
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.8668901506338013	0.8668901506338013
+Animal Pathogen	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.8794630753110209	0.8794630753110209
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.6929283538301383	0.6929283538301383
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.6323289103930462	0.6323289103930462
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.7015191271040615	0.7015191271040615
+Dung Saprotroph-Undefined Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.6759120801695905	0.6759120801695905
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.7450669331405774	0.7450669331405774
+Dung Saprotroph-Wood Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.7389749306741538	0.7389749306741538
+Endophyte-Plant Pathogen	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.8199454947646128	0.8199454947646128
+Epiphyte	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.7279425376509661	0.7279425376509661
+Fungal Parasite	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.6518940715948324	0.6518940715948324
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.6850194911014982	0.6850194911014982
+Lichenized	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.8523123585603577	0.8523123585603577
+Plant Pathogen	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.8861412834878001	0.8861412834878001
+Plant Pathogen-Undefined Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.8367807176672665	0.8367807176672665
+Plant Pathogen-Wood Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.679157812493639	0.679157812493639
+Undefined Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.805231555833012	0.805231555833012
+Wood Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	-0.6988404304404747	0.6988404304404747
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.7528891391389126	0.7528891391389126
+Animal Pathogen	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.7587236992417519	0.7587236992417519
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	-0.6929283538301383	0.6929283538301383
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.6002621425302046	0.6002621425302046
+Animal Pathogen-Soil Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.6433648957656005	0.6433648957656005
+Dung Saprotroph-Nematophagous	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.689006145421465	0.689006145421465
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.6129659741065681	0.6129659741065681
+Dung Saprotroph-Undefined Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.6747015007725431	0.6747015007725431
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.751005791079717	0.751005791079717
+Dung Saprotroph-Wood Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.7544521478756369	0.7544521478756369
+Endophyte-Plant Pathogen	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.7396675174311461	0.7396675174311461
+Epiphyte	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.7567695979929252	0.7567695979929252
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.7087513120269109	0.7087513120269109
+Lichenized	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.8500056976558678	0.8500056976558678
+Plant Pathogen	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.8220420334545534	0.8220420334545534
+Plant Pathogen-Undefined Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.7001357701341001	0.7001357701341001
+Plant Pathogen-Wood Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.6162064980639341	0.6162064980639341
+Undefined Saprotroph	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	0.7116119490547071	0.7116119490547071
+Animal Pathogen	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	0.6304753577473783	0.6304753577473783
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	-0.6323289103930462	0.6323289103930462
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	0.6002621425302046	0.6002621425302046
+Animal Pathogen-Soil Saprotroph	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	0.8247531664210312	0.8247531664210312
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	0.703620787724197	0.703620787724197
+Dung Saprotroph-Wood Saprotroph	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	0.6604969462125376	0.6604969462125376
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	0.6907832030578237	0.6907832030578237
+Plant Pathogen	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	0.7374649853167355	0.7374649853167355
+Plant Pathogen-Undefined Saprotroph	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	0.6919604207813128	0.6919604207813128
+Undefined Saprotroph	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	0.6616996016013652	0.6616996016013652
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.6379429452823994	0.6379429452823994
+Animal Pathogen	Animal Pathogen-Soil Saprotroph	0.6854190696391844	0.6854190696391844
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Animal Pathogen-Soil Saprotroph	0.6433648957656005	0.6433648957656005
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Animal Pathogen-Soil Saprotroph	0.8247531664210312	0.8247531664210312
+Animal Pathogen-Undefined Saprotroph	Animal Pathogen-Soil Saprotroph	0.7044486065587235	0.7044486065587235
+Dung Saprotroph-Nematophagous	Animal Pathogen-Soil Saprotroph	0.6116550429166105	0.6116550429166105
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Animal Pathogen-Soil Saprotroph	0.6897937907948668	0.6897937907948668
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Animal Pathogen-Soil Saprotroph	0.6818818020319517	0.6818818020319517
+Dung Saprotroph-Wood Saprotroph	Animal Pathogen-Soil Saprotroph	0.6630815450321581	0.6630815450321581
+Epiphyte	Animal Pathogen-Soil Saprotroph	0.6594830133622533	0.6594830133622533
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Animal Pathogen-Soil Saprotroph	0.7246697304759582	0.7246697304759582
+Lichenized	Animal Pathogen-Soil Saprotroph	0.6488749467428095	0.6488749467428095
+Plant Pathogen	Animal Pathogen-Soil Saprotroph	0.7679703761113043	0.7679703761113043
+Plant Pathogen-Undefined Saprotroph	Animal Pathogen-Soil Saprotroph	0.678801930282131	0.678801930282131
+Plant Pathogen-Wood Saprotroph	Animal Pathogen-Soil Saprotroph	0.6442190252557992	0.6442190252557992
+Undefined Saprotroph	Animal Pathogen-Soil Saprotroph	0.7520293067052933	0.7520293067052933
+Wood Saprotroph	Animal Pathogen-Soil Saprotroph	0.6596875807636742	0.6596875807636742
+Animal Pathogen-Soil Saprotroph	Animal Pathogen-Undefined Saprotroph	0.7044486065587235	0.7044486065587235
+Fungal Parasite	Animal Pathogen-Undefined Saprotroph	0.6029546048576295	0.6029546048576295
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Animal Pathogen-Undefined Saprotroph	0.6313938860051688	0.6313938860051688
+Plant Pathogen	Animal Pathogen-Undefined Saprotroph	0.6207939030789427	0.6207939030789427
+Undefined Saprotroph	Animal Pathogen-Undefined Saprotroph	0.6221936455826014	0.6221936455826014
+Wood Saprotroph	Animal Pathogen-Undefined Saprotroph	0.6077417945311171	0.6077417945311171
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Dung Saprotroph-Nematophagous	0.689006145421465	0.689006145421465
+Animal Pathogen-Soil Saprotroph	Dung Saprotroph-Nematophagous	0.6116550429166105	0.6116550429166105
+Dung Saprotroph-Wood Saprotroph	Dung Saprotroph-Nematophagous	0.6304561858706323	0.6304561858706323
+Epiphyte	Dung Saprotroph-Nematophagous	0.6359544071288331	0.6359544071288331
+Lichenized	Dung Saprotroph-Nematophagous	0.6575078816593395	0.6575078816593395
+Plant Pathogen	Dung Saprotroph-Nematophagous	0.6663948637422704	0.6663948637422704
+Plant Pathogen-Undefined Parasite-Undefined Saprotroph	Dung Saprotroph-Nematophagous	0.6569328832230872	0.6569328832230872
+Plant Pathogen-Undefined Saprotroph	Dung Saprotroph-Nematophagous	0.6139018477784978	0.6139018477784978
+Animal Pathogen	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.8198048200610317	0.8198048200610317
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	-0.7015191271040615	0.7015191271040615
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.6129659741065681	0.6129659741065681
+Animal Pathogen-Soil Saprotroph	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.6897937907948668	0.6897937907948668
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.6646485744325974	0.6646485744325974
+Ectomycorrhizal	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.7405213694880763	0.7405213694880763
+Endophyte	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.632822972840504	0.632822972840504
+Endophyte-Plant Pathogen	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.6098184241319125	0.6098184241319125
+Epiphyte	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.7276630688374205	0.7276630688374205
+Lichenized	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.7420154000180135	0.7420154000180135
+Plant Pathogen	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.7806743263796991	0.7806743263796991
+Plant Pathogen-Undefined Saprotroph	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.6149198350852775	0.6149198350852775
+Plant Pathogen-Wood Saprotroph	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.7481531933300185	0.7481531933300185
+Undefined Saprotroph	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.88381351915311	0.88381351915311
+Wood Saprotroph	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	0.8135814375932948	0.8135814375932948
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Dung Saprotroph-Undefined Saprotroph	0.7082119274679683	0.7082119274679683
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Dung Saprotroph-Undefined Saprotroph	-0.6759120801695905	0.6759120801695905
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Dung Saprotroph-Undefined Saprotroph	0.6747015007725431	0.6747015007725431
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Dung Saprotroph-Undefined Saprotroph	0.6288904787037813	0.6288904787037813
+Dung Saprotroph-Wood Saprotroph	Dung Saprotroph-Undefined Saprotroph	0.7376185591205325	0.7376185591205325
+Endophyte-Plant Pathogen	Dung Saprotroph-Undefined Saprotroph	0.6328413760644629	0.6328413760644629
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Dung Saprotroph-Undefined Saprotroph	0.7787539231255185	0.7787539231255185
+Lichenized	Dung Saprotroph-Undefined Saprotroph	0.6558438209564623	0.6558438209564623
+Plant Pathogen	Dung Saprotroph-Undefined Saprotroph	0.729005933091112	0.729005933091112
+Plant Pathogen-Undefined Saprotroph	Dung Saprotroph-Undefined Saprotroph	0.733001690057681	0.733001690057681
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.702811247772301	0.702811247772301
+Animal Pathogen	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.7320075630534338	0.7320075630534338
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	-0.7450669331405774	0.7450669331405774
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.751005791079717	0.751005791079717
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.703620787724197	0.703620787724197
+Animal Pathogen-Soil Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.6818818020319517	0.6818818020319517
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.6646485744325974	0.6646485744325974
+Dung Saprotroph-Undefined Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.6288904787037813	0.6288904787037813
+Dung Saprotroph-Wood Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.753061944969392	0.753061944969392
+Epiphyte	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.6850419915268288	0.6850419915268288
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.7113432827671414	0.7113432827671414
+Lichenized	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.757958468505841	0.757958468505841
+Plant Pathogen	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.8292715653894994	0.8292715653894994
+Plant Pathogen-Undefined Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.7919183676686401	0.7919183676686401
+Plant Pathogen-Wood Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.6915983509146824	0.6915983509146824
+Undefined Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.7945517581381136	0.7945517581381136
+Wood Saprotroph	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	0.6700730820556084	0.6700730820556084
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Dung Saprotroph-Wood Saprotroph	0.7862574210695418	0.7862574210695418
+Animal Pathogen	Dung Saprotroph-Wood Saprotroph	0.7092045854184376	0.7092045854184376
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Dung Saprotroph-Wood Saprotroph	-0.7389749306741538	0.7389749306741538
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Dung Saprotroph-Wood Saprotroph	0.7544521478756369	0.7544521478756369
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Dung Saprotroph-Wood Saprotroph	0.6604969462125376	0.6604969462125376
+Animal Pathogen-Soil Saprotroph	Dung Saprotroph-Wood Saprotroph	0.6630815450321581	0.6630815450321581
+Dung Saprotroph-Nematophagous	Dung Saprotroph-Wood Saprotroph	0.6304561858706323	0.6304561858706323
+Dung Saprotroph-Undefined Saprotroph	Dung Saprotroph-Wood Saprotroph	0.7376185591205325	0.7376185591205325
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Dung Saprotroph-Wood Saprotroph	0.753061944969392	0.753061944969392
+Endophyte-Plant Pathogen	Dung Saprotroph-Wood Saprotroph	0.653192584548308	0.653192584548308
+Epiphyte	Dung Saprotroph-Wood Saprotroph	0.6564034690199426	0.6564034690199426
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Dung Saprotroph-Wood Saprotroph	0.7974479622219266	0.7974479622219266
+Lichenized	Dung Saprotroph-Wood Saprotroph	0.7706450881592924	0.7706450881592924
+Plant Pathogen	Dung Saprotroph-Wood Saprotroph	0.8283008689319366	0.8283008689319366
+Plant Pathogen-Undefined Saprotroph	Dung Saprotroph-Wood Saprotroph	0.7990539797480823	0.7990539797480823
+Undefined Saprotroph	Dung Saprotroph-Wood Saprotroph	0.6617195934122626	0.6617195934122626
+Animal Pathogen	Ectomycorrhizal	0.7039437962185737	0.7039437962185737
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Ectomycorrhizal	0.7405213694880763	0.7405213694880763
+Plant Pathogen	Ectomycorrhizal	0.6113327583963456	0.6113327583963456
+Plant Pathogen-Wood Saprotroph	Ectomycorrhizal	0.6585970007313714	0.6585970007313714
+Undefined Saprotroph	Ectomycorrhizal	0.81730928936803	0.81730928936803
+Wood Saprotroph	Ectomycorrhizal	0.7329069104347469	0.7329069104347469
+Animal Endosymbiont-Animal Pathogen-Endophyte-Plant Pathogen-Undefined Saprotroph	Endophyte	0.7481292585601031	0.7481292585601031
+Animal Pathogen	Endophyte	0.6825368348991692	0.6825368348991692
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Endophyte	0.632822972840504	0.632822972840504
+Plant Pathogen-Wood Saprotroph	Endophyte	0.6131585847768254	0.6131585847768254
+Undefined Saprotroph	Endophyte	0.6820064463255362	0.6820064463255362
+Wood Saprotroph	Endophyte	0.6104961514857954	0.6104961514857954
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Endophyte-Plant Pathogen	0.8109882032230146	0.8109882032230146
+Animal Pathogen	Endophyte-Plant Pathogen	0.7601588825131345	0.7601588825131345
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Endophyte-Plant Pathogen	-0.8199454947646128	0.8199454947646128
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Endophyte-Plant Pathogen	0.7396675174311461	0.7396675174311461
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Endophyte-Plant Pathogen	0.6098184241319125	0.6098184241319125
+Dung Saprotroph-Undefined Saprotroph	Endophyte-Plant Pathogen	0.6328413760644629	0.6328413760644629
+Dung Saprotroph-Wood Saprotroph	Endophyte-Plant Pathogen	0.653192584548308	0.653192584548308
+Epiphyte	Endophyte-Plant Pathogen	0.6597923490347576	0.6597923490347576
+Lichenized	Endophyte-Plant Pathogen	0.8358480857890493	0.8358480857890493
+Plant Pathogen	Endophyte-Plant Pathogen	0.7680386984784878	0.7680386984784878
+Plant Pathogen-Undefined Saprotroph	Endophyte-Plant Pathogen	0.6978721786384017	0.6978721786384017
+Undefined Saprotroph	Endophyte-Plant Pathogen	0.6856987468427617	0.6856987468427617
+Wood Saprotroph	Endophyte-Plant Pathogen	0.6047775106986836	0.6047775106986836
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Epiphyte	0.7651956173484487	0.7651956173484487
+Animal Pathogen	Epiphyte	0.8431801139225874	0.8431801139225874
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Epiphyte	-0.7279425376509661	0.7279425376509661
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Epiphyte	0.7567695979929252	0.7567695979929252
+Animal Pathogen-Soil Saprotroph	Epiphyte	0.6594830133622533	0.6594830133622533
+Dung Saprotroph-Nematophagous	Epiphyte	0.6359544071288331	0.6359544071288331
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Epiphyte	0.7276630688374205	0.7276630688374205
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Epiphyte	0.6850419915268288	0.6850419915268288
+Dung Saprotroph-Wood Saprotroph	Epiphyte	0.6564034690199426	0.6564034690199426
+Endophyte-Plant Pathogen	Epiphyte	0.6597923490347576	0.6597923490347576
+Lichenized	Epiphyte	0.8655393204150673	0.8655393204150673
+Plant Pathogen	Epiphyte	0.812949409345551	0.812949409345551
+Plant Pathogen-Undefined Saprotroph	Epiphyte	0.74141678632525565	0.74141678632525565
+Plant Pathogen-Wood Saprotroph	Epiphyte	0.7922696794889086	0.7922696794889086
+Undefined Saprotroph	Epiphyte	0.7830039704593644	0.7830039704593644
+Wood Saprotroph	Epiphyte	0.7509023716107154	0.7509023716107154
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Fungal Parasite	0.6366492909065271	0.6366492909065271
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Fungal Parasite	-0.6518940715948324	0.6518940715948324
+Animal Pathogen-Undefined Saprotroph	Fungal Parasite	0.6029546048576295	0.6029546048576295
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Fungal Parasite	0.6002357241548566	0.6002357241548566
+Lichenized	Fungal Parasite	0.6074492163101849	0.6074492163101849
+Plant Pathogen	Fungal Parasite	0.6066560052684714	0.6066560052684714
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.6771307705001431	0.6771307705001431
+Animal Pathogen	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.6373127779593122	0.6373127779593122
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	-0.6850194911014982	0.6850194911014982
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.7087513120269109	0.7087513120269109
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.6907832030578237	0.6907832030578237
+Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.6379429452823994	0.6379429452823994
+Animal Pathogen-Soil Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.7246697304759582	0.7246697304759582
+Animal Pathogen-Undefined Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.6313938860051688	0.6313938860051688
+Dung Saprotroph-Undefined Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.7787539231255185	0.7787539231255185
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.7113432827671414	0.7113432827671414
+Dung Saprotroph-Wood Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.7974479622219266	0.7974479622219266
+Fungal Parasite	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.6002357241548566	0.6002357241548566
+Lichenized	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.6394940100024081	0.6394940100024081
+Plant Pathogen	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.7817573177407465	0.7817573177407465
+Plant Pathogen-Undefined Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.8165234948415805	0.8165234948415805
+Undefined Saprotroph	Fungal Parasite-Plant Pathogen-Plant Saprotroph	0.6259243921207035	0.6259243921207035
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Lichenized	0.9002605451367452	0.9002605451367452
+Animal Pathogen	Lichenized	0.8866808061092455	0.8866808061092455
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Lichenized	-0.8523123585603577	0.8523123585603577
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Lichenized	0.8500056976558678	0.8500056976558678
+Animal Pathogen-Soil Saprotroph	Lichenized	0.6488749467428095	0.6488749467428095
+Dung Saprotroph-Nematophagous	Lichenized	0.6575078816593395	0.6575078816593395
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Lichenized	0.7420154000180135	0.7420154000180135
+Dung Saprotroph-Undefined Saprotroph	Lichenized	0.6558438209564623	0.6558438209564623
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Lichenized	0.757958468505841	0.757958468505841
+Dung Saprotroph-Wood Saprotroph	Lichenized	0.7706450881592924	0.7706450881592924
+Endophyte-Plant Pathogen	Lichenized	0.8358480857890493	0.8358480857890493
+Epiphyte	Lichenized	0.8655393204150673	0.8655393204150673
+Fungal Parasite	Lichenized	0.6074492163101849	0.6074492163101849
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Lichenized	0.6394940100024081	0.6394940100024081
+Plant Pathogen	Lichenized	0.9034705507987248	0.9034705507987248
+Plant Pathogen-Undefined Saprotroph	Lichenized	0.7866997847729699	0.7866997847729699
+Plant Pathogen-Wood Saprotroph	Lichenized	0.6991034550309787	0.6991034550309787
+Undefined Saprotroph	Lichenized	0.8268767799737344	0.8268767799737344
+Wood Saprotroph	Lichenized	0.7534003782526439	0.7534003782526439
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Plant Pathogen	0.8426034722366921	0.8426034722366921
+Animal Pathogen	Plant Pathogen	0.9002968547846067	0.9002968547846067
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Plant Pathogen	-0.8861412834878001	0.8861412834878001
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Plant Pathogen	0.8220420334545534	0.8220420334545534
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Plant Pathogen	0.7374649853167355	0.7374649853167355
+Animal Pathogen-Soil Saprotroph	Plant Pathogen	0.7679703761113043	0.7679703761113043
+Animal Pathogen-Undefined Saprotroph	Plant Pathogen	0.6207939030789427	0.6207939030789427
+Dung Saprotroph-Nematophagous	Plant Pathogen	0.6663948637422704	0.6663948637422704
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Plant Pathogen	0.7806743263796991	0.7806743263796991
+Dung Saprotroph-Undefined Saprotroph	Plant Pathogen	0.729005933091112	0.729005933091112
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Plant Pathogen	0.8292715653894994	0.8292715653894994
+Dung Saprotroph-Wood Saprotroph	Plant Pathogen	0.8283008689319366	0.8283008689319366
+Ectomycorrhizal	Plant Pathogen	0.6113327583963456	0.6113327583963456
+Endophyte-Plant Pathogen	Plant Pathogen	0.7680386984784878	0.7680386984784878
+Epiphyte	Plant Pathogen	0.812949409345551	0.812949409345551
+Fungal Parasite	Plant Pathogen	0.6066560052684714	0.6066560052684714
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Plant Pathogen	0.7817573177407465	0.7817573177407465
+Lichenized	Plant Pathogen	0.9034705507987248	0.9034705507987248
+Plant Pathogen-Undefined Saprotroph	Plant Pathogen	0.8844930630582798	0.8844930630582798
+Plant Pathogen-Wood Saprotroph	Plant Pathogen	0.7445737139532631	0.7445737139532631
+Undefined Saprotroph	Plant Pathogen	0.8719047948747038	0.8719047948747038
+Wood Saprotroph	Plant Pathogen	0.7761766481980007	0.7761766481980007
+Dung Saprotroph-Nematophagous	Plant Pathogen-Undefined Parasite-Undefined Saprotroph	0.6569328832230872	0.6569328832230872
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Plant Pathogen-Undefined Saprotroph	0.8076549945880982	0.8076549945880982
+Animal Pathogen	Plant Pathogen-Undefined Saprotroph	0.7905921182857979	0.7905921182857979
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Plant Pathogen-Undefined Saprotroph	-0.8367807176672665	0.8367807176672665
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Plant Pathogen-Undefined Saprotroph	0.7001357701341001	0.7001357701341001
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Plant Pathogen-Undefined Saprotroph	0.6919604207813128	0.6919604207813128
+Animal Pathogen-Soil Saprotroph	Plant Pathogen-Undefined Saprotroph	0.678801930282131	0.678801930282131
+Dung Saprotroph-Nematophagous	Plant Pathogen-Undefined Saprotroph	0.6139018477784978	0.6139018477784978
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Plant Pathogen-Undefined Saprotroph	0.6149198350852775	0.6149198350852775
+Dung Saprotroph-Undefined Saprotroph	Plant Pathogen-Undefined Saprotroph	0.733001690057681	0.733001690057681
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Plant Pathogen-Undefined Saprotroph	0.7919183676686401	0.7919183676686401
+Dung Saprotroph-Wood Saprotroph	Plant Pathogen-Undefined Saprotroph	0.7990539797480823	0.7990539797480823
+Endophyte-Plant Pathogen	Plant Pathogen-Undefined Saprotroph	0.6978721786384017	0.6978721786384017
+Epiphyte	Plant Pathogen-Undefined Saprotroph	0.74141678632525565	0.74141678632525565
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Plant Pathogen-Undefined Saprotroph	0.8165234948415805	0.8165234948415805
+Lichenized	Plant Pathogen-Undefined Saprotroph	0.7866997847729699	0.7866997847729699
+Plant Pathogen	Plant Pathogen-Undefined Saprotroph	0.8844930630582798	0.8844930630582798
+Undefined Saprotroph	Plant Pathogen-Undefined Saprotroph	0.7339655650100113	0.7339655650100113
+Animal Pathogen	Plant Pathogen-Wood Saprotroph	0.7965618048902728	0.7965618048902728
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Plant Pathogen-Wood Saprotroph	-0.679157812493639	0.679157812493639
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Plant Pathogen-Wood Saprotroph	0.6162064980639341	0.6162064980639341
+Animal Pathogen-Soil Saprotroph	Plant Pathogen-Wood Saprotroph	0.6442190252557992	0.6442190252557992
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Plant Pathogen-Wood Saprotroph	0.7481531933300185	0.7481531933300185
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Plant Pathogen-Wood Saprotroph	0.6915983509146824	0.6915983509146824
+Ectomycorrhizal	Plant Pathogen-Wood Saprotroph	0.6585970007313714	0.6585970007313714
+Endophyte	Plant Pathogen-Wood Saprotroph	0.6131585847768254	0.6131585847768254
+Epiphyte	Plant Pathogen-Wood Saprotroph	0.7922696794889086	0.7922696794889086
+Lichenized	Plant Pathogen-Wood Saprotroph	0.6991034550309787	0.6991034550309787
+Plant Pathogen	Plant Pathogen-Wood Saprotroph	0.7445737139532631	0.7445737139532631
+Undefined Saprotroph	Plant Pathogen-Wood Saprotroph	0.8415433624050751	0.8415433624050751
+Wood Saprotroph	Plant Pathogen-Wood Saprotroph	0.9002844208373137	0.9002844208373137
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Undefined Saprotroph	0.6915124708995677	0.6915124708995677
+Animal Pathogen	Undefined Saprotroph	0.9175685118891072	0.9175685118891072
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Undefined Saprotroph	-0.805231555833012	0.805231555833012
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Undefined Saprotroph	0.7116119490547071	0.7116119490547071
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Undefined Saprotroph	0.6616996016013652	0.6616996016013652
+Animal Pathogen-Soil Saprotroph	Undefined Saprotroph	0.7520293067052933	0.7520293067052933
+Animal Pathogen-Undefined Saprotroph	Undefined Saprotroph	0.6221936455826014	0.6221936455826014
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Undefined Saprotroph	0.88381351915311	0.88381351915311
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Undefined Saprotroph	0.7945517581381136	0.7945517581381136
+Dung Saprotroph-Wood Saprotroph	Undefined Saprotroph	0.6617195934122626	0.6617195934122626
+Ectomycorrhizal	Undefined Saprotroph	0.81730928936803	0.81730928936803
+Endophyte	Undefined Saprotroph	0.6820064463255362	0.6820064463255362
+Endophyte-Plant Pathogen	Undefined Saprotroph	0.6856987468427617	0.6856987468427617
+Epiphyte	Undefined Saprotroph	0.7830039704593644	0.7830039704593644
+Fungal Parasite-Plant Pathogen-Plant Saprotroph	Undefined Saprotroph	0.6259243921207035	0.6259243921207035
+Lichenized	Undefined Saprotroph	0.8268767799737344	0.8268767799737344
+Plant Pathogen	Undefined Saprotroph	0.8719047948747038	0.8719047948747038
+Plant Pathogen-Undefined Saprotroph	Undefined Saprotroph	0.7339655650100113	0.7339655650100113
+Plant Pathogen-Wood Saprotroph	Undefined Saprotroph	0.8415433624050751	0.8415433624050751
+Wood Saprotroph	Undefined Saprotroph	0.9232436015356319	0.9232436015356319
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Wood Saprotroph	0.6136498897608513	0.6136498897608513
+Animal Pathogen	Wood Saprotroph	0.8398640711832034	0.8398640711832034
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Wood Saprotroph	-0.6988404304404747	0.6988404304404747
+Animal Pathogen-Soil Saprotroph	Wood Saprotroph	0.6596875807636742	0.6596875807636742
+Animal Pathogen-Undefined Saprotroph	Wood Saprotroph	0.6077417945311171	0.6077417945311171
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Wood Saprotroph	0.8135814375932948	0.8135814375932948
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Wood Saprotroph	0.6700730820556084	0.6700730820556084
+Ectomycorrhizal	Wood Saprotroph	0.7329069104347469	0.7329069104347469
+Endophyte	Wood Saprotroph	0.6104961514857954	0.6104961514857954
+Endophyte-Plant Pathogen	Wood Saprotroph	0.6047775106986836	0.6047775106986836
+Epiphyte	Wood Saprotroph	0.7509023716107154	0.7509023716107154
+Lichenized	Wood Saprotroph	0.7534003782526439	0.7534003782526439
+Plant Pathogen	Wood Saprotroph	0.7761766481980007	0.7761766481980007
+Plant Pathogen-Wood Saprotroph	Wood Saprotroph	0.9002844208373137	0.9002844208373137
+Undefined Saprotroph	Wood Saprotroph	0.9232436015356319	0.9232436015356319

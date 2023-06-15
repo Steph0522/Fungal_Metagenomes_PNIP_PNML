@@ -1,0 +1,33 @@
+Var1	Var2	cor	cors
+prop_Pinus	prop_Broadleaf	-0.6036388205712622	0.6036388205712622
+prop_Broadleaf	prop_Pinus	-0.6036388205712622	0.6036388205712622
+mean_coverage_Pinus	prop_Pinus	0.6498170608149492	0.6498170608149492
+total_mean_Height	prop_Arbutus	-0.6013022167885049	0.6013022167885049
+mean_coverage_Arbutus	prop_Arbutus	0.6424508280879031	0.6424508280879031
+mean_coverage_Quercus	prop_Juniperus	0.6149376311893265	0.6149376311893265
+mean_coverage_Juniperus	prop_Juniperus	0.6697093910950922	0.6697093910950922
+prop_Arbutus	total_mean_Height	-0.6013022167885049	0.6013022167885049
+total_mean_coverage	total_mean_Height	0.6752087764228445	0.6752087764228445
+total_mean_Height	total_mean_coverage	0.6752087764228445	0.6752087764228445
+prop_Pinus	mean_coverage_Pinus	0.6498170608149492	0.6498170608149492
+prop_Arbutus	mean_coverage_Arbutus	0.6424508280879031	0.6424508280879031
+prop_Juniperus	mean_coverage_Quercus	0.6149376311893265	0.6149376311893265
+prop_Juniperus	mean_coverage_Juniperus	0.6697093910950922	0.6697093910950922
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	0.6508115415658665	0.6508115415658665
+Endophyte-Plant Pathogen	Animal Pathogen	-0.6074848120573267	0.6074848120573267
+Endophyte-Plant Pathogen-Undefined Saprotroph	Animal Pathogen	0.6342126849475551	0.6342126849475551
+Plant Pathogen	Animal Pathogen	-0.6253901885464676	0.6253901885464676
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	0.6508115415658665	0.6508115415658665
+Plant Pathogen	Animal Pathogen-Undefined Saprotroph	0.6505347079016089	0.6505347079016089
+Animal Pathogen	Endophyte-Plant Pathogen	-0.6074848120573267	0.6074848120573267
+Endophyte-Plant Pathogen-Undefined Saprotroph	Endophyte-Plant Pathogen	-0.853107773378533	0.853107773378533
+Endophyte-Undefined Saprotroph	Endophyte-Plant Pathogen	-0.664425875317286	0.664425875317286
+Plant Pathogen	Endophyte-Plant Pathogen	0.7223445298427018	0.7223445298427018
+Animal Pathogen	Endophyte-Plant Pathogen-Undefined Saprotroph	0.6342126849475551	0.6342126849475551
+Endophyte-Plant Pathogen	Endophyte-Plant Pathogen-Undefined Saprotroph	-0.853107773378533	0.853107773378533
+Plant Pathogen	Endophyte-Plant Pathogen-Undefined Saprotroph	-0.7814857883371772	0.7814857883371772
+Endophyte-Plant Pathogen	Endophyte-Undefined Saprotroph	-0.664425875317286	0.664425875317286
+Animal Pathogen	Plant Pathogen	-0.6253901885464676	0.6253901885464676
+Animal Pathogen-Undefined Saprotroph	Plant Pathogen	0.6505347079016089	0.6505347079016089
+Endophyte-Plant Pathogen	Plant Pathogen	0.7223445298427018	0.7223445298427018
+Endophyte-Plant Pathogen-Undefined Saprotroph	Plant Pathogen	-0.7814857883371772	0.7814857883371772

@@ -1,0 +1,310 @@
+---
+title: "CCA Y RDA"
+author:
+- name: Stephanie Hereira
+  affiliation: Universidad Autónoma de Tlaxcala
+  email: sehereirap@uatx.mx
+date: "`r format(Sys.time(), '%d - %m - %Y')`"
+output:
+  html_document:
+    theme: flatly
+    highlight: kate
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+## Figura 5 y 6
+- Loading packages and data
+```{r, warning=FALSE, message=FALSE}
+library(reshape2)
+library(tidyverse)
+library(picante)
+library(Rmisc)
+library(readxl)
+library(vegan)
+library(qiime2R)
+source("../Code/functions_betadiv.R")
+
+#Environmental data
+metadata_secas<- read_excel("../Data/Metadatos.xlsx", sheet = "secas-marzo")
+fq_secas<- read_excel("../Data/fisicoq.xlsx", sheet = "seca")
+fq_secas2<- read.csv("../Data/fisicoq-la.csv")
+meta_fq_secas<- metadata_secas %>% full_join(fq_secas) 
+meta_fq_secas_all<- metadata_secas %>% full_join(fq_secas) %>% full_join(fq_secas2, by = "SampleID")
+env<-meta_fq_secas_all
+
+metadata<-read_excel("../Data/Metadatos.xlsx") %>% mutate_if(is.numeric, as.factor)
+
+
+# Vegetation data
+veg<- read_tsv("../Data/vegeta.tsv") %>% as.data.frame( ) %>% 
+   select_all(~str_replace(., "prop_", ""))  %>% 
+   select_all(~str_replace(., "mean_", ""))  %>% 
+   select_all(~str_replace(., "coverage_", "cov_")) 
+
+# Metagenomic data
+
+table_single<-read.delim("../Data/table_micop_single.txt") 
+table_paired<-read.delim("../Data/table_micop_paired.txt") 
+table_kraken<-read.delim("../Data/table_fungi_again.txt", 
+                   skip = 1,
+                   row.names = 1, check.names = F) %>% dplyr::select_if(
+                     is.numeric)%>% t() %>% as.data.frame() %>% rownames_to_column(var = "id_sequence") %>% separate(
+                         ., "id_sequence", c(
+                           "kraken", "fungi", 
+                           "id_metagenome", "report", "bracken"), 
+                         sep = "_") %>% dplyr::select(
+                           -kraken, -fungi, -report, -bracken) %>% full_join(
+                           metadata) %>% dplyr::select(-id_sequence:-Transecto, -id_metagenome, -Sites, -id_new, -Names,  -id_fisicoq) %>% column_to_rownames(var = "SampleID") %>% t() %>% as.data.frame() %>% mutate_all(as.numeric)
+
+table_qiime2<-data.frame(read_qza("../Data/clustered_table_filter.qza")$data, 
+                   check.names = F) %>% t() %>% as.data.frame(
+                   ) %>% rownames_to_column(
+                     var = "SampleID") %>% separate(
+                       SampleID, c(
+                         "id_metagenome", "R", "unmap", "Paired"), 
+                       sep = "_")%>% inner_join(
+                         metadata) %>% dplyr::select(
+                           -id_metagenome:-Paired, 
+                           -id_sequence:-id_fisicoq, -Sites, 
+                           -Names) %>% column_to_rownames(
+                             var="SampleID") %>% t(
+                             ) %>% as.data.frame() %>% mutate_all(as.numeric)
+
+
+
+table_qiime2_t<-data.frame(t(table_qiime2), check.names = F)
+table_single_t<-data.frame(t(table_single), check.names = F)
+table_paired_t<-data.frame(t(table_paired), check.names = F)
+table_kraken_t<-data.frame(t(table_kraken), check.names = F)
+```
+
+- Environmental analysis
+```{r, warning=FALSE, message=FALSE}
+#select variables that did not show collinearity and order data
+set.seed(124)
+vars<- c("MO", "Ca", "LIMO", "ARCILLA", "WHC", "Fe", "K", "Mg",
+         "pH", "Cu", "P", "N", "moisture")
+#qiime2
+mm1<-table_qiime2_t %>% rownames_to_column(var = "SampleID") %>% inner_join(
+  env) %>% column_to_rownames(var = "SampleID")
+env1=mm1[,vars]
+#env1=mm1[,c(3149:3159, 3162,  3165,3167)]
+spp1=mm1[,1:3138]
+
+#single
+mm2<-table_single_t %>% rownames_to_column(var = "SampleID") %>% inner_join(
+  env) %>% column_to_rownames(var = "SampleID")
+env2=mm2[,vars]
+spp2=mm2[,1:210]
+
+#paired
+mm3<-table_paired_t %>% rownames_to_column(var = "SampleID") %>% inner_join(
+  env) %>% column_to_rownames(var = "SampleID")
+env3=mm3[,vars]
+spp3=mm3[,1:234]
+
+#kraken
+mm4<-table_kraken_t %>% rownames_to_column(var = "SampleID") %>% inner_join(
+  env) %>% column_to_rownames(var = "SampleID")
+env4=mm4[,vars]
+spp4=mm4[,1:72]
+
+
+# Hellinger transformation
+
+spp_hell1=decostand(spp1, "hell") 
+spp_hell2=decostand(spp2, "hell")
+spp_hell3=decostand(spp3, "hell")
+spp_hell4=decostand(spp4, "hell")
+
+# Compositional tranformation
+#spp_hell1=decostand(otu.single(spp1), "clr", pseudocount=0.5) 
+#spp_hell2=decostand(otu.single(spp2),  "clr", pseudocount=0.5)
+#spp_hell3=decostand(otu.single(spp3),  "clr", pseudocount=0.5)
+#spp_hell4=decostand(otu.single(spp4),  "clr", pseudocount=0.5)
+
+# Transforming environmental data
+envscho<-c("MO", "Ca", "Silt", "WHC", "Fe", "K", "Mg", "pH", "Cu", "Clay", "P", "Humidity", "N")
+envst1=data.frame(scale(env1, scale=T, center=F)) %>% dplyr::rename(Silt=LIMO, Humidity=moisture, Clay=ARCILLA) %>% dplyr::select(all_of(envscho))
+envst2=data.frame(scale(env2, scale=T, center=F))%>% dplyr::rename(Silt=LIMO, Humidity=moisture, Clay=ARCILLA) %>% dplyr::select(all_of(envscho))
+envst3=data.frame(scale(env3, scale=T, center=F))%>% dplyr::rename(Silt=LIMO, Humidity=moisture, Clay=ARCILLA) %>% dplyr::select(all_of(envscho))
+envst4=data.frame(scale(env4, scale=T, center=F))%>% dplyr::rename(Silt=LIMO, Humidity=moisture, Clay=ARCILLA) %>% dplyr::select(all_of(envscho))
+
+# Forward selection procedure
+#accounting for abundance
+cap.env1=capscale(spp_hell1~.,envst1,distance = "bray")
+mod0.env1=capscale(spp_hell1~1,envst1,distance = "bray")
+step.env1=ordistep(mod0.env1,scope = formula(cap.env1))
+cap1<-step.env1$anova %>% mutate(method="QIIME2") #no significants
+meta1<- env1 %>% rownames_to_column(var = "SampleID") %>%  inner_join(metadata)
+
+cap.env2=capscale(spp_hell2~.,envst2,distance = "bray")
+mod0.env2=capscale(spp_hell2~1,envst2,distance = "bray")
+step.env2=ordistep(mod0.env2,scope = formula(cap.env2))
+cap2<-step.env2$anova %>% mutate(method="Single Micop") 
+meta2<- env2 %>% rownames_to_column(var = "SampleID") %>%  inner_join(metadata)
+
+
+cap.env3=capscale(spp_hell3~.,envst3,distance = "bray")
+mod0.env3=capscale(spp_hell3~1,envst3,distance = "bray")
+step.env3=ordistep(mod0.env3,scope = formula(cap.env3))
+cap3<-step.env3$anova %>% mutate(method="Paired Micop") 
+meta3<- env3 %>% rownames_to_column(var = "SampleID") %>%  inner_join(metadata)
+
+cap.env4=capscale(spp_hell4~.,envst4,distance = "bray")
+mod0.env4=capscale(spp_hell4~1,envst4,distance = "bray")
+step.env4=ordistep(mod0.env4,scope = formula(cap.env4))
+cap4<-step.env4$anova %>% mutate(method="Kraken2") 
+meta4<- env4 %>% rownames_to_column(var = "SampleID") %>%  inner_join(metadata)
+
+#compositional
+cap.env1_c=capscale(spp_hell1~.,envst1,distance = "horn")
+mod0.env1_c=capscale(spp_hell1~1,envst1,distance = "horn")
+step.env1_c=ordistep(mod0.env1_c,scope = formula(cap.env1_c))
+cap1_c<-step.env1_c$anova %>% mutate(method="QIIME2")
+
+cap.env2_c=capscale(spp_hell2~.,envst2,distance = "horn")
+mod0.env2_c=capscale(spp_hell2~1,envst2,distance = "horn")
+step.env2_c=ordistep(mod0.env2_c,scope = formula(cap.env2_c))
+cap2_c<-step.env2_c$anova %>% mutate(method="Single Micop") 
+
+cap.env3_c=capscale(spp_hell3~.,envst3,distance = "horn")
+mod0.env3_c=capscale(spp_hell3~1,envst3,distance = "horn")
+step.env3_c=ordistep(mod0.env3_c,scope = formula(cap.env3_c))
+cap3_c<-step.env3_c$anova %>% mutate(method="Paired Micop") 
+
+cap.env4_c=capscale(spp_hell4~.,envst4,distance = "horn")
+mod0.env4_c=capscale(spp_hell4~1,envst4,distance = "horn")
+step.env4_c=ordistep(mod0.env4_c,scope = formula(cap.env4_c))
+cap4_c<-step.env4_c$anova %>% mutate(method="Kraken2")  #no significant
+
+#selecting using cca (no distance)
+vares_cca1 <- cca(spp_hell1 ~., data=envst1)
+envs1<-envfit(vares_cca1 ~ ., data=envst1)$vectors[["pvals"]]%>% as.data.frame() %>% dplyr::select("QIIME2"=".")
+
+vares_cca2 <- cca(spp_hell2 ~., data=envst2)
+envs2<-envfit(vares_cca2 ~ ., data=envst2)$vectors[["pvals"]]%>% as.data.frame() %>% dplyr::select("Single Micop"=".")
+
+vares_cca3 <- cca(spp_hell3 ~.,data=envst3)
+envs3<-envfit(vares_cca3 ~ ., data=envst3)$vectors[["pvals"]]%>% as.data.frame() %>% dplyr::select("Paired Micop"=".")
+
+vares_cca4 <- cca(spp_hell4 ~.,data=envst4)
+envs4<-envfit(vares_cca4 ~ ., data=envst4)$vectors[["pvals"]]%>% as.data.frame() %>% dplyr::select("Kraken2"=".")
+
+envs<- cbind(envs1, envs2, envs3, envs4)
+rownames(envs)
+```
+
+- Vegetation analysis
+
+```{r}
+#qiime2
+mm1= veg %>% inner_join(table_qiime2_t %>%rownames_to_column(var = "SampleID"))
+veg1=mm1[1:15] %>% column_to_rownames(var = "SampleID")
+spp1=mm1[c(1,16:3153)]%>% column_to_rownames(var = "SampleID")
+
+#single
+mm2=veg%>% inner_join(table_single_t %>%rownames_to_column(var = "SampleID") )
+veg2=mm2[1:15] %>% column_to_rownames(var = "SampleID")
+spp2=mm2[c(1,16:225)]%>% column_to_rownames(var = "SampleID")
+
+#paired
+mm3=veg %>% inner_join(table_paired_t %>%rownames_to_column(var = "SampleID") )
+veg3=mm3[1:15] %>% column_to_rownames(var = "SampleID")
+spp3=mm3[c(1,16:249)]%>% column_to_rownames(var = "SampleID")
+
+#kraken
+mm4=veg %>% inner_join(table_kraken_t %>%rownames_to_column(var = "SampleID") )
+veg4=mm2[1:15] %>% column_to_rownames(var = "SampleID")
+spp4=mm4[c(1,16:87)]%>% column_to_rownames(var = "SampleID")
+
+
+# Hellinger transformation
+
+spp_hell1=decostand(spp1, "hell") 
+spp_hell2=decostand(spp2, "hell")
+spp_hell3=decostand(spp3, "hell")
+spp_hell4=decostand(spp4, "hell")
+
+# Compositional tranformation
+#spp_hell1=decostand(otu.single(spp1), "clr", pseudocount=0.5) 
+#spp_hell2=decostand(otu.single(spp2),  "clr", pseudocount=0.5)
+#spp_hell3=decostand(otu.single(spp3),  "clr", pseudocount=0.5)
+#spp_hell4=decostand(otu.single(spp4),  "clr", pseudocount=0.5)
+
+# Transforming environmental data
+vegt1=data.frame(scale(veg1, scale=T, center=F)) 
+vegt2=data.frame(scale(veg2, scale=T, center=F))
+vegt3=data.frame(scale(veg3, scale=T, center=F))
+vegt4=data.frame(scale(veg4, scale=T, center=F))
+
+# Forward selection procedure
+#accounting for abundance
+cap.veg1=capscale(spp_hell1~.,vegt1,distance = "bray")
+mod0.veg1=capscale(spp_hell1~1,vegt1,distance = "bray")
+step.veg1=ordistep(mod0.veg1,scope = formula(cap.veg1))
+cap1v<-step.veg1$anova %>% mutate(method="QIIME2")
+meta1<- veg1 %>% rownames_to_column(var = "SampleID") %>%  inner_join(metadata)
+
+cap.veg2=capscale(spp_hell2~.,vegt2,distance = "bray")
+mod0.veg2=capscale(spp_hell2~1,vegt2,distance = "bray")
+step.veg2=ordistep(mod0.veg2,scope = formula(cap.veg2))
+cap2v<-step.veg2$anova %>% mutate(method="Single Micop") 
+meta2<- veg2 %>% rownames_to_column(var = "SampleID") %>%  inner_join(metadata)
+
+cap.veg3=capscale(spp_hell3~.,vegt3,distance = "bray")
+mod0.veg3=capscale(spp_hell3~1,vegt3,distance = "bray")
+step.veg3=ordistep(mod0.veg3,scope = formula(cap.veg3))
+cap3v<-step.veg3$anova %>% mutate(method="Paired Micop") 
+meta3<- veg3 %>% rownames_to_column(var = "SampleID") %>%  inner_join(metadata)
+
+cap.veg4=capscale(spp_hell4~.,vegt4,distance = "bray")
+mod0.veg4=capscale(spp_hell4~1,vegt4,distance = "bray")
+step.veg4=ordistep(mod0.veg4,scope = formula(cap.veg4))
+cap4v<-step.veg4$anova %>% mutate(method="Kraken2") 
+meta4<- veg4 %>% rownames_to_column(var = "SampleID") %>%  inner_join(metadata)
+
+#horn
+cap.veg1_c=capscale(spp_hell1~.,vegt1,distance = "horn")
+mod0.veg1_c=capscale(spp_hell1~1,vegt1,distance = "horn")
+step.veg1_c=ordistep(mod0.veg1_c,scope = formula(cap.veg1_c))
+cap1_vc<-step.veg1_c$anova %>% mutate(method="QIIME2")
+
+cap.veg2_c=capscale(spp_hell2~.,vegt2,distance = "horn")
+mod0.veg2_c=capscale(spp_hell2~1,vegt2,distance = "horn")
+step.veg2_c=ordistep(mod0.veg2_c,scope = formula(cap.veg2_c))
+cap2_vc<-step.veg2_c$anova %>% mutate(method="Single Micop") 
+
+cap.veg3_c=capscale(spp_hell3~.,vegt3,distance = "horn")
+mod0.veg3_c=capscale(spp_hell3~1,vegt3,distance = "horn")
+step.veg3_c=ordistep(mod0.veg3_c,scope = formula(cap.veg3_c))
+cap3_vc<-step.veg3_c$anova %>% mutate(method="Paired Micop") 
+
+cap.veg4_c=capscale(spp_hell4~.,vegt4,distance = "horn")
+mod0.veg4_c=capscale(spp_hell4~1,vegt4,distance = "horn")
+step.veg4_c=ordistep(mod0.veg4_c,scope = formula(cap.veg4))
+cap4_vc<-step.veg4_c$anova %>% mutate(method="Kraken2") 
+
+#selecting using cca (no distance)
+vares_cca1_veg <- cca(spp_hell1 ~., data=vegt1)
+vegs1<-envfit(vares_cca1_veg ~., data=vegt1)$vectors[["pvals"]]%>% as.data.frame() %>% dplyr::select("QIIME2"=".")
+
+vares_cca2_veg <- cca(spp_hell2 ~., data=vegt2)
+vegs2<-envfit(vares_cca2_veg ~., data=vegt2)$vectors[["pvals"]]%>% as.data.frame() %>% dplyr::select("Single Micop"=".")
+
+vares_cca3_veg <- cca(spp_hell3 ~.,data=vegt3)
+vegs3<-envfit(vares_cca3_veg ~., data=vegt3)$vectors[["pvals"]]%>% as.data.frame() %>% dplyr::select("Paired Micop"=".")
+
+vares_cca4_veg <- cca(spp_hell4 ~.,data=vegt4)
+vegs4<-envfit(vares_cca4_veg ~., data=vegt4)$vectors[["pvals"]]%>% as.data.frame() %>% dplyr::select("Kraken2"=".")
+
+vegs<- cbind(vegs1, vegs2, vegs3, vegs4)
+rownames(vegs)
+
+```
+

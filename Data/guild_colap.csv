@@ -1,0 +1,62 @@
+Guild,QIIME2,SINGLE MICOP,PAIRED MICOP,KRAKEN2
+Ectomycorrhizal,692,2,2,0
+Undefined Saprotroph,105,12,20,8
+Ectomycorrhizal-Undefined Saprotroph,138,0,0,0
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph,56,4,4,0
+Plant Pathogen,20,13,20,11
+Wood Saprotroph,27,10,10,0
+Ectomycorrhizal-Fungal Parasite,39,0,0,0
+Endophyte-Litter Saprotroph-Soil Saprotroph-Undefined Saprotroph,28,0,0,0
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph,21,2,2,0
+Animal Pathogen,5,8,9,1
+Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph,19,0,0,0
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph,11,3,4,0
+Undefined Saprotroph-Undefined Symbiotroph,17,0,0,0
+Ericoid Mycorrhizal,15,0,0,0
+Lichenized,7,2,2,0
+Plant Pathogen-Undefined Saprotroph,7,1,1,1
+Endophyte-Plant Pathogen,0,4,5,1
+Ectomycorrhizal-Undefined Saprotroph-Wood Saprotroph,9,0,0,0
+Animal Pathogen-Plant Pathogen-Undefined Saprotroph,6,1,1,0
+Ectomycorrhizal-Fungal Parasite-Plant Saprotroph-Wood Saprotroph,8,0,0,0
+Endophyte-Plant Pathogen-Wood Saprotroph,8,0,0,0
+Plant Saprotroph-Wood Saprotroph,8,0,0,0
+Animal Pathogen-Soil Saprotroph,0,4,4,0
+Arbuscular Mycorrhizal,7,0,0,0
+Endophyte,3,2,1,0
+Endophyte-Plant Pathogen-Undefined Saprotroph,5,0,0,1
+Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph,0,1,2,3
+Dung Saprotroph-Plant Saprotroph,5,0,0,0
+Soil Saprotroph,5,0,0,0
+Endophyte-Insect Pathogen,4,0,0,0
+Endophyte-Lichen Parasite-Plant Pathogen-Undefined Saprotroph,4,0,0,0
+Fungal Parasite,2,1,1,0
+Animal Pathogen-Undefined Saprotroph,0,1,2,1
+Dung Saprotroph,3,0,0,0
+Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph,0,1,1,1
+Animal Pathogen-Endophyte-Lichen Parasite-Plant Pathogen-Soil Saprotroph-Wood Saprotroph,0,3,0,0
+Algal Parasite-Bryophyte Parasite-Fungal Parasite-Undefined Saprotroph,2,0,0,0
+Endophyte-Litter Saprotroph-Wood Saprotroph,2,0,0,0
+Lichenized-Undefined Saprotroph,2,0,0,0
+Orchid Mycorrhizal,2,0,0,0
+Animal Endosymbiont-Animal Pathogen-Endophyte-Plant Pathogen-Undefined Saprotroph,0,1,1,0
+Dung Saprotroph-Nematophagous,0,1,1,0
+Dung Saprotroph-Plant Saprotroph-Wood Saprotroph,0,1,1,0
+Dung Saprotroph-Undefined Saprotroph,0,1,1,0
+Dung Saprotroph-Wood Saprotroph,0,1,1,0
+Epiphyte,0,1,1,0
+Fungal Parasite-Plant Pathogen-Plant Saprotroph,0,1,1,0
+Plant Pathogen-Undefined Parasite-Undefined Saprotroph,0,1,1,0
+Plant Pathogen-Wood Saprotroph,0,1,1,0
+Endophyte-Undefined Saprotroph,0,0,0,2
+Algal Parasite--Leaf Saprotroph-Wood Saprotroph,1,0,0,0
+Dung Saprotroph-Soil Saprotroph,1,0,0,0
+Ectomycorrhizal-Wood Saprotroph,1,0,0,0
+Fungal Parasite-Lichen Parasite,1,0,0,0
+Animal Pathogen-Endophyte-Ericoid Mycorrhizal-Plant Pathogen-Wood Saprotroph,0,1,0,0
+Animal Pathogen-Endophyte-Plant Pathogen-Wood Saprotroph,0,1,0,0
+Dung Saprotroph-Endophyte-Litter Saprotroph-Undefined Saprotroph,0,1,0,0
+Epiphyte-Plant Pathogen-Wood Saprotroph,0,1,0,0
+Animal Endosymbiont-Undefined Saprotroph,0,0,0,1
+Total,1296,88,100,31
+Percentage of all,41.3,41.9,42.7,43.1

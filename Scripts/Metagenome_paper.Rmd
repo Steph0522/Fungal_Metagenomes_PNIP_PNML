@@ -1,0 +1,46 @@
+---
+title: "Metagenomic analysis of the diversity and composition of the fungal communities of forest soils of the transect Iztaccíhuatl-Popocatépetl (PNIP) and La Malinche (PNLM)"
+author:
+- name: Stephanie Hereira-Pacheco
+  affiliation: Universidad Autónoma de Tlaxcala
+  email: sehereirap@uatx.mx
+date: "`r format(Sys.time(), '%d - %m - %Y')`"
+output:
+  html_document:
+    theme: flatly
+    highlight: kate
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+```{r child = './Figure1_maps_MOD.Rmd'}
+```
+
+
+```{r child = './Figure2_heatmap_final.Rmd'}
+```
+
+```{r child = './Figure3_FINAL.Rmd'}
+```
+
+```{r child = './Figure4andS3_pcoas.Rmd'}
+```
+
+
+```{r child = './Figure5_spatial.Rmd'}
+```
+
+```{r child = './Figure6and7_cca_rda.Rmd'}
+```
+
+```{r child = './FigureS1_alpha.Rmd'}
+```
+
+```{r child = './FigureS5andS6.Rmd'}
+```
+
+```{r child = './FigureS7_corplot.Rmd'}
+```

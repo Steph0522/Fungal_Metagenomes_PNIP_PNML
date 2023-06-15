@@ -29,6 +29,10 @@ library(ggpubr)
 
 - Loading data
 ```{r, warning=FALSE, message=FALSE}
+scaleFUN <- function(x) sprintf("%.1f", x)
+scaleFUN0 <- function(x) sprintf("%.0f", x)
+scaleFUN2 <- function(x) sprintf("%.2f", x)
+
 metadata<-read_excel("../Data/Metadatos.xlsx") %>% mutate_if(is.numeric, as.factor)
 table_single_micop<- read.delim("../Data/table_micop_single.txt") 
 table_paired_micop<- read.delim("../Data/table_micop_paired.txt")
@@ -131,7 +135,7 @@ aq0<- ggboxplot(alphadiv_qiime2_q0,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.title.x = element_blank())+ scale_y_continuous(labels=scaleFUN)
 
 aq1<- ggboxplot(alphadiv_qiime2_q1, 
                 x = "Sites", y = "value", fill = "Sites", facet.by = "order") + stat_compare_means(label.y = 62, label = "p.format")+
@@ -147,7 +151,7 @@ aq1<- ggboxplot(alphadiv_qiime2_q1,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 aq2<- ggboxplot(alphadiv_qiime2_q2 %>% mutate(methods="QIIME 2"), 
                 x = "Sites", y = "value", fill = "Sites", facet.by = "order") +
@@ -165,7 +169,7 @@ aq2<- ggboxplot(alphadiv_qiime2_q2 %>% mutate(methods="QIIME 2"),
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 qiime2al<-cowplot::plot_grid(aq0, aq1, aq2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
 ```
@@ -192,7 +196,7 @@ as0<- ggboxplot(alphadiv_single_micop_q0,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.title.x = element_blank())+ scale_y_continuous(labels=scaleFUN)
 
 as1<- ggboxplot(alphadiv_single_micop_q1, 
                 x = "Sites", y = "value", fill = "Sites") +
@@ -209,7 +213,7 @@ as1<- ggboxplot(alphadiv_single_micop_q1,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 as2<- ggboxplot(alphadiv_single_micop_q2 %>% mutate(methodS="SINGLE MICOP"), x = "Sites", y = "value", fill = "Sites") +
   facet_grid( rows= vars(methodS))+
@@ -226,7 +230,7 @@ as2<- ggboxplot(alphadiv_single_micop_q2 %>% mutate(methodS="SINGLE MICOP"), x =
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 singleal<-cowplot::plot_grid(as0, as1, as2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
 ```
@@ -243,7 +247,7 @@ ap0<- ggboxplot(alphadiv_paired_micop_q0,
                 x = "Sites", y = "value", fill = "Sites") +
     stat_compare_means(label.y = 195, label.x = 1.5, label = "p.format")+
   theme_linedraw()+theme(legend.position = "none", 
-                         axis.title = element_blank(),
+                         axis.title.x = element_blank(),
                          axis.text.x = element_blank(),
                          axis.ticks.x = element_blank(),
                          
@@ -255,11 +259,14 @@ ap0<- ggboxplot(alphadiv_paired_micop_q0,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+ylab("Efective number of features")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0),colour = "black", size = 12))+ scale_y_continuous(labels=scaleFUN)
+
+ap0
+
 ap1<- ggboxplot(alphadiv_paired_micop_q1, 
                 x = "Sites", y = "value", fill = "Sites") +
  stat_compare_means(label.y = 9,label.x = 3, label = "p.format")+
-  theme_linedraw()+theme(legend.position = "none", 
+  theme_linedraw()+theme(legend.position = "top", 
                          axis.title = element_blank(),
                          axis.text.x = element_blank(),
                          axis.ticks.x = element_blank(),
@@ -272,7 +279,8 @@ ap1<- ggboxplot(alphadiv_paired_micop_q1,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+guides(fill=guide_legend(nrow =1))+
+  theme(legend.text =element_text(size = 14), legend.title = element_text(size = 18))
 
 ap2<- ggboxplot(alphadiv_paired_micop_q2 %>% mutate(methodS="PAIRED MICOP"), x = "Sites", y = "value", fill = "Sites") +
   facet_grid(rows = vars(methodS))+
@@ -290,7 +298,7 @@ ap2<- ggboxplot(alphadiv_paired_micop_q2 %>% mutate(methodS="PAIRED MICOP"), x =
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 pairedal<-cowplot::plot_grid(ap0, ap1, ap2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
 ```
@@ -317,7 +325,7 @@ af0<- ggboxplot(alphadiv_fungi_q0,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.title.x = element_blank())+ scale_y_continuous(labels=scaleFUN2)+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
 af1<- ggboxplot(alphadiv_fungi_q1, 
                 x = "Sites", y = "value", fill = "Sites") +
@@ -333,7 +341,7 @@ af1<- ggboxplot(alphadiv_fungi_q1,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
 af2<- ggboxplot(alphadiv_fungi_q2 %>% mutate(methodS="KRAKEN2"), 
                 x = "Sites", y = "value", fill = "Sites") +
@@ -350,7 +358,7 @@ af2<- ggboxplot(alphadiv_fungi_q2 %>% mutate(methodS="KRAKEN2"),
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")
+  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
 pairedfungi<-cowplot::plot_grid(af0, af1, af2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
 ```
@@ -358,19 +366,24 @@ pairedfungi<-cowplot::plot_grid(af0, af1, af2, ncol = 3, align = "h", rel_widths
 
 - Joinning plots
 ```{r, warning=FALSE, message=FALSE, fig.height=10, fig.width=14}
-
+leg<- get_legend(ap1)
 all<- cowplot::plot_grid(aq0, aq1, aq2,
                          as0, as1, as2,
-                         ap0, ap1, ap2, 
-                         af0, af1, af2, align = "hv", 
+                         ap0, ap1+theme(legend.position = "none"), ap2, 
+                         af0, af1, af2, 
                          labels = c("a)", "b)", "c)",
                                     "d)", "e)", "f)",
                                     "g)", "h)", "i)", 
                                     "j)", "k)", "l)"), 
-                         scale = 0.9, nrow = 4, ncol = 3)
+                         scale = 1, nrow = 4, ncol = 3,
+                         label_y = 1,label_x =0.05,
+                   label_size = 14, hjust = -0.2, align = "hv")
 
 all
-#ggsave("Figures_final/Fig1.exploratory_alpha_final.png",width = 15, height = 10, dpi = 300, plot = all, device = "png")
+
+all2<- cowplot::plot_grid(leg, all, nrow = 2, rel_heights = c(0.1,1))
+all2
+ggsave("Fig1.exploratory_alpha_final2.png",width = 12, height = 10, dpi = 300, plot = all2, device = "png")
 
 
 ```

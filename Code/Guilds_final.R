@@ -1,10 +1,14 @@
 library(readxl)
 library(tidyverse)
 library(ggpubr)
-#Guilds
+## Guilds
 metadata<-read_excel("Data/Metadatos.xlsx") %>% mutate_if(is.numeric, as.factor)
 guild_colors<- read_tsv("colors_guild")
 trophic_colors<- read_tsv("colors_trophic")
+
+# fisrt -------------------------------------------------------------------
+
+
 
   
 names_col<- read.delim(

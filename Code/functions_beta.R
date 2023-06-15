@@ -67,11 +67,11 @@ bc.dist.tidy.filter <-function(bc.dist){
     inner_join(map, by = c("SampleID.y" = "SampleID")) %>% 
     filter(!is.na(value)) %>% dplyr::rename(Distance=value)
   
-  
-  
-  b.dist.filt <- bc.dist.tidy %>% 
+    b.dist.filt <- bc.dist.tidy %>% 
     filter(Distance > 0)  %>% 
-    full_join(distance_dm) %>% dplyr::rename(SpatialDistance = value) %>% 
+    full_join(distance_dm) %>% dplyr::rename(SpatialDistance = value)  %>% 
+      full_join(nut.dist.tidy) %>% 
+      full_join(nut.dist.tidy2) %>% 
     mutate(Similarity = 1 - Distance)
   return(b.dist.filt)
 }
@@ -85,14 +85,17 @@ bc.dist.tidy.filter.hill <-function(bc.dist){
     inner_join(map, by = c("SampleID.x" = "SampleID")) %>% 
     inner_join(map, by = c("SampleID.y" = "SampleID")) %>% 
     filter(!is.na(value)) %>% dplyr::rename(Distance=value)
-  
-  b.dist.filt <- bc.dist.tidy %>% 
+   
+     b.dist.filt <- bc.dist.tidy %>% 
     filter(Distance > 0)  %>% 
     full_join(distance_dm) %>% dplyr::rename(SpatialDistance = value) %>% 
     full_join(nut.dist.tidy) %>% 
+    full_join(nut.dist.tidy2) %>% 
     mutate(Similarity = 1 - Distance)
   return(b.dist.filt)
 }
+
+
 
 overlap_function<- function(otu){
   #Generate presence/absence OTU table
@@ -126,7 +129,7 @@ pcoa_plot<-function(pca){
     aes(x = x, y = y, label=Group), 
     label.padding = unit(0.15, "lines"),label.size = 0.4,
   )+guides(
-    color=guide_legend(title="Sites", nrow = 1))+theme_linedraw() +
+    color=guide_legend(title="Sites"))+theme_linedraw() +
     geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
     geom_hline(yintercept = 0, linetype = 2) +
     theme_linedraw()+
@@ -138,8 +141,8 @@ pcoa_plot<-function(pca){
           axis.title = element_text(colour = "black", size = 12),
           legend.text = element_text(size = 10),
           legend.title = element_text(size = 12), 
-          legend.position = "top", 
-          legend.box = "horizontal",
+          legend.position = "right", 
+          legend.box = "vertical",
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank())
           #  plot.margin = margin(t = 0,  # Top margin
@@ -168,11 +171,29 @@ cor.b <- function(x){
   cor.test(x$SpatialDistance,x$Similarity, method= "pearson", alternative = "two.sided") %>% tidy()
 }
 cor.e <- function(x){
-  cor.test(x$EucDist,x$Similarity) %>% tidy()
+  cor.test(x$EucDistenv,x$Similarity) %>% tidy()
+}
+cor.v <- function(x){
+  cor.test(x$EucDistveg,x$Similarity) %>% tidy()
+}
+
+cor.env <- function(x){
+  cor.test(x$SpatialDistance,x$EucDistenv, method= "pearson", alternative = "two.sided") %>% tidy()
+}
+cor.veg <- function(x){
+  cor.test(x$SpatialDistance,x$EucDistveg, method= "pearson", alternative = "two.sided") %>% tidy()
+}
+cor.both <- function(x){
+  cor.test(x$EucDistenv,x$EucDistveg, method= "pearson", alternative = "two.sided") %>% tidy()
 }
 
 lm.b <- function(x){lm(Similarity ~ SpatialDistance, data = x) %>% tidy() %>% filter(term == "SpatialDistance")}
-lm.e <- function(x){lm(Similarity ~ EucDist, data = x) %>% tidy() %>% filter(term == "EucDist")}
+lm.e <- function(x){lm(Similarity ~ EucDistenv, data = x) %>% tidy() %>% filter(term == "EucDistenv")}
+lm.v <- function(x){lm(Similarity ~ EucDistveg, data = x) %>% tidy() %>% filter(term == "EucDistveg")}
+
+lm.env <- function(x){lm(EucDistenv~SpatialDistance , data = x) %>% tidy() %>% filter(term == "SpatialDistance")}
+lm.veg <- function(x){lm(EucDistveg~SpatialDistance  , data = x) %>% tidy() %>% filter(term == "SpatialDistance")}
+lm.both <- function(x){lm( EucDistenv ~ EucDistveg, data = x) %>% tidy() %>% filter(term == "EucDistveg")}
 
 
 distance.plot <- function(x){
@@ -215,7 +236,7 @@ distance.plot1 <- function(x){
     geom_point(shape = 16, size = 1, alpha = 0.5, color = "#566573") +
     geom_smooth(method = "lm", color = "black", se = F) +
     xlab("Enviromental distance") +
-    ylab("Bray-curtis similarity") +
+    ylab("Similarity") +
     ylim(.2, max.sim) +
     xlim(0,8)+
     theme_linedraw()+theme(legend.position = "none", 

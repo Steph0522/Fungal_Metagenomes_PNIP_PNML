@@ -6,11 +6,13 @@ library(data.table)
 library(tidyverse)
 library(readxl)
 library(qiime2R)
-source("Code/functions_compositional.R")
+source("Code/functions_beta.R")
+source("Code/funciones_compositional.R")
 #source("Code/selecting_vars.R")
 library(RColorBrewer)
 n <- 30
 taxones_color<- read_csv("taxones_color.csv")
+set.seed(123)
 #load and format files
 metadata<-read_excel("Data/Metadatos.xlsx") %>% mutate_if(
   is.numeric, as.factor) %>% mutate_if(is.character, as.factor) %>% mutate(
@@ -53,6 +55,9 @@ table_qiime2<- data.frame(
             meta) %>% dplyr::select(
                                     -id_metagenome:-Paired, -id_sequence:-id_fisicoq, -Sites, -Names, -Pol, -Site) %>% column_to_rownames(
                                       var="SampleID") %>% t() %>% as.data.frame() %>% mutate_all(as.numeric)
+
+
+
 table_fungi<- read.delim("Data/table_fungi_again.txt", 
                          skip = 1, row.names = 1, check.names = F) %>% dplyr::select_if(
                            is.numeric)%>% t() %>% as.data.frame() %>% rownames_to_column(
@@ -62,6 +67,10 @@ table_fungi<- read.delim("Data/table_fungi_again.txt",
       metadata) %>% dplyr::select(-id_sequence:-Transecto, -id_metagenome, -Sites, -id_new, -Names, -Pol, -Site, -id_fisicoq) %>% column_to_rownames(
         var = "SampleID") %>% t() %>% as.data.frame() %>% mutate_all(as.numeric)
 
+table_qiime2_s<- otu.single(table_qiime2)
+table_fungi_s<- otu.single(table_fungi)
+table_single_micop_s<- otu.single(table_single_micop)
+table_paired_micop_s<- otu.single(table_paired_micop)
 
 taxonomy_qiime2<- data.frame(read_qza("Data/taxonomy_blast_dfc_0.98.qza")$data, check.names = F) %>% dplyr::select(Feature.ID,Taxon)
 taxonomy_single_micop<- read.delim("Data/table_micop_single.txt") %>% rownames_to_column(var = "Feature.ID") %>% dplyr::select(Feature.ID) %>% mutate(Taxon=Feature.ID)
@@ -86,10 +95,11 @@ barplot_fungi<- barplot_genus(table_fungi, taxonomy_fungi, metadata)+ggtitle("KR
 
 
 #transform clr data
-clr_qiime2<- transform_clr(table_qiime2)
+set.seed(126)
+clr_qiime2<- transform_clr(table_qiime2_s)
 clr_micop_single<- transform_clr(table_single_micop)
-clr_micop_paired<- transform_clr(table_paired_micop)
-clr_fungi<- transform_clr(table_fungi)
+clr_micop_paired<- transform_clr(table_paired_micop_s)
+clr_fungi<- transform_clr(table_fungi_s)
 
 #permanova's
 perm_qiime2<- permanova_compo(clr_qiime2, meta)
@@ -196,5 +206,5 @@ pcas_plot<- plot_grid(pcas, legd, ncol = 2, rel_widths = c(1,0.1), align = "hv")
 
 ggsave("barplots_v.tiff",width = 14, height =12, plot = barplot2, device = "tiff")
 
-ggsave("pcas.png",width = 10, height =7.5, dpi = 300, plot = pcas_plot, device = "png")
+ggsave("pcas_final.png",width = 10, height =7.5, dpi = 300, plot = pcas_plot, device = "png")
 

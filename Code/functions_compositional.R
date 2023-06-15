@@ -1,5 +1,5 @@
 #functions
-taxones_color<- read.delim("taxones_color.csv",sep = ",")
+taxones_color<- read.delim("Data/taxones_color.csv",sep = ",")
 
 
 relabunda<- function(x){(as.data.frame(t(t(x)/colSums(x)))*100)}
@@ -28,7 +28,7 @@ barplot_genus<- function(tab, taxonomy, metadata){
   
 barplot_genus<- table_genus %>% inner_join(metadata) %>% ggplot(
       aes(SampleID, relab, fill=Taxon)) +geom_col() +facet_nested(
-        .~Sites, scales = "free_x")+#scale_fill_manual(
+        .~Pol, scales = "free_x")+#scale_fill_manual(
           #values=col_vector)+
   theme_linedraw()+scale_x_discrete(
             labels=rep(1:3,12))+ylab("Relative abundance (%)")+
@@ -73,7 +73,7 @@ names(col) <- as.character(cols$Taxon)
 
 barplot_genus<- table_genus %>% inner_join(metadata) %>% inner_join(taxones_color) %>% ggplot(
       aes(SampleID, relab, fill=Taxon)) +geom_col() +facet_nested(
-        .~Sites, scales = "free_x")+#scale_fill_manual(
+        .~Pol, scales = "free_x")+#scale_fill_manual(
           #values=col_vector)+
   theme_linedraw()+scale_x_discrete(
             labels=rep(1:3,12))+ylab("Relative abundance (%)")+

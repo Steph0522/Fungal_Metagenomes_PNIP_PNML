@@ -1,0 +1,234 @@
+gen	Guild	Trophic Mode
+Absidia	Undefined Saprotroph	Saprotroph
+Agaricaceae	Undefined Saprotroph	Saprotroph
+Albatrellaceae	Ectomycorrhizal-Undefined Saprotroph	Saprotroph-Symbiotroph
+Amanita	Ectomycorrhizal-Undefined Saprotroph	Saprotroph-Symbiotroph
+Amphinema	Ectomycorrhizal	Symbiotroph
+Anthracocystis	Plant Pathogen	Pathotroph
+Apodus	Undefined Saprotroph	Saprotroph
+Arthrobotrys	Dung Saprotroph-Nematophagous	Saprotroph
+Arthroderma	Animal Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph
+Arxiella	Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph
+Ascoideaceae	Wood Saprotroph	Saprotroph
+Asterostroma	Undefined Saprotroph	Saprotroph
+Astraeus	Ectomycorrhizal	Symbiotroph
+Basidioascus	Undefined Saprotroph	Saprotroph
+Beauveria	Animal Pathogen	Pathotroph
+Bionectriaceae	Algal Parasite-Bryophyte Parasite-Fungal Parasite-Undefined Saprotroph	Pathotroph-Saprotroph
+Bipolaris	Plant Pathogen	Pathotroph
+Blastomyces	Animal Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph
+Boletaceae	Ectomycorrhizal-Fungal Parasite-Plant Saprotroph-Wood Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Boletus	Ectomycorrhizal-Fungal Parasite	Pathotroph-Symbiotroph
+Botryosphaeriaceae	Endophyte-Plant Pathogen-Wood Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Botrytis	Plant Pathogen	Pathotroph
+Byssochlamys	Undefined Saprotroph	Saprotroph
+Cadophora	Endophyte	Symbiotroph
+Caliciaceae	Lichenized	Pathotroph-Saprotroph-Symbiotroph
+Calocera	Wood Saprotroph	Saprotroph
+Candida	Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Capronia	Endophyte	Symbiotroph
+Cenococcum	Ectomycorrhizal	Symbiotroph
+Cercospora	Plant Pathogen	Pathotroph
+Chaetosphaeria	Endophyte-Litter Saprotroph-Wood Saprotroph	Saprotroph-Symbiotroph
+Chalara	Endophyte-Plant Pathogen-Wood Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Cirrenalia	Undefined Saprotroph	Saprotroph
+Cladophialophora	Undefined Saprotroph	Saprotroph
+Clarireedia	Plant Pathogen	Pathotroph
+Claroideoglomus	Arbuscular Mycorrhizal	Symbiotroph
+Clavaria	Undefined Saprotroph	Saprotroph
+Clavariaceae	Lichenized-Undefined Saprotroph	Saprotroph-Symbiotroph
+Clavulina	Ectomycorrhizal	Symbiotroph
+Clavulinopsis	Undefined Saprotroph	Saprotroph
+Clitocybe	NULL	Pathotroph-Saprotroph
+Clonostachys	Plant Pathogen	Pathotroph
+Coccidioides	Animal Pathogen-Soil Saprotroph	Pathotroph-Saprotroph
+Colletotrichum	Endophyte-Plant Pathogen	Pathotroph-Symbiotroph
+Coniophora	Wood Saprotroph	Saprotroph
+Coprinellus	Undefined Saprotroph	Saprotroph
+Cortinariaceae	Ectomycorrhizal	Symbiotroph
+Cortinarius	Ectomycorrhizal	Symbiotroph
+Craterellus	Ectomycorrhizal	Symbiotroph
+Cuphophyllus	Undefined Saprotroph-Undefined Symbiotroph	Saprotroph-Symbiotroph
+Cytospora	Endophyte-Plant Pathogen-Wood Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Dactylellina	Undefined Saprotroph	Saprotroph
+Debaryomyces	Undefined Saprotroph	Saprotroph
+Dichomitus	Wood Saprotroph	Saprotroph
+Dictyosporiaceae	Undefined Saprotroph	Saprotroph
+Didymella	Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph
+Didymosphaeriaceae	Endophyte-Lichen Parasite-Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Diplotomma	Lichenized	Symbiotroph
+Elaphomyces	Ectomycorrhizal	Symbiotroph
+Endocarpon	Lichenized	Symbiotroph
+Eremothecium	Plant Pathogen	Pathotroph
+Eutypa	Plant Pathogen	Pathotroph
+Fibroporia	Wood Saprotroph	Saprotroph
+Fomitiporia	Plant Pathogen-Wood Saprotroph	Pathotroph-Saprotroph
+Fonsecaea	Animal Pathogen-Soil Saprotroph	Pathotroph-Saprotroph
+Gaeumannomyces	Plant Pathogen	Pathotroph
+Gautieria	Ectomycorrhizal	Symbiotroph
+Geastrum	Undefined Saprotroph	Saprotroph
+Geminibasidium	Undefined Saprotroph	Saprotroph
+Genea	Ectomycorrhizal	Symbiotroph
+Geoglossaceae	Undefined Saprotroph	Saprotroph
+Geoglossum	Undefined Saprotroph	Saprotroph
+Geopora	Ectomycorrhizal	Symbiotroph
+Glarea	Undefined Saprotroph	Saprotroph
+Gloeophyllum	Wood Saprotroph	Saprotroph
+Glomeraceae	Arbuscular Mycorrhizal	Symbiotroph
+Glomeromycota	Arbuscular Mycorrhizal	Symbiotroph
+Glutinoglossum	Undefined Saprotroph	Saprotroph
+Gomphaceae	Ectomycorrhizal-Undefined Saprotroph-Wood Saprotroph	Saprotroph-Symbiotroph
+Grosmannia	Plant Pathogen	Pathotroph
+Gymnomyces	Ectomycorrhizal	Symbiotroph
+Haptocillium	Animal Pathogen	Pathotroph
+Harzia	Undefined Saprotroph	Saprotroph
+Hebeloma	Ectomycorrhizal	Symbiotroph
+Helvella	Ectomycorrhizal	Symbiotroph
+Herpotrichiellaceae	Animal Pathogen-Fungal Parasite-Undefined Saprotroph	Pathotroph-Saprotroph
+Heterobasidion	Wood Saprotroph	Saprotroph
+Histoplasma	Undefined Saprotroph	Saprotroph
+Hyaloscyphaceae	Plant Saprotroph-Wood Saprotroph	Saprotroph
+Hydnangiaceae	Ectomycorrhizal	Symbiotroph
+Hydnellum	Ectomycorrhizal	Symbiotroph
+Hydnobolites	Ectomycorrhizal	Symbiotroph
+Hygrocybe	Undefined Saprotroph-Undefined Symbiotroph	Saprotroph-Symbiotroph
+Hygrophoraceae	Ectomycorrhizal-Undefined Saprotroph	Saprotroph-Symbiotroph
+Hygrophorus	Ectomycorrhizal	Symbiotroph
+Hymenochaetaceae	Ectomycorrhizal-Wood Saprotroph	Saprotroph-Symbiotroph
+Hypomyces	Fungal Parasite	Pathotroph
+Hysterangium	Ectomycorrhizal	Symbiotroph
+Ilyonectria	Plant Pathogen	Pathotroph
+Inocybaceae	Ectomycorrhizal	Symbiotroph
+Inocybe	Ectomycorrhizal	Symbiotroph
+Isaria	Animal Pathogen	Pathotroph
+Kluyveromyces	Endophyte-Undefined Saprotroph	Saprotroph-Symbiotroph
+Kockovaella	Epiphyte	Symbiotroph
+Laccaria	Ectomycorrhizal	Symbiotroph
+Lactarius	Ectomycorrhizal	Symbiotroph
+Lasiosphaeriaceae	Undefined Saprotroph	Saprotroph
+Lentinus	Wood Saprotroph	Saprotroph
+Leotia	Undefined Saprotroph	Saprotroph
+Lepiota	Soil Saprotroph	Saprotroph
+Leptosphaeria	Plant Pathogen	Pathotroph
+Lobosporangium	Undefined Saprotroph	Saprotroph
+Lophiostoma	Undefined Saprotroph	Saprotroph
+Madurella	Animal Pathogen	Pathotroph
+Magnaporthaceae	Plant Pathogen	Pathotroph
+Magnaporthe	Plant Pathogen	Pathotroph
+Malassezia	Animal Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph
+Marasmiaceae	Endophyte-Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Marasmius	Endophyte-Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Marssonina	Plant Pathogen	Pathotroph
+Melampsora	Plant Pathogen	Pathotroph
+Melanommataceae	Wood Saprotroph	Saprotroph
+Membranomyces	Ectomycorrhizal	Symbiotroph
+Metarhizium	Animal Pathogen	Pathotroph
+Moesziomyces	Plant Pathogen	Pathotroph
+Mortierella	Endophyte-Litter Saprotroph-Soil Saprotroph-Undefined Saprotroph	Saprotroph-Symbiotroph
+Mycena	Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph	Pathotroph-Saprotroph
+Mycosphaerellaceae	Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph
+Neofusicoccum	Plant Pathogen	Pathotroph
+Neonectria	Plant Pathogen	Pathotroph
+Neurospora	Undefined Saprotroph	Saprotroph
+Oidiodendron	Ericoid Mycorrhizal	Pathotroph-Symbiotroph
+Oliveonia	Undefined Saprotroph	Saprotroph
+Omphalotaceae	Wood Saprotroph	Saprotroph
+Onygenaceae	Dung Saprotroph-Soil Saprotroph	Saprotroph
+Ophiocordyceps	Endophyte-Insect Pathogen	Pathotroph-Symbiotroph
+Ophiosphaerella	Undefined Saprotroph	Saprotroph
+Paracoccidioides	Undefined Saprotroph	Saprotroph
+Penicillium	Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph	Saprotroph
+Pestalotiopsis	Plant Pathogen	Pathotroph
+Pezicula	Endophyte-Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph
+Phaeoacremonium	Plant Pathogen	Pathotroph
+Phaeosphaeria	Undefined Saprotroph	Saprotroph
+Phaeosphaeriaceae	Fungal Parasite-Plant Pathogen-Plant Saprotroph	Pathotroph-Saprotroph
+Phaeothecoidea	Undefined Saprotroph	Saprotroph
+Phanerochaete	Wood Saprotroph	Saprotroph
+Phialocephala	Endophyte	Symbiotroph
+Phycomyces	Undefined Saprotroph	Saprotroph
+Physalacriaceae	Algal Parasite--Leaf Saprotroph-Wood Saprotroph	Pathotroph-Saprotroph
+Pichia	Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Pilidium	Plant Pathogen	Pathotroph
+Piloderma	Ectomycorrhizal	Symbiotroph
+Piptocephalis	Fungal Parasite	Pathotroph
+Plectania	Undefined Saprotroph	Saprotroph
+Pleurotus	Endophyte-Plant Pathogen-Wood Saprotroph	Pathotroph-Saprotroph
+Pneumocystis	Animal Pathogen	Pathotroph
+Pochonia	Animal Pathogen	Pathotroph
+Polyporus	Wood Saprotroph	Saprotroph
+Postia	Wood Saprotroph	Saprotroph
+Psathyrella	Wood Saprotroph	Saprotroph
+Psathyrellaceae	Dung Saprotroph-Plant Saprotroph-Wood Saprotroph	Saprotroph
+Pseudeurotiaceae	Plant Saprotroph-Wood Saprotroph	Saprotroph
+Pseudocercospora	Plant Pathogen	Pathotroph
+Pseudocraterellus	Ectomycorrhizal	Symbiotroph
+Pucciniaceae	Plant Pathogen	Pathotroph
+Punctularia	Undefined Saprotroph	Saprotroph
+Purpureocillium	Fungal Parasite	Pathotroph
+Pyrenophora	Plant Pathogen	Pathotroph
+Pyricularia	Plant Pathogen	Pathotroph
+Pyronema	Undefined Saprotroph	Saprotroph
+Ramicandelaber	Undefined Saprotroph	Saprotroph
+Rasamsonia	Undefined Saprotroph	Saprotroph
+Rhizophlyctis	Undefined Saprotroph	Saprotroph
+Rhizopogon	Ectomycorrhizal	Symbiotroph
+Rhizosphaera	Plant Pathogen	Pathotroph
+Rhodocollybia	Undefined Saprotroph	Saprotroph
+Rhodotorula	Animal Endosymbiont-Animal Pathogen-Endophyte-Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph
+Ripartites	Undefined Saprotroph	Saprotroph
+Russula	Ectomycorrhizal	Symbiotroph
+Russulaceae	Ectomycorrhizal	Symbiotroph
+Saccharomyces	Undefined Saprotroph	Saprotroph
+Sagenomella	Undefined Saprotroph	Saprotroph
+Sarcodon	Ectomycorrhizal	Symbiotroph
+Scedosporium	Undefined Saprotroph	Saprotroph
+Scheffersomyces	Animal Endosymbiont-Undefined Saprotroph	Saprotroph-Symbiotroph
+Schizosaccharomyces	Undefined Saprotroph	Saprotroph
+Schizothecium	Dung Saprotroph	Saprotroph
+Scleroderma	Ectomycorrhizal	Symbiotroph
+Sclerotinia	Plant Pathogen	Pathotroph
+Sebacinaceae	Ectomycorrhizal	Symbiotroph
+Serendipita	Orchid Mycorrhizal	Symbiotroph
+Serpula	Wood Saprotroph	Saprotroph
+Setosphaeria	Endophyte-Plant Pathogen	Pathotroph-Symbiotroph
+Sordaria	Dung Saprotroph-Wood Saprotroph	Saprotroph
+Sordariaceae	Dung Saprotroph-Plant Saprotroph	Saprotroph
+Sphaerulina	Lichenized	Symbiotroph
+Spizellomyces	Plant Pathogen-Undefined Parasite-Undefined Saprotroph	Pathotroph-Saprotroph
+Sporisorium	Plant Pathogen	Pathotroph
+Stagonospora	Plant Pathogen	Pathotroph
+Stephanosporaceae	Plant Saprotroph-Wood Saprotroph	Saprotroph
+Stereum	Undefined Saprotroph	Saprotroph
+Strobilomyces	Ectomycorrhizal	Symbiotroph
+Syzygospora	Fungal Parasite-Lichen Parasite	Pathotroph
+Talaromyces	Undefined Saprotroph	Saprotroph
+Tarzetta	Ectomycorrhizal	Symbiotroph
+Teratosphaeriaceae	Animal Pathogen-Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph
+Thanatephorus	Plant Pathogen	Pathotroph
+Thelephoraceae	Ectomycorrhizal-Undefined Saprotroph	Saprotroph-Symbiotroph
+Thielavia	Dung Saprotroph-Undefined Saprotroph	Saprotroph
+Tomentella	Ectomycorrhizal	Symbiotroph
+Tomentellopsis	Ectomycorrhizal	Symbiotroph
+Trametes	Wood Saprotroph	Saprotroph
+Trechispora	Wood Saprotroph	Saprotroph
+Trichoderma	Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Trichoglossum	Undefined Saprotroph	Saprotroph
+Tricholoma	Ectomycorrhizal-Fungal Parasite	Pathotroph-Symbiotroph
+Tricholomataceae	Ectomycorrhizal-Fungal Parasite	Pathotroph-Symbiotroph
+Trichosporon	Animal Pathogen	Pathotroph
+Trichothecium	Plant Pathogen	Pathotroph
+Tuberaceae	Ectomycorrhizal	Symbiotroph
+Tulasnellaceae	Ectomycorrhizal-Undefined Saprotroph	Saprotroph-Symbiotroph
+Umbelopsis	Undefined Saprotroph	Saprotroph
+Uncinocarpus	Undefined Saprotroph	Saprotroph
+Ustilago	Plant Pathogen	Pathotroph
+Venturiaceae	Endophyte-Plant Pathogen-Undefined Saprotroph	Pathotroph-Saprotroph-Symbiotroph
+Wallemia	Undefined Saprotroph	Saprotroph
+Warcupia	Undefined Saprotroph	Saprotroph
+Wilcoxina	Ectomycorrhizal	Symbiotroph
+Xanthoconium	Ectomycorrhizal	Symbiotroph
+Xenopolyscytalum	Undefined Saprotroph	Saprotroph
+Xylodon	Undefined Saprotroph	Saprotroph
+Yarrowia	Undefined Saprotroph	Saprotroph
+Zygosaccharomyces	Plant Pathogen	Pathotroph

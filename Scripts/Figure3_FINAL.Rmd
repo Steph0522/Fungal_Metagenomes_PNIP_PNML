@@ -1,5 +1,5 @@
 ---
-title: "Figure 3"
+title: "Figure 3. Barplot guilds"
 author:
 - name: Stephanie Hereira
   affiliation: Universidad Autónoma de Tlaxcala
@@ -17,7 +17,7 @@ output:
     toc_depth: '2'
 ---
 
-## Figure 3
+## Figure 3. Barplot Guilds
 
 - Loading packages 
 ```{r, warning=FALSE, message=FALSE}
@@ -33,7 +33,7 @@ library(ggh4x)
 metadata<-read_excel("../Data/Metadatos.xlsx") %>% mutate_if(
   is.numeric, as.factor)
 meta<-metadata
-guild_colors<- read_csv("../Data/guilds_color")
+guild_colors<- read_csv("../Data/guilds_color_new")
 trophic_colors<- read_csv("../Data/trophic_color")
 
 names_col<- read.delim(
@@ -48,17 +48,17 @@ names_col<- read.delim(
 guild_qiime2<- read.delim(
   "../Data/tabla_qiime2_blast_OTUS.guilds.txt", 
   check.names = F, row.names = 1) %>% filter(
-  !Guild=="-",! `Confidence Ranking`=="Possible" ) %>% mutate(Method="QIIME2")
+  !Guild=="-",! `Confidence Ranking`=="Possible" , !Guild=="NULL") %>% mutate(Method="QIIME2")
 
 colnames(guild_qiime2)[1:36]<-names_col
 
 guild_qiime2<- guild_qiime2 %>% rownames_to_column(var = "otu")
 
-guild_single<- read.delim("../Data/table_micop_single.guilds.txt", 
+guild_single<- read.delim("../Data/table_single.guilds.txt", 
                           check.names = F)%>% filter(
-  !Guild=="-",! `Confidence Ranking`=="Possible" ) %>% mutate(Method="MICOP SINGLE")
+  !Guild=="-",! `Confidence Ranking`=="Possible", !Guild=="NULL" ) %>% mutate(Method="MICOP SINGLE")
 
-guild_paired<- read.delim("../Data/table_micop_paired.guilds.txt", 
+guild_paired<- read.delim("../Data/table_paired.guilds.txt", 
                           check.names = F)%>% filter(
                             !Guild=="-",! `Confidence Ranking`=="Possible" ) %>% mutate(Method="MICOP PAIRED")
 
@@ -66,9 +66,10 @@ guilds_fungi<- read.delim("../Data/table_fungi_again.guilds.txt",
                           check.names = F, row.names = 1)%>% filter(
                             !Guild=="-",! `Confidence Ranking`=="Possible" ) %>% mutate(otu=paste0("otu", rownames(.))) %>% select_at(vars(!starts_with("kraken")))
 
+
 guild_fungi<- read.delim("../Data/table_fungi_again.guilds.txt", 
                           check.names = F, row.names = 1) %>% filter(
-                            !Guild=="-",! `Confidence Ranking`=="Possible" ) %>% mutate(otu=paste0("otu", rownames(.))) %>% column_to_rownames(var = "otu")%>% select_if(is.numeric)%>% t() %>% as.data.frame() %>% rownames_to_column(
+                            !Guild=="-",! `Confidence Ranking`=="Possible" ,   !Guild=="NULL") %>% mutate(otu=paste0("otu", rownames(.))) %>% column_to_rownames(var = "otu")%>% select_if(is.numeric)%>% t() %>% as.data.frame() %>% rownames_to_column(
                                 var = "id_sequence") %>% separate(
                                   ., "id_sequence", c(
               "kraken", "fungi", "id_metagenome", "report", "bracken"), 
@@ -79,7 +80,7 @@ relabunda<- function(x){(as.data.frame(t(t(x)/colSums(x)))*100)}
 
 g1<- guild_qiime2 %>% group_by(Guild) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
-    var = "Guild") %>% relabunda(.) %>% rownames_to_column(var = "Guild") %>% mutate(method="QIIME2")
+    var = "Guild") %>% relabunda(.) %>% rownames_to_column(var = "Guild") %>% mutate(method="QIIME2") %>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total) %>% dplyr::select(-total)
 
 t1<- guild_qiime2 %>% group_by(`Trophic Mode`) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
@@ -87,7 +88,7 @@ t1<- guild_qiime2 %>% group_by(`Trophic Mode`) %>% summarise_if(
 
 g2<- guild_single %>% group_by(Guild) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
-    var = "Guild") %>% relabunda(.)%>% rownames_to_column(var = "Guild")%>% mutate(method="SINGLE MICOP")
+    var = "Guild") %>% relabunda(.)%>% rownames_to_column(var = "Guild")%>% mutate(method="SINGLE MICOP")%>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total)%>% dplyr::select(-total)
 
 t2<- guild_single %>% group_by(`Trophic Mode`) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
@@ -95,7 +96,7 @@ t2<- guild_single %>% group_by(`Trophic Mode`) %>% summarise_if(
 
 g3<- guild_paired %>% group_by(Guild) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
-    var = "Guild") %>% relabunda(.)%>% rownames_to_column(var = "Guild")%>% mutate(method="PAIRED MICOP")
+    var = "Guild") %>% relabunda(.)%>% rownames_to_column(var = "Guild")%>% mutate(method="PAIRED MICOP")%>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total)%>% dplyr::select(-total)
 
 t3<- guild_paired %>% group_by(`Trophic Mode`) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
@@ -104,14 +105,15 @@ t3<- guild_paired %>% group_by(`Trophic Mode`) %>% summarise_if(
 
 g4<- guild_fungi %>% group_by(Guild) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
-    var = "Guild") %>% relabunda(.)%>% rownames_to_column(var = "Guild")%>% mutate(method="KRAKEN2")
+    var = "Guild") %>% relabunda(.)%>% rownames_to_column(var = "Guild")%>% mutate(method="KRAKEN2")%>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total)%>% dplyr::select(-total)
 
 t4<- guild_fungi %>% group_by(`Trophic Mode`) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
     var = "Trophic Mode") %>% relabunda(.)%>% rownames_to_column(var = "Trophic")%>% mutate(method="KRAKEN2")
 
 #guild_all<- rbind(guild_qiime2, guild_paired, guild_single, guild_fungi)
-guild_all<- g1 %>% full_join(g2) %>% full_join(g3) %>% full_join(g4)
+guild_all<- g1 %>% full_join(g2) %>% full_join(g3) %>% full_join(g4) %>%
+  filter(!Guild %in% c("Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph", "Animal Pathogen-Soil Saprotroph", "Endophyte-Undefined Saprotroph"))
 trophic_all<- t1 %>% full_join(t2) %>% full_join(t3) %>% full_join(t4)
 
 
@@ -122,7 +124,8 @@ trophic_all<- t1 %>% full_join(t2) %>% full_join(t3) %>% full_join(t4)
 ```{r, warning=FALSE, message=FALSE}
 
 bar_data<- guild_all %>% pivot_longer(cols = -c(Guild,method), names_to = "SampleID", values_to = "relab")%>% mutate(Guilds=case_when(
-    Guild=="Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph"~"Undefined Saprotroph",
+    Guild=="Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph"~"Dung Sap.-Undef Sap.-Wood Sap.",
+        Guild=="Ectomycorrhizal-Fungal Parasite"~"Ectomycorrhizal-Fung.Parasit",
     Guild=="Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph"~"Animal P-Endoph/symb-Undef. Sap.",
     Guild=="Endophyte-Plant Pathogen-Wood Saprotroph"~"Endohpyte-Pathogen-Saprotroph",
     Guild=="Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph"~"Animal-Plant P-Endophyte-Saprotroph",
@@ -132,8 +135,10 @@ Guild=="Endophyte-Plant Pathogen-Undefined Saprotroph"~"Endophyte-Plant Pathogen
 Guild=="Ectomycorrhizal-Undefined Saprotroph"~"Ectomycorrhizal-Undef. Sap.",
 Guild=="Animal Pathogen-Fungal Parasite-Undefined Saprotroph"~"Animal P-Fungal Parasite-Undef. Sap.",
     Guild=="Fungal Parasite-Plant Pathogen-Plant Saprotroph"~"Fungal Parasite-Plant Path-Plant Sap.",
+Guild=="Animal Pathogen-Endophyte-Plant Pathogen-Soil Saprotroph-Wood Saprotroph" ~"Animal Pathogen-Endoph-Plant P-Soil/Wood Sap", 
     TRUE~as.character(Guild))) %>% filter(relab>1)
 
+#write_csv(bar_data, "bar_data.csv")
 # %>% filter(!Guild %in% c("Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph", "Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph", "Ectomycorrhizal-Undefined Saprotroph", "Dung Saprotroph-Wood Saprotroph" ))
 cols_guild<- bar_data %>% inner_join(guild_colors) %>% arrange(Guilds)
 col_guild <- as.character(cols_guild$col)
@@ -184,8 +189,8 @@ bar_data_t<- trophic_all %>% pivot_longer(cols = -c(Trophic,method), names_to = 
 bar_data_t$method <- factor(
   bar_data_t$method,levels = c(
     "QIIME2","SINGLE MICOP","PAIRED MICOP" , "KRAKEN2"))
-chose_trophic<-unique(cols_trophic$Trophic)  
 cols_trophic<- bar_data_t %>% inner_join(trophic_colors) %>% arrange(Trophic)
+chose_trophic<-unique(cols_trophic$Trophic)  
 col_trophic <- as.character(cols_trophic$col)
 names(col_trophic) <- as.character(cols_trophic$Trophic)
 
@@ -225,13 +230,10 @@ theme_linedraw()+ylab("Relative abundance")+
 - Joinning barplots 
 ```{r, warning=FALSE, message=FALSE, fig.width=10, fig.height=7}
 library(cowplot)
-all<- plot_grid(barplot_guild+theme(legend.text = element_text(size = 8),
-                                    legend.title = element_text(face = "bold")),  
-                barplot_trophic+theme(legend.text = element_text(size = 7.5),
-                                       legend.title = element_text(face = "bold")),
-                nrow = 2, rel_heights = c(1.2,1))
+all<- plot_grid(
+  barplot_guild+theme(legend.text = element_text(size = 7),   legend.title = element_text(face = "bold")),                  barplot_trophic+theme(legend.text = element_text(size = 8.5),  legend.title = element_text(face = "bold")), nrow = 2, rel_heights = c(1.2,1))
 all
-ggsave("guilds_final3.png",width = 11, height = 7, dpi = 300, plot = all, device = "png")
+ggsave("guilds_final4.png",width = 11, height = 7, dpi = 300, plot = all, device = "png")
 
 ```
 

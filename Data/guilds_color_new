@@ -1,0 +1,21 @@
+Guild,col
+Animal Pathogen,#ba4a00                                                                
+Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph,#F08080 
+Animal Pathogen-Endophyte-Plant Pathogen-Soil Saprotroph-Wood Saprotroph,#D95F02         
+Animal Pathogen-Fungal Parasite-Undefined Saprotroph,#900C3F                           
+Animal Pathogen-Undefined Saprotroph,#C70039                                            
+Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph,#FDC086                          
+Dung Saprotroph-Wood Saprotroph,#7d5c48                                                
+Ectomycorrhizal,#7FC97F                                                                  
+Ectomycorrhizal-Fungal Parasite,#58d68d                                                   
+Ectomycorrhizal-Undefined Saprotroph,#edf2a3                                             
+Endophyte-Insect Pathogen,#00FFFF                                                        
+Endophyte-Litter Saprotroph-Soil Saprotroph-Undefined Saprotroph,#73c6b6                 
+Endophyte-Plant Pathogen,#0b5345                                                       
+Endophyte-Plant Pathogen-Undefined Saprotroph,#00FF00                                   
+Ericoid Mycorrhizal,#a2ab16                                                              
+Plant Pathogen,#E7298A                                                             
+Plant Pathogen-Undefined Saprotroph,#b65169
+Plant Pathogen-Wood Saprotroph,#5c2402                                                
+Undefined Saprotroph,#7d6608                                                            
+Wood Saprotroph,#E6AB02                                                                  

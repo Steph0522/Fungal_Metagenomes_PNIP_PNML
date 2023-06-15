@@ -9,6 +9,21 @@ library(reshape2)
 library(readxl)
 source("Code/functions_beta.R")
 source("Code/funciones_compositional.R")
+
+envschose<-c("P", "K", "Ca", "Mg", "P", "moisture", "WHC", "Silt")
+varschose<- c("total_mean_coverage",
+              "prop_Abies",
+              "total_mean_Height",
+              "prop_Pinus",
+              "mean_coverage_Pinus",
+              "mean_coverage_Quercus",
+              "prop_Arbutus",
+              "prop_Salix",
+              "prop_Broadleaf",
+              "prop_Alnus",
+              "prop_Juniperus",
+              "mean_coverage_Arbutus")
+
 metadata_secas<- read_excel("Data/Metadatos.xlsx", sheet = "secas-marzo")
 fq_secas<- read_excel("Data/fisicoq.xlsx", sheet = "seca")
 fq_secas2<- read.csv("Data/fisicoq-la.csv")
@@ -22,19 +37,24 @@ dfs=data.frame(df[1],scale(df[,2:17], center = T, scale = T)) %>% dplyr::select(
   SampleID,P,K,Ca,Mg,moisture,WHC, LIMO) %>% 
   column_to_rownames(var = "SampleID")
 
-dfs_dist<- dist(dfs, method = "euclidean")
-nut.dist<- dfs_dist %>% as.matrix()
+veg.16s=read_tsv("Data/vegetacion_data_norm.txt")
+dfs2=veg.16s %>% dplyr::select(SampleID,varschose)
 
 #pca environmental
 
 pca_env<- prcomp(dfs, center = F, scale. = F)
 
+#distancias euclidianas
+
+dfs_dist<- dist(dfs, method = "euclidean")
+nut.dist<- dfs_dist %>% as.matrix()
 nut.dist[upper.tri(nut.dist)] <- NA 
 
 nut.dist.tidy <- nut.dist %>% 
   melt(as.matrix(distance), varnames = c(
-    "SampleID.x", "SampleID.y"), value.name = "EucDist") %>% drop_na() %>% filter(!EucDist==0) %>% 
-  filter(!is.na(EucDist)) %>% 
+    "SampleID.x", "SampleID.y"), value.name = "EucDistenv") %>% 
+  drop_na() %>% filter(!EucDistenv==0) %>% 
+  filter(!is.na(EucDistenv)) %>% 
   filter(SampleID.x != SampleID.y) 
 
 
@@ -95,28 +115,26 @@ table_fungi<- read.delim("Data/table_fungi_again.txt",
                                  metadata) %>% dplyr::select(-id_sequence:-Transecto, -id_metagenome, -Sites, -id_new, -Names,  -id_fisicoq) %>% column_to_rownames(
                                    var = "SampleID") %>% t() %>% as.data.frame() %>% mutate_all(as.numeric)
 
+#table_qiime2=table_qiime2[, match(colnames(table_fungi), colnames(table_qiime2))] %>% as.data.frame()
 
 
-
-otu <- list(table_single_micop, table_paired_micop, table_qiime2, table_fungi)
-otu_match<- lapply(otu, otu.match) # matching to map
+otu <- list(table_qiime2, table_single_micop, table_paired_micop,  table_fungi)
+otu_match<- lapply(otu, otu.match) # matching to map# machear para que queden el mismo orden que la metadata y todos iguales
 otu_single<- lapply(otu_match, otu.single) #remove singletons
 otu_norm<- lapply(otu_single, otu.norm)#Normalize
-bc.dist2<- lapply(otu_norm, beta_div_dist)#Calculate Bray-Curtis dissimilarities
-bc.dist2<- lapply(otu_single, beta_div_dist_hill, q=1)
+bc.dist<- lapply(otu_norm, beta_div_dist)#Calculate Bray-Curtis dissimilarities con la data normalizada
+bc.dist2<- lapply(otu_single, beta_div_dist_hill, q=1)#Calculate Horn dissimilarities sin la data normalizada
 
-
-bc.pcoa2<- lapply(bc.dist2, pcoa_all)
+bc.pcoa<- lapply(bc.dist, pcoa_all) #pcoa de bray
+bc.pcoa2<- lapply(bc.dist2, pcoa_all) #pcoa de Horn
 
 bc.pcoa.axes <- lapply(bc.dist2, pcoa_axes) #obtain pcoa axes
 bc.pcoa.eigval <- lapply(bc.dist2, pcoa_eigval) #obtain pcoa eigavlues
 
 #STEP 2 FIGURES:PCOA AND DISTANCES
 #Filter BC so that only pairwise comparisons within time points are considered. Transform dissimilarities to similarities.
-#bc.dist.tidy.filt<- lapply(bc.dist, bc.dist.tidy.filter)
+bc.dist.tidy.filt<- lapply(bc.dist, bc.dist.tidy.filter)
 bc.dist.tidy.filt2<- lapply(bc.dist2, bc.dist.tidy.filter.hill)
-
-
 
 #Calculate the range of BC similarities for plotting
 #max.sim <- max( b.dist.filt$Similarity)#
@@ -126,22 +144,36 @@ max.sim<- 1
 min.sim<- 0
 
 #permanova's
+set.seed(124)
 perm_qiime2<- permanova_beta(bc.dist2[[1]], metadata = metadata)
 perm_micop_single<- permanova_beta(bc.dist2[[2]], metadata = metadata)
 perm_micop_paired<- permanova_beta(bc.dist2[[3]], metadata = metadata)
 perm_fungi<- permanova_beta(bc.dist2[[4]], metadata = metadata)
 
+perm_qiime22<- permanova_beta(bc.dist[[1]], metadata = metadata)
+perm_micop_single2<- permanova_beta(bc.dist[[2]], metadata = metadata)
+perm_micop_paired2<- permanova_beta(bc.dist[[3]], metadata = metadata)
+perm_fungi2<- permanova_beta(bc.dist[[4]], metadata = metadata)
+
 #betadisper
+set.seed(125)
 permd_qiime2<- permdisp_beta(bc.dist2[[1]], metadata = metadata)
 permd_micop_single<- permdisp_beta(bc.dist2[[2]], metadata = metadata)
 permd_micop_paired<- permdisp_beta(bc.dist2[[3]], metadata = metadata)
 permd_fungi<- permdisp_beta(bc.dist2[[4]], metadata = metadata)
 
+permd_qiime22<- permdisp_beta(bc.dist[[1]], metadata = metadata)
+permd_micop_single2<- permdisp_beta(bc.dist[[2]], metadata = metadata)
+permd_micop_paired2<- permdisp_beta(bc.dist[[3]], metadata = metadata)
+permd_fungi2<- permdisp_beta(bc.dist[[4]], metadata = metadata)
+
 #pcoas
 qiime2_pcoa <- pcoa_plot(bc.pcoa2[[1]])+
   #xlab(paste("PCo1 (", bc.pcoa.eigval[[1]]$Eigval[1], "%)", sep = "")) +
   #ylab(paste("PCo2 (", bc.pcoa.eigval[[1]]$Eigval[2], "%)", sep = "")) +
-  ggtitle("QIIME2")+
+  ggtitle("QIIME2")+  
+  xlab("DIM1")+
+  ylab("DIM2")+
   labs(title = paste("adonis: F = ", signif(perm_qiime2$F[1], 3), ",",
                      "p-value = ",signif(perm_qiime2$`Pr(>F)`[1], 5), 
                      "\n betadisper: F = ", signif(permd_qiime2$tab$F[1], 2), ",",
@@ -149,8 +181,25 @@ qiime2_pcoa <- pcoa_plot(bc.pcoa2[[1]])+
                        legend.text = element_text(size = 20), legend.title = element_text(size = 20),
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
-                       legend.key.size = unit(2, "cm"))+ guides(
+                       legend.key.size = unit(1, "cm"))+ guides(
                          fill = guide_legend(override.aes = list(size = 8)))
+
+qiime2_pcoa2 <- pcoa_plot(bc.pcoa[[1]])+
+  #xlab(paste("PCo1 (", bc.pcoa.eigval[[1]]$Eigval[1], "%)", sep = "")) +
+  #ylab(paste("PCo2 (", bc.pcoa.eigval[[1]]$Eigval[2], "%)", sep = "")) +
+  ggtitle("QIIME2")+  
+  xlab("DIM1")+
+  ylab("DIM2")+
+  labs(title = paste("adonis: F = ", signif(perm_qiime22$F[1], 3), ",",
+                     "p-value = ",signif(perm_qiime22$`Pr(>F)`[1], 5), 
+                     "\n betadisper: F = ", signif(permd_qiime22$tab$F[1], 2), ",",
+                     "p-value = ",signif(permd_qiime22$tab$`Pr(>F)`[1], 5)))+theme(
+                       legend.text = element_text(size = 20), legend.title = element_text(size = 20),
+                       axis.title = element_text(size = 16),
+                       plot.title = element_text(hjust = 1, size = 12),
+                       legend.key.size = unit(1, "cm"))+ guides(
+                         fill = guide_legend(override.aes = list(size = 8)))
+
 
 single_pcoa <- pcoa_plot(bc.pcoa2[[2]])+
 #  xlab(paste("PCo1 (", bc.pcoa.eigval[[2]]$Eigval[2], "%)", sep = "")) +
@@ -160,6 +209,20 @@ single_pcoa <- pcoa_plot(bc.pcoa2[[2]])+
                      "p-value = ",signif(perm_micop_single$`Pr(>F)`[1], 5), 
                      "\n betadisper: F = ", signif(permd_micop_single$tab$F[1], 2), ",",
                      "p-value = ",signif(permd_micop_single$tab$`Pr(>F)`[1], 5)))+theme(
+                       legend.text = element_text(size = 20), legend.title = element_text(size = 20),
+                       axis.title = element_text(size = 16),
+                       plot.title = element_text(hjust = 1, size = 12),
+                       legend.key.size = unit(2, "cm"))+ guides(
+                         fill = guide_legend(override.aes = list(size = 8)))
+
+single_pcoa2 <- pcoa_plot(bc.pcoa[[2]])+
+  #  xlab(paste("PCo1 (", bc.pcoa.eigval[[2]]$Eigval[2], "%)", sep = "")) +
+  #  ylab(paste("PCo2 (", bc.pcoa.eigval[[2]]$Eigval[3], "%)", sep = "")) +
+  ggtitle("SINGLE MICOP")+
+  labs(title = paste("adonis: F = ", signif(perm_micop_single2$F[1], 3), ",",
+                     "p-value = ",signif(perm_micop_single2$`Pr(>F)`[1], 5), 
+                     "\n betadisper: F = ", signif(permd_micop_single2$tab$F[1], 2), ",",
+                     "p-value = ",signif(permd_micop_single2$tab$`Pr(>F)`[1], 5)))+theme(
                        legend.text = element_text(size = 20), legend.title = element_text(size = 20),
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
@@ -183,6 +246,25 @@ paired_pcoa <- pcoa_plot(bc.pcoa2[[3]])+
                          fill = guide_legend(override.aes = list(size = 8)))
 
   
+paired_pcoa2 <- pcoa_plot(bc.pcoa[[3]])+
+  # xlab(paste("PCo1 (", bc.pcoa.eigval[[3]]$Eigval[1], "%)", sep = "")) +
+  #  ylab(paste("PCo2 (", bc.pcoa.eigval[[3]]$Eigval[2], "%)", sep = "")) +
+  xlab("DIM1")+
+  ylab("DIM2")+
+  ggtitle("PAIRED MICOP")+
+  labs(title = paste("adonis: F = ", signif(perm_micop_paired2$F[1], 3), ",",
+                     "p-value = ",signif(perm_micop_paired2$`Pr(>F)`[1], 5), 
+                     "\n betadisper: F = ", signif(permd_micop_paired2$tab$F[1], 2), ",",
+                     "p-value = ",signif(permd_micop_paired2$tab$`Pr(>F)`[1], 5)))+theme(
+                       legend.text = element_text(size = 20), legend.title = element_text(size = 20),
+                       axis.title = element_text(size = 16),
+                       plot.title = element_text(hjust = 1, size = 12),
+                       legend.key.size = unit(2, "cm"))+ guides(
+                         fill = guide_legend(override.aes = list(size = 8)))
+
+
+
+
 kraken_pcoa <- pcoa_plot(bc.pcoa2[[4]])+
 #  scale_x_continuous(limits = c(-0.01,0.01))+
  # scale_y_continuous(limits = c(-0.01,0.01))+
@@ -198,12 +280,25 @@ kraken_pcoa <- pcoa_plot(bc.pcoa2[[4]])+
                        plot.title = element_text(hjust = 1, size = 12),
                        legend.key.size = unit(2, "cm"))+ guides(
                          fill = guide_legend(override.aes = list(size = 8)))
+
+kraken_pcoa2 <- pcoa_plot(bc.pcoa[[4]])+
+  #  scale_x_continuous(limits = c(-0.01,0.01))+
+  # scale_y_continuous(limits = c(-0.01,0.01))+
+  # xlab(paste("PCo1 (", bc.pcoa.eigval[[4]]$Eigval[2], "%)", sep = "")) +
+  #  ylab(paste("PCo2 (", bc.pcoa.eigval[[4]]$Eigval[3], "%)", sep = "")) +
+  ggtitle("KRAKEN2")+
+  labs(title = paste("adonis: F = ", signif(perm_fungi2$F[1], 3), ",",
+                     "p-value = ",signif(perm_fungi2$`Pr(>F)`[1], 5), 
+                     "\n betadisper: F = ", signif(permd_fungi2$tab$F[1], 2), ",",
+                     "p-value = ",signif(permd_fungi2$tab$`Pr(>F)`[1], 5)))+theme(
+                       legend.text = element_text(size = 20), legend.title = element_text(size = 20),
+                       axis.title = element_text(size = 16),
+                       plot.title = element_text(hjust = 1, size = 12),
+                       legend.key.size = unit(2, "cm"))+ guides(
+                         fill = guide_legend(override.aes = list(size = 8)))
     
-plot_grid(qiime2_pcoa, single_pcoa, paired_pcoa, kraken_pcoa,
-          nrow = 2, align = "hv")
 
 leg<- get_legend(qiime2_pcoa)
-legs<- plot_grid(NULL, NULL, leg, NULL, ncol = 4)
 
 first<-plot_grid(qiime2_pcoa+theme(legend.position = "none")+theme(aspect.ratio =6/10),  
                  single_pcoa+theme(legend.position = "none")+theme(aspect.ratio =6/10), 
@@ -213,12 +308,23 @@ first<-plot_grid(qiime2_pcoa+theme(legend.position = "none")+theme(aspect.ratio 
                  align = "v",
                  labels = c("A) QIIME2", "B) SINGLE MICOP",
                             "C) PAIRED MICOP", "D) KRAKEN2"),hjust = 0)
+second<-plot_grid(qiime2_pcoa2+theme(legend.position = "none")+theme(aspect.ratio =6/10),  
+                 single_pcoa2+theme(legend.position = "none")+theme(aspect.ratio =6/10)+
+                   xlab("DIM1")+ylab("DIM2") ,
+                 paired_pcoa2+theme(legend.position = "none")+theme(aspect.ratio =6/10),   
+                 kraken_pcoa2+theme(legend.position = "none")+theme(aspect.ratio =6/10), 
+                 ncol = 2, nrow = 2, rel_widths = c(1,1,1,1),
+                 align = "v",
+                 labels = c("A) QIIME2", "B) SINGLE MICOP",
+                            "C) PAIRED MICOP", "D) KRAKEN2"),hjust = 0)
+first
 
-pcoas_plot <- plot_grid(first,legd,ncol = 2, rel_widths = c(1,.1), align = "hv")
+pcoas_plot <- plot_grid(first,leg,ncol = 2, rel_widths = c(.9,.1), align = "hv")
+pcoas_plot <- plot_grid(second,leg,ncol = 2, rel_widths = c(.9,.1), align = "hv")
 
-#ggsave("pcoas_plot.png",width = 10, height =7, dpi = 300, plot = pcoas_plot, device = "png")
+pcoas_plot
+ggsave("pcoas_plot_final_bray.png",width =9, height =7, dpi = 300, plot = pcoas_plot, device = "png")
 #Correaltion test
-#Perform Pearson test and regression to get stats
 
 library(ecodist)
 library(vegan)
@@ -316,7 +422,7 @@ all<-plot_grid(  fourth,third ,nrow = 2, axis = "lr",align = "hv",
           rel_heights = c(1, 1))
 
 all
-ggsave("Fig1.bray_distance_env.tiff",width = 8, height = 8.2, dpi = 300, plot = four, device = "tiff")
+#ggsave("Fig1.bray_distance_env.tiff",width = 8, height = 8.2, dpi = 300, plot = four, device = "tiff")
 
 
 
@@ -336,13 +442,13 @@ mantel_q2<-mantels %>% ggtexttable(rows = NULL, theme = ttheme("blank"))%>%
   tab_add_hline(at.row = 5, row.side = "bottom", linewidth = 2)
 
 library(cowplot)
-man<-plot_grid(mantel_bc,  mantel_q2, 
+man<-plot_grid(mantel_q1,  mantel_q2, 
           labels = c("a) Bray curtis", "b)  Horn"), nrow = 1)
 
 
 ver<-plot_grid(fourth,fourth, nrow = 2)
 man
-ggsave("ver.png",width = 6, height = 10, dpi = 300, plot = ver, device = "png")
+#ggsave("ver.png",width = 6, height = 10, dpi = 300, plot = ver, device = "png")
 
 
 #plot of distances
@@ -362,7 +468,7 @@ joined_data$Distances<- factor(joined_data$Distances,
                                labels = c("Spatial Distance (km)", "Environmental Distance"))
 
 ann_text<-data.frame(val_distance=c( 30,30,30,30,4.2,4.2,4.2,4.2),
-                     Similarity=c(0.3,0.3,0.8,0.3, 0.3,0.3,0.8,0.3),
+                     Similarity=c(0.8,0.3,0.3,0.3, 0.8,0.3,0.3,0.3),
                      Distances=c("Spatial Distance (km)", 
                                  "Spatial Distance (km)", 
                                  "Spatial Distance (km)",
@@ -396,5 +502,5 @@ jo<-joined_data %>% ggplot(aes(x = val_distance, y =Similarity ))+
                                                          colour = "#E5E8E8")) +  
   geom_text(data = ann_text,label=ann_text$label, size=3)+xlab("Distances")
 jo
-ggsave("Fig.Horn_joined_distances.png",width = 5.7, height = 8, dpi = 300, plot = jo, device = "png")
+ggsave("Fig.Bray_joined_distances_final.png",width = 6.5, height = 8, dpi = 300, plot = jo, device = "png")
 

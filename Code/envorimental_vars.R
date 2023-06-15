@@ -8,6 +8,7 @@ library(reshape2)
 library(tidyverse)
 library(picante)
 library(Rmisc)
+library(readxl)
 metadata_secas<- read_excel("Data/Metadatos.xlsx", sheet = "secas-marzo")
 fq_secas<- read_excel("Data/fisicoq.xlsx", sheet = "seca")
 fq_secas2<- read.csv("Data/fisicoq-la.csv")
@@ -154,26 +155,46 @@ env.16S_st4=data.frame(scale(env.16S4, scale=T, center=F))
 
 # Forward selection procedure
 #accounting for abundance
-cap.env=capscale(spp.16S_hell1~.,env.16S_st1,distance = "bray")
+cap.env1=capscale(spp.16S_hell1~.,env.16S_st1,distance = "bray")
 mod0.env=capscale(spp.16S_hell1~1,env.16S_st1,distance = "bray")
-step.env=ordistep(mod0.env,scope = formula(cap.env))
+step.env1=ordistep(mod0.env,scope = formula(cap.env1))
 cap1<-step.env1$anova %>% mutate(method="Single Micop") # These are the selected structuring variables that are included in the subsequent analyses 
 
-cap.env=capscale(spp.16S_hell2~.,env.16S_st2,distance = "bray")
+
+cap.env2=capscale(spp.16S_hell2~.,env.16S_st2,distance = "bray")
 mod0.env=capscale(spp.16S_hell2~1,env.16S_st2,distance = "bray")
-step.env=ordistep(mod0.env,scope = formula(cap.env))
+step.env=ordistep(mod0.env,scope = formula(cap.env2))
 cap2<-step.env$anova %>% mutate(method="Paired Micop") 
 
-cap.env=capscale(spp.16S_hell3~.,env.16S_st3,distance = "bray")
+cap.env3=capscale(spp.16S_hell3~.,env.16S_st3,distance = "bray")
 mod0.env=capscale(spp.16S_hell3~1,env.16S_st3,distance = "bray")
-step.env=ordistep(mod0.env,scope = formula(cap.env))
+step.env=ordistep(mod0.env,scope = formula(cap.env3))
 cap3<-step.env$anova %>% mutate(method="Kraken2") 
 
 
-cap.env=capscale(spp.16S_hell4~.,env.16S_st4,distance = "bray")
+cap.env4=capscale(spp.16S_hell4~.,env.16S_st4,distance = "bray")
 mod0.env=capscale(spp.16S_hell4~1,env.16S_st4,distance = "bray")
-step.env=ordistep(mod0.env,scope = formula(cap.env))
+step.env=ordistep(mod0.env,scope = formula(cap.env4))
 #cap4<-step.env$anova %>% mutate(method="QIIME2") 
+
+#plot
+pdf(file="beta_gao_explo_bact_fung.pdf", width =6, height =6.5)
+library(viridis)
+pal<- viridis(6, option = "D") 
+#plots
+par(mfrow=c(3,2),mar=c(2, 2, 0.5, 0.5))
+color=rgb(0,0,0,alpha=0.5) 
+ordiplot(cap.env,type="n")
+#orditorp(cap.env,display="specie",col="red",air=0.01)
+text(cap.env, dis="cn", scaling="sites", cex=0.8, col="red")
+orditorp(cap.env,display="sites",cex=0.5,air=0.01)
+#orditorp(cap.env,display="species",cex=0.5,air=0.01)
+ordiellipse(cap.env, groups =metadata$Sites, col =pal, display = "sites",
+            label=T, draw = "polygon", alpha = 50, label.cex=0.2, cex=0.5)
+
+
+dev.off()
+
 
 #accounting for richness
 
