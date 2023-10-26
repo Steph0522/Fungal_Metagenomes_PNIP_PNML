@@ -37,6 +37,7 @@ library(cowplot)
 ```{r, warning=FALSE, message=FALSE}
 YK = map_data("world")
 YK2 = map_data("world") %>% filter(group==985)
+#YK3=map_data("world")%>% filter(group==985) %>% filter(abs(long)>97 & abs(long)<103) %>% filter(abs(lat)<21 & abs(lat)>18)
 air<- read.csv("../Data/coord.csv") %>% mutate_at(c(1,2,3,7), as.factor)
 air$Sites<- factor(air$Names, levels = c(
   "1. Tetlanohcan 1", "2. Tetlanohcan 2",
@@ -62,6 +63,8 @@ maps<-ggplot() +
   geom_polygon(data = YK2, aes(x=long, y = lat, group = group), 
                color = 'black', fill = 'grey') +
   coord_sf(xlim = c(-110, -85), ylim = c(10, 30))+
+ # geom_polygon(data = YK3, aes(x=long, y = lat, group = group), 
+  #             color = 'black', fill = 'red')
     xlab("Longitude")+ ylab("Latitude")+
   theme(panel.grid.major = element_line(colour = gray(0.5), linetype = "dashed", 
                                         size = 0.5), panel.background = element_rect(fill = "aliceblue"), 
@@ -125,11 +128,12 @@ wat<-ggmap(map) +
         axis.text = element_text(size = 8))
 
 
-wat2<- wat+theme(legend.position = "none",
-                 axis.text = element_text(colour = "black"))+ylab(
+wat2<- wat+theme(axis.text = element_text(colour = "black"))+ylab(
                    "Latitude")+xlab("Longitude")+ 
-  annotate("text", x =-98, y = 19.3, label = "NPLM", size=5, fontface="bold")+ 
-  annotate("text", x =-98.7, y = 19.35, label = "NPIP", size=5, fontface="bold")
+    annotate("text", x =-98.25, y = 19.6, label = "TMVB", size=5, fontface="bold")+ 
+  annotate("text", x =-98, y = 19.3, label = "LMNP", size=5, fontface="bold")+ 
+  annotate("text", x =-98.7, y = 19.35, label = "IPNP", size=5, fontface="bold")+
+  theme(legend.position = "none")
   
 wat2
 
@@ -144,15 +148,15 @@ maps_final<-ggplot() +
     xlim = c(0, 30), ylim = c(0, 20), expand = FALSE) +
   annotation_custom(
     ggplotGrob(maps), xmin = 0, 
-    xmax = 10, ymin = 5, ymax = 12) +
+    xmax = 15, ymin = 0,ymax = 20) +
   annotation_custom(
-    ggplotGrob(wat2),  
-    xmin = 10, xmax = 30, ymin = 9, ymax = 20) +
+    ggplotGrob(wat2), xmin = 15, xmax = 28,
+    ymin =8,ymax =24) +
   annotation_custom(
-    leg, xmin = 15, xmax = 28, 
-    ymin = 0, ymax =9 ) +
+    leg, xmin = 20, xmax = 28, 
+    ymin = 5, ymax = 7) +
   geom_segment(
-    aes(x = 5.5, y = 9, xend = 14, yend = 12.5),
+    aes(x = x1, y = y1, xend = x2, yend = y2),
     data = arrowA,arrow = arrow(), lineend = "round") +
   theme_void()
 maps_final
@@ -160,7 +164,7 @@ maps_final
 
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
-ggsave('map_sites_mod.jpg',
+ggsave('map_sites_final.jpg',
        width = 10, height = 6.5, dpi = 300, plot = maps_final)
 
 ```
