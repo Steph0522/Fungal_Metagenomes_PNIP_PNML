@@ -1,0 +1,55 @@
+Nombre,Index_ID,Index_Fw,Index_Rv,#Muestras_en_pool,gen_amplificado,amplicon_size,ambiente,ID Tubo,[ng/ul],Volumen
+Mauricio,1,,,27,16S rRNA,600 pb,Faeces,Lib1 16S 2021,4.2,50uL
+Mauricio,2,,,25,16S rRNA,600 pb,Faeces,Lib2 16S 2021,5.9,50uL
+Mauricio,3,,,15,16S rRNA,600 pb,Faeces,Lib3 16S 2021,1.8,50uL
+Steph,4,,,8,ITS2,500 pb,Suelo, , ,50uL
+Steph,5,,,8,ITS2,500 pb,Suelo,, ,50uL
+Steph,6,,,8,ITS2,500 pb,Suelo,, ,50uL
+Steph,7,,,8,ITS2,500 pb,Suelo,, ,50uL
+Steph,8,,,8,ITS2,500 pb,Suelo,, ,50uL
+Steph,9,,,8,ITS2,500 pb,Suelo,, ,50uL
+Steph,10,,,8,ITS2,500 pb,Suelo,, ,50uL
+Steph,11,,,8,ITS2,500 pb,Suelo,, ,50uL
+Steph,12,,,8,ITS2,500 pb,Suelo,, ,50uL
+Mauricio,13,,,26,16S rRNA,600 pb,Faeces,Lib4 16S Sg&Ss,3.9,50uL
+Mauricio,14,,,21,16S rRNA,600 pb,Faeces,Lib5 16S Sa&Sb,3.7,50uL
+,15,,,,,,,, ,
+Yendi,16,,,4,ITS2,500 pb,Suelo,,,50uL
+,17,,,,,,,,,
+,18,,,,,,,,,
+,20,,,,,,,,,
+,21,,,,,,,,,
+,24,,,,,,,,,
+,25,,,,,,,,,
+,26,,,,,,,,,
+,28,,,,,,,,,
+,29,,,,,,,,,
+,30,,,,,,,,,
+,31,,,,,,,,,
+,39,,,,,,,,,
+,41,,,,,,,,,
+,45,,,,,,,,,
+,46,,,,,,,,,
+,47,,,,,,,,,
+,49,,,,,,,,,
+,57,,,,,,,,,
+,58,,,,,,,,,
+Nina,61,,,15,16S rRNA,700 pb ,Tracto,FEM.ALTA.REP,11.73,60 ul 
+Nina,62,,,15,16S rRNA,700 pb,Tracto,MALE.ALTA.REP,5.88,60 ul 
+Nina,63,,,24,16S rRNA,700 pb,Tracto,FEM.BAJA.REP,03.02,60 ul 
+Nina,75,,,16,16S rRNA, 700 pb ,Tracto,MALE.BAJA.REP,6.81,60 ul 
+Nina,76,,,17,16S rRNA,700 pb,Tracto embrionario,TRACTOS.EMB,9.70,60 ul 
+Nina,77,,,19,16S rRNA,700 pb,"LA, membrana, yema",LA.BAJA,7.91,60 ul 
+Nina,78,,,7,16S rRNA, 700 pb ,Liquido amniotico,LA.ALTA,4.83,60 ul 
+Nina,70,,,24,16S rRNA,700 pb,Swabs,SWABS.BAJA,6.38,60 ul 
+Nina,71,,,15,16S rRNA,700 pb,Swabs,SWABS.ALTA,7.2,60 ul 
+Nina,73,,,15,16S rRNA, 700 pb ,Tracto,FEM.ALTA.NREP,5.92,60 ul 
+Nina,91,,,15,16S rRNA,700 pb,Tracto,MALE.ALTA.NREP,5.19,60 ul 
+Nina,92,,,15,16S rRNA,700 pb,Tracto,FEM.BAJA.NREP,5.37,60 ul 
+Nina,94,,,15,16S rRNA, 700 pb ,Tracto,MALE.BAJA.NREP,8.86,60 ul 
+,95,,,,,,,,,
+,96,,,,,,,,,
+,98,,,,,,,,,
+,103,,,,,,,,,
+,111,,,,,,,,,
+,119,,,,,,,,,

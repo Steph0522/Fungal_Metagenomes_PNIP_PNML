@@ -1,0 +1,239 @@
+---
+title: "Figure 4. Barplot guilds"
+author:
+- name: Stephanie Hereira
+  affiliation: Universidad Autónoma de Tlaxcala
+  email: sehereirap@uatx.mx
+date: "`r format(Sys.time(), '%d - %m - %Y')`"
+output:
+  html_document:
+    theme: flatly
+    highlight: kate
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+## Figure 4. Barplot Guilds
+
+- Loading packages 
+```{r, warning=FALSE, message=FALSE}
+library(readxl)
+library(tidyverse)
+library(ggpubr)
+library(RColorBrewer)
+library(ggh4x)
+```
+
+- Loading data and formatting
+```{r, warning=FALSE, message=FALSE}
+metadata<-read_excel("../Data/Metadatos.xlsx") %>% mutate_if(
+  is.numeric, as.factor)
+meta<-metadata
+guild_colors<- read_csv("../Data/guilds_color_new")
+trophic_colors<- read_csv("../Data/trophic_color")
+
+names_col<- read.delim(
+  "../Data/tabla_qiime2_blast_OTUS.guilds.txt", 
+  check.names = F, row.names = 1)%>% t() %>% 
+  as.data.frame() %>% rownames_to_column(
+    var = "SampleID") %>% separate(
+      SampleID, c(
+        "id_metagenome", "R", "unmap", "Paired"), 
+      sep = "_")%>% inner_join(meta) %>% dplyr::select(
+        SampleID) %>% t() %>% as.vector()
+guild_qiime2<- read.delim(
+  "../Data/tabla_qiime2_blast_OTUS.guilds.txt", 
+  check.names = F, row.names = 1) %>% filter(
+  !Guild=="-",! `Confidence Ranking`=="Possible" , !Guild=="NULL") %>% mutate(Method="QIIME2")
+
+colnames(guild_qiime2)[1:36]<-names_col
+
+guild_qiime2<- guild_qiime2 %>% rownames_to_column(var = "otu")
+
+guild_single<- read.delim("../Data/table_single.guilds.txt", 
+                          check.names = F)%>% filter(
+  !Guild=="-",! `Confidence Ranking`=="Possible", !Guild=="NULL" ) %>% mutate(Method="MICOP SINGLE")
+
+guild_paired<- read.delim("../Data/table_paired.guilds.txt", 
+                          check.names = F)%>% filter(
+                            !Guild=="-",! `Confidence Ranking`=="Possible" ) %>% mutate(Method="MICOP PAIRED")
+
+guilds_fungi<- read.delim("../Data/table_kraken.guilds.txt", 
+                          check.names = F, row.names = 1)%>% filter(
+                            !Guild=="-",! `Confidence Ranking`=="Possible" ) %>% mutate(otu=paste0("otu", rownames(.))) %>% select_at(vars(!starts_with("kraken")))
+
+
+guild_fungi<- read.delim("../Data/table_fungi_again.guilds.txt", 
+                          check.names = F, row.names = 1) %>% filter(
+                            !Guild=="-",! `Confidence Ranking`=="Possible" ,   !Guild=="NULL") %>% mutate(otu=paste0("otu", rownames(.))) %>% column_to_rownames(var = "otu")%>% select_if(is.numeric)%>% t() %>% as.data.frame() %>% rownames_to_column(
+                                var = "id_sequence") %>% separate(
+                                  ., "id_sequence", c(
+              "kraken", "fungi", "id_metagenome", "report", "bracken"), 
+                                  sep = "_") %>% dplyr::select(
+                                    -kraken, -fungi, -report, -bracken) %>% full_join(metadata) %>% dplyr::select(-id_sequence:-Names, -id_metagenome) %>% column_to_rownames(var = "SampleID") %>% t() %>% as.data.frame() %>% rownames_to_column(var = "otu") %>% inner_join(guilds_fungi)%>% mutate(Method="KRAKEN2")
+
+relabunda<- function(x){(as.data.frame(t(t(x)/colSums(x)))*100)}
+
+g1<- guild_qiime2 %>% group_by(Guild) %>% summarise_if(
+  is.numeric, sum) %>% column_to_rownames(
+    var = "Guild") %>% relabunda(.) %>% rownames_to_column(var = "Guild") %>% mutate(method="QIIME2") %>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total) %>% dplyr::select(-total)
+
+t1<- guild_qiime2 %>% group_by(`Trophic Mode`) %>% summarise_if(
+  is.numeric, sum) %>% column_to_rownames(
+    var = "Trophic Mode") %>% relabunda(.) %>% rownames_to_column(var = "Trophic") %>% mutate(method="QIIME2")
+
+g2<- guild_single %>% group_by(Guild) %>% summarise_if(
+  is.numeric, sum) %>% column_to_rownames(
+    var = "Guild") %>% relabunda(.)%>% rownames_to_column(var = "Guild")%>% mutate(method="SINGLE MICOP")%>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total)%>% dplyr::select(-total)
+
+t2<- guild_single %>% group_by(`Trophic Mode`) %>% summarise_if(
+  is.numeric, sum) %>% column_to_rownames(
+    var = "Trophic Mode") %>% relabunda(.)%>% rownames_to_column(var = "Trophic")%>% mutate(method="SINGLE MICOP")
+
+g3<- guild_paired %>% group_by(Guild) %>% summarise_if(
+  is.numeric, sum) %>% column_to_rownames(
+    var = "Guild") %>% relabunda(.)%>% rownames_to_column(var = "Guild")%>% mutate(method="PAIRED MICOP")%>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total)%>% dplyr::select(-total)
+
+t3<- guild_paired %>% group_by(`Trophic Mode`) %>% summarise_if(
+  is.numeric, sum) %>% column_to_rownames(
+    var = "Trophic Mode") %>% relabunda(.)%>% rownames_to_column(var = "Trophic")%>% mutate(method="PAIRED MICOP")
+
+
+g4<- guild_fungi %>% group_by(Guild) %>% summarise_if(
+  is.numeric, sum) %>% column_to_rownames(
+    var = "Guild") %>% relabunda(.)%>% rownames_to_column(var = "Guild")%>% mutate(method="KRAKEN2")%>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total)%>% dplyr::select(-total)
+
+t4<- guild_fungi %>% group_by(`Trophic Mode`) %>% summarise_if(
+  is.numeric, sum) %>% column_to_rownames(
+    var = "Trophic Mode") %>% relabunda(.)%>% rownames_to_column(var = "Trophic")%>% mutate(method="KRAKEN2")
+
+#guild_all<- rbind(guild_qiime2, guild_paired, guild_single, guild_fungi)
+guild_all<- g1 %>% full_join(g2) %>% full_join(g3) %>% full_join(g4) %>%
+  filter(!Guild %in% c("Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph", "Animal Pathogen-Soil Saprotroph", "Endophyte-Undefined Saprotroph"))
+trophic_all<- t1 %>% full_join(t2) %>% full_join(t3) %>% full_join(t4)
+
+
+```
+
+
+- Guilds barplots
+```{r, warning=FALSE, message=FALSE}
+
+bar_data<- guild_all %>% pivot_longer(cols = -c(Guild,method), names_to = "SampleID", values_to = "relab")%>% mutate(Guilds=case_when(
+    Guild=="Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph"~"Dung Sap.-Undef Sap.-Wood Sap.",
+        Guild=="Ectomycorrhizal-Fungal Parasite"~"Ectomycorrhizal-Fung.Parasit",
+    Guild=="Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph"~"Animal P-Endoph/symb-Undef. Sap.",
+    Guild=="Endophyte-Plant Pathogen-Wood Saprotroph"~"Endohpyte-Pathogen-Saprotroph",
+    Guild=="Animal Pathogen-Endophyte-Epiphyte-Fungal Parasite-Plant Pathogen-Wood Saprotroph"~"Animal-Plant P-Endophyte-Saprotroph",
+    Guild=="Endophyte-Litter Saprotroph-Soil Saprotroph-Undefined Saprotroph"~"Endophyte-Undefined Saprotrop",
+    Guild=="Animal Endosymbiont-Animal Pathogen-Plant Pathogen-Undefined Saprotroph"~"Animal-Plant endosymb-P-Undef. Sap.",
+Guild=="Endophyte-Plant Pathogen-Undefined Saprotroph"~"Endophyte-Plant Pathogen-Undef. Sap.",
+Guild=="Ectomycorrhizal-Undefined Saprotroph"~"Ectomycorrhizal-Undef. Sap.",
+Guild=="Animal Pathogen-Fungal Parasite-Undefined Saprotroph"~"Animal P-Fungal Parasite-Undef. Sap.",
+    Guild=="Fungal Parasite-Plant Pathogen-Plant Saprotroph"~"Fungal Parasite-Plant Path-Plant Sap.",
+Guild=="Animal Pathogen-Endophyte-Plant Pathogen-Soil Saprotroph-Wood Saprotroph" ~"Animal Pathogen-Endoph-Plant P-Soil/Wood Sap", 
+    TRUE~as.character(Guild))) %>% filter(relab>1)
+
+#write_csv(bar_data, "bar_data.csv")
+# %>% filter(!Guild %in% c("Animal Pathogen-Endophyte-Endosymbiont-Epiphyte-Soil Saprotroph-Undefined Saprotroph", "Dung Saprotroph-Undefined Saprotroph-Wood Saprotroph", "Ectomycorrhizal-Undefined Saprotroph", "Dung Saprotroph-Wood Saprotroph" ))
+cols_guild<- bar_data %>% inner_join(guild_colors) %>% arrange(Guilds)
+col_guild <- as.character(cols_guild$col)
+names(col_guild) <- as.character(cols_guild$Guilds)
+  
+bar_data$method <- factor(
+  bar_data$method,levels = c(
+    "QIIME2","SINGLE MICOP","PAIRED MICOP" , "KRAKEN2"))
+chose_guild<-unique(cols_guild$Guilds)  
+
+barplot_guild<-bar_data%>% filter(Guilds %in% chose_guild ) %>%
+  filter(!Guilds %in%  "Dung Saprotroph") %>% 
+  inner_join(metadata) %>% mutate(
+    Pol= case_when(
+      Poligono==1~ "POL 1",
+      Poligono==2~ "POL 2",
+      Poligono==3~ "POL 3",
+      Poligono==4~ "POL 4",
+      Poligono==5~ "POL 5",
+      Poligono==6~ "POL 6"),
+    Site= case_when(
+      Sitio==1~ "S1",
+      Sitio==2~ "S2"))%>% ggbarplot(
+        x = "Sites", y = "relab",add = "mean",
+        facet.by = "method", fill="Guilds", 
+        position = position_fill()) +facet_nested(
+          .~method, scales = "free_x")+scale_fill_manual(
+            name = "Guilds",values =col_guild )+
+theme_linedraw()+ylab("Relative abundance")+
+    xlab("")+theme(legend.text = element_text(face = "plain"))+
+  #  guides(fill = guide_legend(nrow = 30))+
+    theme(legend.title = element_text(size = 9),
+          #axis.ticks = element_blank(),
+          legend.text = element_text(size = 9), 
+          axis.text.x = element_text(size = 10),
+          legend.key.size = unit(0.6, 'cm'), #change legend key size
+          legend.key.height = unit(0.45, 'cm'), #change legend key height
+          legend.key.width = unit(0.5, 'cm'),
+          strip.text.x = element_text(size = 16),
+          legend.box = "vertical")
+```
+
+- Trophic barplots
+```{r, warning=FALSE, message=FALSE}
+
+bar_data_t<- trophic_all %>% pivot_longer(cols = -c(Trophic,method), names_to = "SampleID", values_to = "relab")#%>% filter(!Trophic %in% c("Pathotroph-Saprotroph-Symbiotroph" ))
+
+bar_data_t$method <- factor(
+  bar_data_t$method,levels = c(
+    "QIIME2","SINGLE MICOP","PAIRED MICOP" , "KRAKEN2"))
+cols_trophic<- bar_data_t %>% inner_join(trophic_colors) %>% arrange(Trophic)
+chose_trophic<-unique(cols_trophic$Trophic)  
+col_trophic <- as.character(cols_trophic$col)
+names(col_trophic) <- as.character(cols_trophic$Trophic)
+
+barplot_trophic<-bar_data_t%>% #filter(Trophic %in% chose_trophic ) %>% 
+  inner_join(metadata) %>% 
+  mutate(
+    Pol= case_when(
+      Poligono==1~ "POL 1",
+      Poligono==2~ "POL 2",
+      Poligono==3~ "POL 3",
+      Poligono==4~ "POL 4",
+      Poligono==5~ "POL 5",
+      Poligono==6~ "POL 6"),
+    Site= case_when(
+      Sitio==1~ "S1",
+      Sitio==2~ "S2"))%>% ggbarplot(
+        x = "Sites", y = "relab",add = "mean",
+        facet.by = "method", fill="Trophic", 
+        position = position_fill()) +facet_nested(
+          .~method, scales = "free_x")+scale_fill_manual(
+            name = "Trophic",values =col_trophic )+
+theme_linedraw()+ylab("Relative abundance")+
+    xlab("")+theme(legend.text = element_text(face = "plain"))+
+  #  guides(fill = guide_legend(nrow = 30))+
+    theme(legend.title = element_text(size = 9),
+          #axis.ticks = element_blank(),
+          legend.text = element_text(size = 9), 
+          axis.text.x = element_text(size = 10),
+          legend.key.size = unit(0.6, 'cm'), #change legend key size
+          legend.key.height = unit(0.45, 'cm'), #change legend key height
+          legend.key.width = unit(0.5, 'cm'),
+          strip.text.x = element_text(size = 16),
+          legend.box = "vertical")
+
+```
+
+- Joinning barplots 
+```{r, warning=FALSE, message=FALSE, fig.width=10, fig.height=7}
+library(cowplot)
+all<- plot_grid(
+  barplot_guild+theme(legend.text = element_text(size = 8.49),   legend.title = element_text(face = "bold")),                  barplot_trophic+theme(legend.text = element_text(size = 8.5),  legend.title = element_text(face = "bold")), nrow = 2, rel_heights = c(1,1))
+all
+ggsave("guilds_finals.png",width = 11, height = 7, dpi = 300, plot = all, device = "png")
+
+```
+

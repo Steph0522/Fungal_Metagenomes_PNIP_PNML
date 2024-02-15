@@ -16,31 +16,31 @@ output:
     toc: yes
     toc_depth: '2'
 ---
-```{r child = './Figure1_maps_MOD.Rmd'}
+
+```{r child = './Figure1_maps.Rmd'}
+```
+
+```{r child = './FigureS1_alpha_final.Rmd'}
+```
+
+```{r child = './Figure3_heatmap_final_mod.Rmd'}
+```
+
+```{r child = './Figure4_guilds_final.Rmd'}
+```
+
+```{r child = './Figure5andS2_pcoas_final.Rmd'}
+```
+
+```{r child = './Figure6_S3_spatial_final.Rmd'}
+```
+
+```{r child = './FigureS4andS5_pca_barplotsveg.Rmd'}
+```
+
+```{r child = './FigureS6_and_s7_corplot_pca.Rmd'}
 ```
 
 
-```{r child = './Figure2_heatmap_final.Rmd'}
-```
-
-```{r child = './Figure3_FINAL.Rmd'}
-```
-
-```{r child = './Figure4andS3_pcoas.Rmd'}
-```
-
-
-```{r child = './Figure5_spatial.Rmd'}
-```
-
-```{r child = './Figure6and7_cca_rda.Rmd'}
-```
-
-```{r child = './FigureS1_alpha.Rmd'}
-```
-
-```{r child = './FigureS5andS6.Rmd'}
-```
-
-```{r child = './FigureS7_corplot.Rmd'}
+```{r child = './Figure7and8_S8-S11_cca_rda_finals.Rmd'}
 ```
