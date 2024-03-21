@@ -440,7 +440,7 @@ heatm<-grid.grabExpr(draw(heats, heatmap_legend_side = "right",
                           annotation_legend_list = list(lgd1)))
                      
 heats
-#ggsave('heat_final5.png', width = 11, height = 7, dpi = 300, plot =heatm)
+ggsave('heat_final.pdf', width = 11, height = 7, dpi = 600, plot =heatm, device = "pdf")
 
 ```
 

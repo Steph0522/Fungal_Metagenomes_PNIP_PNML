@@ -71,7 +71,8 @@ maps<-ggplot() +
         panel.border = element_rect(fill = NA))+
   geom_point(data = air, mapping = aes(
     x = Longitude, y = Latitude),#,color=Sitio, shape=Transecto), 
-    size=1, color="black" )+ annotation_scale(location = "br", plot_unit = "km")
+    size=1, color="black" )+ annotation_scale(location = "br", plot_unit = "km")+ 
+    annotate("text", x =-100, y = 21, label = "TMVB", size=3, fontface="bold")
 
 maps
 ```
@@ -163,9 +164,9 @@ maps_final
 ```
 
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
-ggsave('map_sites_final.jpg',
-       width = 10, height = 6.5, dpi = 300, plot = maps_final)
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+ggsave('map_sites_final.pdf',device = "pdf",
+       width = 10, height = 6.5, dpi = 600, plot = maps_final)
 
 ```
 
