@@ -276,6 +276,6 @@ pcoas_plot <- plot_grid(first,leg,ncol = 2, rel_widths = c(.9,.1), align = "hv")
 pcoas_plot
 pcoas_plot <- plot_grid(second,leg,ncol = 2, rel_widths = c(.9,.1), align = "hv")
 pcoas_plot
-ggsave("pcoas_plot_horn_final.jpg",width =9, height =7, dpi = 300, plot = pcoas_plot, device = "jpg")
+ggsave("pcoas_plot_bray_final.pdf",width =9, height =7, dpi = 600, plot = pcoas_plot, device = "pdf")
 ```
 

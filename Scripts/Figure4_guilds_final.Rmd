@@ -178,7 +178,7 @@ theme_linedraw()+ylab("Relative abundance")+
           legend.key.height = unit(0.45, 'cm'), #change legend key height
           legend.key.width = unit(0.5, 'cm'),
           strip.text.x = element_text(size = 16),
-          legend.box = "vertical")
+          legend.box = "vertical")+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 ```
 
 - Trophic barplots
@@ -223,7 +223,7 @@ theme_linedraw()+ylab("Relative abundance")+
           legend.key.height = unit(0.45, 'cm'), #change legend key height
           legend.key.width = unit(0.5, 'cm'),
           strip.text.x = element_text(size = 16),
-          legend.box = "vertical")
+          legend.box = "vertical")+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+xlab("Sites")
 
 ```
 
@@ -233,7 +233,7 @@ library(cowplot)
 all<- plot_grid(
   barplot_guild+theme(legend.text = element_text(size = 8.49),   legend.title = element_text(face = "bold")),                  barplot_trophic+theme(legend.text = element_text(size = 8.5),  legend.title = element_text(face = "bold")), nrow = 2, rel_heights = c(1,1))
 all
-ggsave("guilds_finals.png",width = 11, height = 7, dpi = 300, plot = all, device = "png")
+ggsave("guilds_finals.pdf",width = 11, height = 7, dpi = 600, plot = all, device = "pdf")
 
 ```
 
