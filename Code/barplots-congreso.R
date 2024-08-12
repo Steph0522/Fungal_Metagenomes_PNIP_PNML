@@ -91,7 +91,7 @@ table_genus_qiime2<- table_qiime2 %>%rownames_to_column(
           all= rowSums(.)) %>% dplyr::arrange(-all) %>% relabunda(.) %>% rownames_to_column(
             var = "Taxon")%>% filter(!Taxon=="unidentified" ,
                                      !Taxon=="Unassigned") %>% slice(
-                                       c(1:30))  %>% pivot_longer(
+                                       c(1:10))  %>% pivot_longer(
                                          ., cols = -Taxon, names_to ="SampleID", 
                                          values_to = "relab" ) %>% filter(!SampleID=="all")
 cols<- table_genus_qiime2 %>% inner_join(taxones_color) %>% arrange(Taxon)
@@ -128,7 +128,7 @@ table_genus_single<- table_single_micop %>%rownames_to_column(
           all= rowSums(.)) %>% dplyr::arrange(-all) %>% relabunda(.) %>% rownames_to_column(
             var = "Taxon")%>% filter(!Taxon=="unidentified" ,
                                      !Taxon=="Unassigned") %>% slice(
-                                       c(1:30))  %>% pivot_longer(
+                                       c(1:10))  %>% pivot_longer(
                                          ., cols = -Taxon, names_to ="SampleID", 
                                          values_to = "relab" ) %>% filter(!SampleID=="all")
 cols<- table_genus_single %>% inner_join(taxones_color) %>% arrange(Taxon)
@@ -165,7 +165,7 @@ table_genus_paired<- table_paired_micop %>%rownames_to_column(
           all= rowSums(.)) %>% dplyr::arrange(-all) %>% relabunda(.) %>% rownames_to_column(
             var = "Taxon")%>% filter(!Taxon=="unidentified" ,
                                      !Taxon=="Unassigned") %>% slice(
-                                       c(1:30))  %>% pivot_longer(
+                                       c(1:10))  %>% pivot_longer(
                                          ., cols = -Taxon, names_to ="SampleID", 
                                          values_to = "relab" ) %>% filter(!SampleID=="all")
 cols<- table_genus_paired %>% inner_join(taxones_color) %>% arrange(Taxon)
@@ -202,12 +202,22 @@ table_genus_fungi<- table_fungi %>%rownames_to_column(
           all= rowSums(.)) %>% dplyr::arrange(-all) %>% relabunda(.) %>% rownames_to_column(
             var = "Taxon")%>% filter(!Taxon=="unidentified" ,
                                      !Taxon=="Unassigned") %>% slice(
-                                       c(1:30))  %>% pivot_longer(
+                                       c(1:10))  %>% pivot_longer(
                                          ., cols = -Taxon, names_to ="SampleID", 
                                          values_to = "relab" ) %>% filter(!SampleID=="all")
 cols<- table_genus_fungi %>% inner_join(taxones_color) %>% arrange(Taxon)
 col <- as.character(cols$color)
 names(col) <- as.character(cols$Taxon)
+
+table_genus_qiime22<- table_genus_qiime2 %>% mutate(Method="QIIME2")
+table_genus_single2<- table_genus_single %>% mutate(Method="SINGLE MICOP")
+table_genus_paired2<- table_genus_paired %>% mutate(Method="PAIRED MICOP")
+table_genus_fungi2<- table_genus_fungi %>% mutate(Method="KRAKEN2")
+
+
+table_all<- table_genus_qiime22 %>% full_join(table_genus_single2) %>% 
+  full_join(table_genus_paired2) %>% full_join(table_genus_fungi2)
+
 
 barplot_genus_fungi<- table_genus_fungi %>% inner_join(metadata) %>% ggplot(
   aes(Pol, relab, fill=Taxon)) +geom_col(width = 0.5) +facet_grid(
@@ -237,5 +247,32 @@ bars<-cowplot::plot_grid(barplot_genus_qiime2+ggtitle("QIIME2")+
                    ncol = 2, nrow = 2, rel_widths = c(1,1,2,1) ,
                    labels = c("A)", "B)", "C)", "D)"), hjust = 0)
 
-bars
-ggsave("bars.png",width = 14, height =12, plot = bars, device = "png")
+library(ggpubr)
+cols<- table_all%>% inner_join(taxones_color) %>% arrange(Taxon)
+col <- as.character(cols$color)
+names(col) <- as.character(cols$Taxon)
+
+
+
+ all<-table_all %>% inner_join(metadata) %>% group_by(Method, Taxon,Pol) %>%
+   summarise_if(is.numeric, mean) %>% ggplot(aes(Pol,relab, fill=Taxon))+
+   geom_col(position = "fill", colour="black")+facet_grid(
+    .~Method, scales = "free")+
+  theme_linedraw()+theme(panel.spacing = unit(0.001, "cm"))+scale_x_discrete(
+    labels=rep(1:6,4))+ylab("Abundancia relativa")+
+  xlab("")+theme(legend.text = element_text(face = "italic"))+
+  guides(fill = guide_legend(nrow = 31))+
+  theme(legend.text = element_text(size = 9), 
+       # axis.text.x = element_blank(),
+       # axis.ticks.x = element_blank(),
+        legend.key.size = unit(0.6, 'cm'), #change legend key size
+        legend.key.height = unit(0.45, 'cm'),
+       strip.text.x = element_text(size = 13),
+        legend.key.width = unit(0.5, 'cm'),
+        legend.box = "vertical")+
+  scale_fill_manual(name = "Genus",values =col )#+scale
+
+
+all
+ggsave("bars_all.png",width = 8.5, height =6, plot = all, device = "png")
+

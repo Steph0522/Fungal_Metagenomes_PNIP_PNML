@@ -1,176 +1,88 @@
-library(tidyverse)
-library(readxl)
-library(ggpubr)
-getwd()
-veget<- read_excel("Data/vegetacion.xlsx") %>% dplyr::select(
-  -DAP, -CopaNS, -CopaEW,-volumenamdera, -distanciacopas, -diamcopa, -basal_area )
+#plot
+pdf(file="cap_envs_veg_final.pdf", width =8.5, height =6)
+library(viridis)
+pal<- viridis(6, option = "D") 
+#plots
+par(mfrow=c(2,2),mar=c(2, 2, 0.5, 0.5))
+color=rgb(0,0,0,alpha=0.5) 
+ordiplot(cap.env4,type="n")
+#orditorp(cap.env,display="specie",col="red",air=0.01)
+text(cap.env4, dis="cn", scaling="sites", cex=0.5, col="red")
+#orditorp(cap.env1,display="sites",cex=0.5,air=0.01)
+#orditorp(cap.env,display="species",cex=0.5,air=0.01)
+ordiellipse(cap.env4, groups =metadata$Sites, col =pal, display = "sites",
+            label=T, draw = "polygon", alpha = 50, label.cex=0.2, cex=0.5)
 
 
-metadata_secas<- read_excel("Data/Metadatos.xlsx", sheet = "secas-marzo")
+ordiplot(cap.env1,type="n")
+#orditorp(cap.env,display="specie",col="red",air=0.01)
+text(cap.env1, dis="cn", scaling="sites", cex=0.5, col="red")
+#orditorp(cap.env2,display="sites",cex=0.5,air=0.01)
+#orditorp(cap.env,display="species",cex=0.5,air=0.01)
+ordiellipse(cap.env1, groups =metadata$Sites, col =pal, display = "sites",
+            label=T, draw = "polygon", alpha = 50, label.cex=0.2, cex=0.5)
 
-#declare data
+ordiplot(cap.env2,type="n")
+#orditorp(cap.env,display="specie",col="red",air=0.01)
+text(cap.env2, dis="cn", scaling="sites", cex=0.5, col="red")
+#orditorp(cap.env3,display="sites",cex=0.5,air=0.01)
+#orditorp(cap.env,display="species",cex=0.5,air=0.01)
+ordiellipse(cap.env2, groups =metadata$Sites, col =pal, display = "sites",
+            label=T, draw = "polygon", alpha = 50, label.cex=0.2, cex=0.5)
 
-veg<-veget %>% separate(
-  Especie, c("Genus", "Specie"), remove =F ) %>%   mutate(
-    Genus=case_when(
-      Genus=="Quecus"~ "Quercus",
-      TRUE ~ as.character(Genus))) %>% mutate(
-        Type=case_when(
-          Genus=="Pinus"~ "Conifer",
-          Genus=="Abies"~ "Conifer",
-          Genus=="Juniperus"~ "Conifer",
-          Genus=="Quercus"~ "Broadleaf",
-          Genus=="Alnus"~ "Broadleaf",
-          Genus=="Prunus"~ "Broadleaf",
-          Genus=="Salix"~ "Broadleaf",
-          Genus=="Arbutus"~ "Broadleaf") ) %>% mutate(
-            Dominante=case_when(
-              Genus=="Quercus"~ "Broadleaf",
-              Genus=="Arbutus"~ "other Broadleaf",
-              Genus=="Pinus"~ "Pinus",
-              Genus=="Abies"~ "Abies",
-              Genus=="Juniperus"~ "other Conifer",
-              Genus=="Alnus"~ "other Broadleaf",
-              Genus=="Alnus"~ "other Broadleaf",
-              Genus=="Prunus"~ "other Broadleaf",
-              Genus=="Salix"~ "other Broadleaf")  )
-
-##proportions
-prop_n<-veg %>% group_by(SampleID,Type) %>% dplyr::count()
-prop_total<- veg %>% group_by(SampleID) %>% dplyr::count() %>% dplyr::rename(total=n)
-prop<- prop_n %>% inner_join(prop_total)%>% mutate(
-  prop=n/total*100)%>% dplyr::select(-n,-total) %>%  pivot_wider(
-    . , names_from = "Type", values_from = "prop")  %>% mutate_if(
-      is.numeric, ~round(.,digits = 2))  %>% mutate_if(
-        is.numeric, ~replace(., is.na(.), 0)) %>% dplyr::rename(prop_Conif="Conifer",prop_Broadleaf="Broadleaf")
-
-prop_n<-veg %>% group_by(SampleID,Genus) %>% dplyr::count()
-prop_total<- veg %>% group_by(SampleID) %>% dplyr::count() %>% dplyr::rename(total=n)
-prop_gen<- prop_n %>% inner_join(prop_total)%>% mutate(
-  prop=n/total*100)%>% dplyr::select(-n,-total) %>%  pivot_wider(
-    . , names_from = "Genus", values_from = "prop")  %>% mutate_if(
-      is.numeric, ~round(.,digits = 2))  %>% mutate_if(
-        is.numeric, ~replace(., is.na(.), 0))%>% 
-  rename_with(~str_c("prop_", .), .cols = -SampleID)
-data_prop <- prop %>% inner_join(prop_gen) %>% column_to_rownames(
-  var = "SampleID") 
-
-
-plot_prop<-prop %>% pivot_longer(
-  cols = -SampleID, names_to = "type", values_to = "prop") %>% inner_join(
-    metadata  ) %>% ggbarplot(
-      x = "Sites", y = "prop", fill="type", add = "mean")+
-  theme_linedraw()+ylab("Proportion (%)")+
-  xlab("Sites")+theme(legend.text = element_text(face = "plain"))+
-  #  guides(fill = guide_legend(nrow = 30))+
-  theme(legend.title = element_text(size = 9),
-        #axis.ticks = element_blank(),
-        legend.text = element_text(size = 9), 
-        axis.text.x = element_text(size = 10),
-        legend.key.size = unit(0.6, 'cm'), #change legend key size
-        legend.key.height = unit(0.45, 'cm'), #change legend key height
-        legend.key.width = unit(0.5, 'cm'),
-        strip.text.x = element_text(size = 16),
-        legend.box = "vertical")+ scale_fill_manual(name = "Type of \nvegetation",
-                                                      labels = c("Broadleaf", "Conifers"),
-                                                        values = c("#ba4a00","#0b5345"))
-
-plot_prop_gen<-prop_gen %>% pivot_longer(
-  cols = -SampleID, names_to = "type", values_to = "prop") %>% inner_join(
-    metadata  ) %>% ggbarplot(
-      x = "Sites", y = "prop", fill="type", add = "mean")+
-  theme_linedraw()+ylab("Proportion (%)")+
-  xlab("Sites")+theme(legend.text = element_text(face = "plain"))+
-  #  guides(fill = guide_legend(nrow = 30))+
-  theme(legend.title = element_text(size = 9),
-        #axis.ticks = element_blank(),
-        legend.text = element_text(size = 9), 
-        axis.text.x = element_text(size = 10),
-        legend.key.size = unit(0.6, 'cm'), #change legend key size
-        legend.key.height = unit(0.45, 'cm'), #change legend key height
-        legend.key.width = unit(0.5, 'cm'),
-        strip.text.x = element_text(size = 16),
-        legend.box = "vertical")+ scale_fill_manual(
-          name = "Genera",
-          labels = c("Abies", "Alnus", "Arbutus",
-                     "Juniperus", "Pinus", "Prunus",
-                     "Quercus", "Salix"),
-          values = c ("#229954", "#d35400",  "#ca6f1e",
-                     "#58d68d", "#0b5345", "#800000", 
-                     "#e59866", "#924d42"))
-library(cowplot)
-all<-plot_grid(plot_prop+theme(
-  axis.text.x = element_blank(), axis.title.x = element_blank(),
-  axis.ticks.x = element_blank(),
-  plot.margin = unit(c(0.2, 0.2, 0, 0.2), "cm")),
-  plot_prop_gen+ theme(plot.margin = unit(c(0, 0.2, 0.1, 0.2), "cm")), ncol = 1)
-
-ggsave("veg_prop.png",width = 6, height = 6, dpi = 300, plot = all, device = "png")
+ordiplot(cap.env3,type="n")
+#orditorp(cap.env,display="specie",col="red",air=0.01)
+text(cap.env3, dis="cn", scaling="sites", cex=0.5, col="red")
+#orditorp(cap.env4,display="sites",cex=0.5,air=0.01)
+#orditorp(cap.env,display="species",cex=0.5,air=0.01)
+ordiellipse(cap.env3, groups =metadata$Sites, col =pal, display = "sites",
+            label=T, draw = "polygon", alpha = 50, label.cex=0.2, cex=0.5)
 
 
 
-#pca
-envschose<-c( "K", "Ca", "Mg", "P", "moisture", "WHC", "Silt", "Fe", "pH", "Cu", "Clay", "N", "MO")
+dev.off()
+
+pdf(file="cca_envs.veg_final.pdf", width =8.5, height =6)
+library(viridis)
+pal<- viridis(6, option = "D") 
+#plots
+par(mfrow=c(2,2),mar=c(2, 2, 0.5, 0.5))
+color=rgb(0,0,0,alpha=0.5) 
+ordiplot(vares_cca4,type="n")
+#orditorp(cap.env,display="specie",col="red",air=0.01)
+text(vares_cca4, dis="cn", scaling="sites", cex=0.5, col="red")
+#orditorp(cap.env1,display="sites",cex=0.5,air=0.01)
+#orditorp(cap.env,display="species",cex=0.5,air=0.01)
+ordiellipse(vares_cca4, groups =metadata$Sites, col =pal, display = "sites",
+            label=T, draw = "polygon", alpha = 50, label.cex=0.2, cex=0.5)
 
 
-metadata_secas<- read_excel("Data/Metadatos.xlsx", sheet = "secas-marzo")
-fq_secas<- read_excel("Data/fisicoq.xlsx", sheet = "seca")
-fq_secas2<- read.csv("Data/fisicoq-la.csv")
+ordiplot(vares_cca1,type="n")
+#orditorp(cap.env,display="specie",col="red",air=0.01)
+text(vares_cca1, dis="cn", scaling="sites", cex=0.5, col="red")
+#orditorp(cap.env2,display="sites",cex=0.5,air=0.01)
+#orditorp(cap.env,display="species",cex=0.5,air=0.01)
+ordiellipse(vares_cca1, groups =metadata$Sites, col =pal, display = "sites",
+            label=T, draw = "polygon", alpha = 50, label.cex=0.2, cex=0.5)
 
-meta_fq_secas<- metadata_secas %>% full_join(fq_secas) #%>%  select(Sites:id_new,pH, MO, N, P) %>% mutate(Season="Dry")
-meta_fq_secas_all<- metadata_secas %>% full_join(fq_secas) %>% full_join(fq_secas2, by = "SampleID")
+ordiplot(vares_cca2,type="n")
+#orditorp(cap.env,display="specie",col="red",air=0.01)
+text(vares_cca2, dis="cn", scaling="sites", cex=0.5, col="red")
+#orditorp(cap.env3,display="sites",cex=0.5,air=0.01)
+#orditorp(cap.env,display="species",cex=0.5,air=0.01)
+ordiellipse(vares_cca2, groups =metadata$Sites, col =pal, display = "sites",
+            label=T, draw = "polygon", alpha = 50, label.cex=0.2, cex=0.5)
 
-env.16S=meta_fq_secas_all
-df<- env.16S %>% dplyr::rename(Silt=LIMO, Clay=ARCILLA, Sand=ARENA) %>% dplyr::select(SampleID,envschose)
-dfs=data.frame(df[1],scale(df[,2:14], center = T, scale = T)) %>% dplyr::select(
-  SampleID,envschose) %>% 
-  column_to_rownames(var = "SampleID")
-
-#pca environmental
-
-pca_env<- prcomp(dfs, center = F, scale. = F)
-#biplot(pca_env)
-metadatas_env<- as.data.frame(pca_env$x) %>% rownames_to_column(var = "SampleID") %>% 
-  inner_join(metadata)
-y<-ggordiplots::gg_ordiplot(pca_env, metadatas_env$Sites, hull = FALSE, 
-                            spiders = TRUE,  ellipse = FALSE,   pt.size = 4,
-                            plot =FALSE, label = FALSE)
-z <- y$plot
-a<-z+geom_label(
-  data = y$df_mean.ord,
-  aes(x = x, y = y, label=Group), 
-  label.padding = unit(0.15, "lines"),label.size = 0.4,
-)+guides(
-  color=guide_legend(title="Sites"))+theme_linedraw() +
-  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
-  geom_hline(yintercept = 0, linetype = 2) +
-  theme_linedraw()+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+#color of points 
-  scale_color_viridis_d(option ="turbo" )+#color of points 
-  theme(axis.text = element_text(colour = "black", size = 12),
-        axis.title = element_text(colour = "black", size = 12),
-        legend.text = element_text(size = 10),
-        legend.title = element_text(size = 12), 
-        legend.position = "right", 
-        legend.box = "vertical",
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank())+
-  ggrepel::geom_label_repel(data=data.frame(pca_env$rotation) %>%   #arrows
-                              rownames_to_column(var = "Feature.ID")%>%  
-                              mutate(a=sqrt(PC1^2+PC2^2)) %>% 
-                              mutate(PC1=PC1*8, PC2=PC2*8),
-                            aes(x=PC1, y=PC2, label=Feature.ID ),
-                            segment.colour = NA, col = 'red', 
-                            fill= "#EEEEEE",
-                            fontface="bold.italic", size=5) +theme(
-                              legend.position = "right")  +
-  guides(color = guide_legend(nrow =2 , title = "Sites"))+theme(
-    legend.text = element_text(size = 12), legend.title = element_text(size = 14),
-    axis.title = element_text(size = 16),
-    plot.title = element_text(hjust = 1, size = 12))+
-  guides(color = guide_legend(ncol = 1, title = "Sites"))
+ordiplot(vares_cca3,type="n")
+#orditorp(cap.env,display="specie",col="red",air=0.01)
+text(vares_cca3, dis="cn", scaling="sites", cex=0.5, col="red")
+#orditorp(cap.env4,display="sites",cex=0.5,air=0.01)
+#orditorp(cap.env,display="species",cex=0.5,air=0.01)
+ordiellipse(vares_cca3, groups =metadata$Sites, col =pal, display = "sites",
+            label=T, draw = "polygon", alpha = 50, label.cex=0.2, cex=0.5)
 
 
-a
 
-ggsave("pca_env.png",width =8, height = 5, dpi = 300, plot = a, device = "png")
+dev.off()
+
+
