@@ -97,9 +97,9 @@ median(colSums(table_fungi))
 
 
 
-table_genus<-table_qiime2 %>%rownames_to_column(
-  var = "Feature.ID") %>%  inner_join(taxonomy_qiime2) %>% separate(
-    Taxon, c("k","p","c","o","f","g","s"), sep = ";" ) %>% mutate_at(
+table_genus<-table_paired_micop %>%rownames_to_column(
+  var = "Feature.ID") %>%  inner_join(taxonomy_paired_micop) %>% separate(
+    Taxon, c("k","p","c","o","f","g","s"), sep = "__" ) %>% mutate_at(
       c("g"), ~str_replace(., "g__", "")) %>% mutate_at(
         c("g"), ~str_replace(., "g__", "")) %>% mutate_if(
           is.character, ~replace_na(., "Unassigned")) %>% group_by(

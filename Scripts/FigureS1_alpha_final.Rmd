@@ -153,10 +153,10 @@ aq1<- ggboxplot(alphadiv_qiime2_q1,
                            colour = "#E5E8E8"))+
   scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
-aq2<- ggboxplot(alphadiv_qiime2_q2 %>% mutate(methods="QIIME 2"), 
+aq2<- ggboxplot(alphadiv_qiime2_q2 %>% mutate(methodS="GENEIOUS+UNITE"), 
                 x = "Sites", y = "value", fill = "Sites", facet.by = "order") +
   stat_compare_means(label.y = 45, label = "p.format")+
-  facet_grid(rows = vars(methods), cols = vars(order))+
+  facet_grid(rows = vars(methodS), cols = vars(order))+
   theme_linedraw()+theme(legend.position = "none", 
                          axis.title = element_blank(),
                          axis.text.x = element_blank(),
@@ -383,7 +383,7 @@ all<- cowplot::plot_grid(aq0, aq1, aq2,
 
 all2<- cowplot::plot_grid(leg, all, nrow = 2, rel_heights = c(0.1,1))
 all2
-ggsave("Fig1.exploratory_alpha_final_mod.jpg",width = 12, height = 10, dpi = 300, plot = all2, device = "jpg")
+ggsave("FigS1.exploratory_alpha_final_mod.jpg",width = 12, height = 10, dpi = 300, plot = all2, device = "jpg")
 
 
 ```

@@ -45,7 +45,7 @@ air$Sites<- factor(air$Names, levels = c(
   "5. El Carmen Las Carrozas","6. La Caridad",
   "7. Tandi-Chala", "8. San Francisco Mitepec",
   "9. Piedra Canteada de San Felipe, Hidalgo",
-  "10. Paraje El Madrono", "11. Ejido San Gabriel" ,
+  "10. Paraje El Madroño", "11. Ejido San Gabriel" ,
   "12. San Rafael Ixtapalucan 2" ))
 
 
@@ -165,7 +165,7 @@ maps_final
 
 
 ```{r, warning=FALSE, message=FALSE, eval=TRUE}
-ggsave('map_sites_final.pdf',device = "pdf",
+ggsave('map_sites_final_r1.pdf',device = "pdf",
        width = 10, height = 6.5, dpi = 600, plot = maps_final)
 
 ```

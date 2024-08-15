@@ -92,6 +92,7 @@ table_fungi<- read.delim("../Data/table_kraken.txt",
 Formatting data as lists and applying functions of beta diversity
 
 ```{r, warning=FALSE, message=FALSE}
+set.seed(12343)
 otu <- list(table_qiime2, table_single_micop, table_paired_micop,  table_fungi)
 otu_match<- lapply(otu, otu.match) # matching to map
 otu_single<- lapply(otu_match, otu.single) #remove singletons
@@ -103,59 +104,66 @@ bc.dist.tidy.filt2<- lapply(bc.dist2, bc.dist.tidy.filter.hill)
 
 cor_test<- lapply(bc.dist.tidy.filt, cor.b)
 lm_test<- lapply(bc.dist.tidy.filt, lm.b)
+distances=list(distance_complete, distance_complete, distance_complete, distance_complete)
+
+mantel_test = mapply(mantel.b, bc.dist, distances, SIMPLIFY = FALSE)
+
+
 
 cor_test2<- lapply(bc.dist.tidy.filt2, cor.b)
 lm_test2<- lapply(bc.dist.tidy.filt2, lm.b)
+mantel_test2 = mapply(mantel.b, bc.dist2,distances, SIMPLIFY = FALSE)
+
 
 stats_qiime2 <- data.frame(
-  label = paste0("Pearson: r = ",signif(cor_test[[1]]$estimate,3), 
-                ", p-value = ",   signif(cor_test[[1]]$p.value, 3),                                       "\nRegression: slope = ", signif(lm_test[[1]]$estimate, 3)))
+  label = paste0("Mantel: r = ",signif(mantel_test[[1]]$statistic,3), 
+                ", p-value = ",   signif(mantel_test[[1]]$signif, 3),                                       "\nRegression: slope = ", signif(lm_test[[1]]$estimate, 3)))
 
 stats_single <- data.frame(
-  label = paste0("Pearson: r = ", signif(cor_test[[2]]$estimate,3), 
-                 ", p-value = ", signif(cor_test[[2]]$p.value, 3),
+  label = paste0("Mantel: r = ", signif(mantel_test[[2]]$statistic,3), 
+                 ", p-value = ", signif(mantel_test[[2]]$signif, 3),
                  "\nRegression: slope = ", signif(lm_test[[2]]$estimate, 3)))
 
 stats_paired <- data.frame(
-  label = paste0("Pearson: r = ", signif(cor_test[[3]]$estimate,3), 
-                 ", p-value = ", signif(cor_test[[3]]$p.value, 3),
+  label = paste0("Mantel: r = ", signif(mantel_test[[3]]$statistic,3), 
+                 ", p-value = ", signif(mantel_test[[3]]$signif, 3),
                  "\nRegression: slope = ", signif(lm_test[[3]]$estimate, 3)))
 
 stats_kraken <- data.frame(
-  label = paste0("Pearson: r = ", signif(cor_test[[4]]$estimate,3), 
-                 ", p-value = ", signif(cor_test[[4]]$p.value, 3),
+  label = paste0("Mantel: r = ", signif(mantel_test[[4]]$statistic,3), 
+                 ", p-value = ", signif(mantel_test[[4]]$signif, 3),
                  "\nRegression: slope = ", signif(lm_test[[4]]$estimate, 3)))
 
 
 stats_qiime22 <- data.frame(
-  label = paste0("Pearson: r = ",signif(cor_test2[[1]]$estimate,3), 
-                ", p-value = ",   signif(cor_test2[[1]]$p.value, 3),                                       "\nRegression: slope = ", signif(lm_test2[[1]]$estimate, 3)))
+  label = paste0("Mantel: r = ",signif(mantel_test2[[1]]$statistic,3), 
+                ", p-value = ",   signif(mantel_test2[[1]]$signif, 3),                                       "\nRegression: slope = ", signif(lm_test2[[1]]$estimate, 3)))
 
 stats_single2 <- data.frame(
-  label = paste0("Pearson: r = ", signif(cor_test2[[2]]$estimate,3), 
-                 ", p-value = ", signif(cor_test2[[2]]$p.value, 3),
+  label = paste0("Mantel: r = ", signif(mantel_test2[[2]]$statistic,3), 
+                 ", p-value = ", signif(mantel_test2[[2]]$signif, 3),
                  "\nRegression: slope = ", signif(lm_test2[[2]]$estimate, 3)))
 
 stats_paired2 <- data.frame(
-  label = paste0("Pearson: r = ", signif(cor_test2[[3]]$estimate,3), 
-                 ", p-value = ", signif(cor_test2[[3]]$p.value, 3),
+  label = paste0("Mantel: r = ", signif(mantel_test2[[3]]$statistic,3), 
+                 ", p-value = ", signif(mantel_test2[[3]]$signif, 3),
                  "\nRegression: slope = ", signif(lm_test2[[3]]$estimate, 3)))
 
 stats_kraken2 <- data.frame(
-  label = paste0("Pearson: r = ", signif(cor_test2[[4]]$estimate,3), 
-                 ", p-value = ", signif(cor_test2[[4]]$p.value, 3),
+  label = paste0("Mantel: r = ", signif(mantel_test2[[4]]$statistic,3), 
+                 ", p-value = ", signif(mantel_test2[[4]]$signif, 3),
                  "\nRegression: slope = ", signif(lm_test2[[4]]$estimate, 3)))
 ```
 
 
 ```{r, warning=FALSE, message=FALSE, fig.height=8, fig.width=4}
 max.sim<-1
-qiime2_data<- bc.dist.tidy.filt[[1]] %>% mutate(Method="QIIME2")
+qiime2_data<- bc.dist.tidy.filt[[1]] %>% mutate(Method="GENEIOUS+UNITE")
 single_data<- bc.dist.tidy.filt[[2]] %>% mutate(Method="MICOP SINGLE")
 paired_data<- bc.dist.tidy.filt[[3]] %>% mutate(Method="MICOP PAIRED")
 kraken_data<- bc.dist.tidy.filt[[4]] %>% mutate(Method="KRAKEN2")
 
-qiime2_data2<- bc.dist.tidy.filt2[[1]] %>% mutate(Method="QIIME2")
+qiime2_data2<- bc.dist.tidy.filt2[[1]] %>% mutate(Method="GENEIOUS+UNITE")
 single_data2<- bc.dist.tidy.filt2[[2]] %>% mutate(Method="MICOP SINGLE")
 paired_data2<- bc.dist.tidy.filt2[[3]] %>% mutate(Method="MICOP PAIRED")
 kraken_data2<- bc.dist.tidy.filt2[[4]] %>% mutate(Method="KRAKEN2")
@@ -164,9 +172,9 @@ joined_data<- rbind(qiime2_data, single_data, paired_data, kraken_data )
 joined_data2<- rbind(qiime2_data2, single_data2, paired_data2, kraken_data2 )
 
 joined_data$Method<- factor(joined_data$Method, levels = c(
-  "QIIME2", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"))
+  "GENEIOUS+UNITE", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"))
 joined_data2$Method<- factor(joined_data2$Method, levels = c(
-  "QIIME2", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"))
+  "GENEIOUS+UNITE", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"))
 
 ann_text<-data.frame(SpatialDistance=c( 30,30,30,30),
                      Similarity=c(0.8,0.3,0.3,0.3),
@@ -174,7 +182,7 @@ ann_text<-data.frame(SpatialDistance=c( 30,30,30,30),
                                  "Spatial Distance (km)", 
                                  "Spatial Distance (km)",
                                  "Spatial Distance (km)"),
-                     Method=c("QIIME2", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"),
+                     Method=c("GENEIOUS+UNITE", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"),
                      label=c(stats_qiime2$label, 
                              stats_single$label, 
                              stats_paired$label, 
@@ -186,21 +194,21 @@ ann_text2<-data.frame(SpatialDistance=c( 30,30,30,30),
                                  "Spatial Distance (km)", 
                                  "Spatial Distance (km)",
                                  "Spatial Distance (km)"),
-                     Method=c("QIIME2", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"),
+                     Method=c("GENEIOUS+UNITE", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"),
                      label=c(stats_qiime22$label, 
                              stats_single2$label, 
                              stats_paired2$label, 
                              stats_kraken2$label))
                             
 ann_text$Method<- factor(ann_text$Method, levels = c(
-  "QIIME2", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"))
+  "GENEIOUS+UNITE", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"))
 ann_text$Distances<- factor(ann_text$Distances,
                             levels = c("Spatial Distance (km)", 
                                        "Environmental Distance", 
                                        "Vegetation Distance"))
 
 ann_text2$Method<- factor(ann_text2$Method, levels = c(
-  "QIIME2", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"))
+  "GENEIOUS+UNITE", "MICOP SINGLE", "MICOP PAIRED", "KRAKEN2"))
 ann_text2$Distances<- factor(ann_text2$Distances,
                             levels = c("Spatial Distance (km)", 
                                        "Environmental Distance", 
@@ -243,7 +251,11 @@ d2<-joined_data2 %>% ggplot(aes(x = SpatialDistance, y =Similarity ))+
   geom_text(data = ann_text2,label=ann_text2$label, size=3)+xlab("Spatial Distance")
 
 d1;d2
-ggsave("Fig.spatialdistance-bray_final.jpg",width =4, height = 8, dpi = 300, plot = d1, device = "jpg")
+ggsave("Figure6.spatialdistance-horn_final.pdf",width =4, height = 8, dpi = 300, plot = d2, device = "pdf")
+ggsave("FigureS3.spatialdistance-bray_final.png",width =4, height = 8, dpi = 300, plot = d1, device = "png")
 
 
 ```
+
+
+

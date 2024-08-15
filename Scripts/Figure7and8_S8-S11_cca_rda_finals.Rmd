@@ -233,18 +233,18 @@ map1<- map[match(rownames(spp_hell1), map$SampleID),]
 map1_type<- map1 %>% dplyr::select(Site, Type) %>% group_by(Site, Type) %>% count()
 
 y<-ggordiplots::gg_ordiplot(cap.env1, groups = map1$Site, ellipse =  F, 
-                            spiders = T, hull = F, plot = F )
+                            spiders = T, hull = F, plot = F,  pt.size = 3.5)
 z <- y$plot
 a1<-z+theme_linedraw()+
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
-      mutate(CAP1=CAP1*0.12, CAP2=CAP2*0.12) ,
+      mutate(CAP1=CAP1*0.5, CAP2=CAP2*0.5) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -254,15 +254,16 @@ a1<-z+theme_linedraw()+
         legend.box = "vertical",
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())+
-  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
-  geom_hline(yintercept = 0, linetype = 2) +
-  geom_label(
-    data = y$df_mean.ord,
-    aes(x = x, y = y, label=Group), 
-    label.padding = unit(0.15, "lines"),label.size = 0.5,
-        size=5,   check_overlap = TRUE
-  )+guides(
-    color=guide_legend(title="Sites"))+ylab("CAP2")+xlab("CAP1")+
+  geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") +
+#  geom_label(
+ #   data = y$df_mean.ord,
+  #  aes(x = x, y = y, label=Group), 
+   # label.padding = unit(0.15, "lines"),label.size = 0.5,
+    #    size=5,   check_overlap = TRUE
+  #)+
+  guides(
+    color=guide_legend(title="Sites"))+#ylab("CAP2")+xlab("CAP1")+
   theme(axis.text = element_text(size = 12))
 
 
@@ -272,18 +273,18 @@ map2<- map[match(rownames(spp_hell2), map$SampleID),]
 map2_type<- map2 %>% dplyr::select(Site, Type) %>% group_by(Site, Type) %>% count()
 
 y<-ggordiplots::gg_ordiplot(cap.env2, groups = map2$Site, ellipse =  F, 
-                            spiders = T, hull = F, plot = F )
+                            spiders = T, hull = F, plot = F,  pt.size = 3.5)
 z <- y$plot
 a2<-z+theme_linedraw()+
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.6, CAP2=CAP2*0.6) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -293,15 +294,16 @@ a2<-z+theme_linedraw()+
         legend.box = "vertical",
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())+
-  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
-  geom_hline(yintercept = 0, linetype = 2) +
-  geom_label(
-    data = y$df_mean.ord,
-    aes(x = x, y = y, label=Group), 
-    label.padding = unit(0.15, "lines"),label.size = 0.5,
-        size=5,   check_overlap = TRUE
-  )+guides(
-    color=guide_legend(title="Sites"))+ylab("CAP2")+xlab("CAP1")+
+  geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") +
+  #geom_label(
+   # data = y$df_mean.ord,
+  #  aes(x = x, y = y, label=Group), 
+   # label.padding = unit(0.15, "lines"),label.size = 0.5,
+       #size=5,   check_overlap = TRUE
+  #)+
+  guides(
+    color=guide_legend(title="Sites"))+#ylab("CAP2")+xlab("CAP1")+
   theme(axis.text = element_text(size = 12))
 
 #a3
@@ -310,18 +312,18 @@ map3<- map[match(rownames(spp_hell3), map$SampleID),]
 map3_type<- map2 %>% dplyr::select(Site, Type) %>% group_by(Site, Type) %>% count()
 
 y<-ggordiplots::gg_ordiplot(cap.env3, groups = map3$Site, ellipse =  F, 
-                            spiders = T, hull = F, plot = F )
+                            spiders = T, hull = F, plot = F,  pt.size = 3.5)
 z <- y$plot
 a3<-z+theme_linedraw()+
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.9, CAP2=CAP2*0.9) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -331,15 +333,16 @@ a3<-z+theme_linedraw()+
         legend.box = "vertical",
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())+
-  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
-  geom_hline(yintercept = 0, linetype = 2) +
-  geom_label(
-    data = y$df_mean.ord,
-    aes(x = x, y = y, label=Group), 
-    label.padding = unit(0.15, "lines"),label.size = 0.5,
-        size=5,   check_overlap = TRUE
-  )+guides(
-    color=guide_legend(title="Sites"))+ylab("CAP2")+xlab("CAP1")+
+   geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") +
+ # geom_label(
+  #  data = y$df_mean.ord,
+   # aes(x = x, y = y, label=Group), 
+  #  label.padding = unit(0.15, "lines"),label.size = 0.5,
+   #     size=5,   check_overlap = TRUE
+  #)+
+  guides(
+    color=guide_legend(title="Sites"))+#ylab("CAP2")+xlab("CAP1")+
   theme(axis.text = element_text(size = 12))
 
 
@@ -349,18 +352,18 @@ map4<- map[match(rownames(spp_hell4), map$SampleID),]
 map4_type<- map4 %>% dplyr::select(Site, Type) %>% group_by(Site, Type) %>% dplyr::count()
 
 y<-ggordiplots::gg_ordiplot(cap.env4, groups = map4$Site, ellipse =  F, 
-                            spiders = T, hull = F, plot = F )
+                            spiders = T, hull = F, plot = F,  pt.size = 3.5)
 z <- y$plot
 a4<-z+theme_linedraw()+
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
-      mutate(CAP1=CAP1*0.5, CAP2=CAP2*.5) ,
+      mutate(CAP1=CAP1*0.2, CAP2=CAP2*.2) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size =4.5)+
+    color="black", segment.color = NA, size =4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -370,18 +373,20 @@ a4<-z+theme_linedraw()+
         legend.box = "vertical",
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())+
-  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
-  geom_hline(yintercept = 0, linetype = 2) +
-  geom_label(
-    data = y$df_mean.ord,
-    aes(x = x, y = y, label=Group), 
-    label.padding = unit(0.15, "lines"),label.size = 0.5,
-        size=5,   check_overlap = TRUE
-  )+guides(
-    color=guide_legend(title="Sites"))+ylab("CAP2")+xlab("CAP1")+
+  geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") +
+ # geom_label(
+  #  data = y$df_mean.ord,
+   # aes(x = x, y = y, label=Group), 
+    #label.padding = unit(0.15, "lines"),label.size = 0.5,
+     #   size=5,   check_overlap = TRUE
+  #)+
+  guides(
+    color=guide_legend(title="Sites"))+#ylab("CAP2")+xlab("CAP1")+
   theme(axis.text = element_text(size = 12))
 
 
+leg<- get_legend(a1)
 
 
 library(cowplot)
@@ -391,11 +396,14 @@ as<-plot_grid(a1+theme(aspect.ratio =6/10, legend.position = "none"),
                    a4+theme(aspect.ratio =6/10, legend.position = "none"),
               nrow = 2, ncol = 2,  align = "v", rel_widths = c(1,1,1,1),
               label_size = 15,
-                  labels = c("A) QIIME2", "B) SINGLE MICOP",
+                  labels = c("A) GENEIOUS+UNITE", "B) SINGLE MICOP",
                              "C) PAIRED MICOP", "D) KRAKEN2"),hjust = 0)
 
-as
-ggsave("CAP_ggplot.jpg",width = 12, height =8.5, dpi = 300, plot = as, device = "jpg")
+as2<- plot_grid(as,leg,ncol = 2, rel_widths = c(.93,.07), align = "hv")
+as2
+
+
+ggsave("CAP_ggplot.jpg",width = 12, height =8.5, dpi = 300, plot = as2, device = "jpg")
 
 
 ```
@@ -413,18 +421,18 @@ map1<- map[match(rownames(spp_hell1), map$SampleID),]
 map1_type<- map1 %>% dplyr::select(Site, Type) %>% group_by(Site, Type) %>% count()
 
 y<-ggordiplots::gg_ordiplot(cap.env1_c, groups = map1$Site, ellipse =  F, 
-                            spiders = T, hull = F, plot = F )
+                            spiders = T, hull = F, plot = F , pt.size = 3.5)
 z <- y$plot
 a1<-z+theme_linedraw()+
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
-      mutate(CAP1=CAP1*0.12, CAP2=CAP2*0.12) ,
+      mutate(CAP1=CAP1*0.5, CAP2=CAP2*0.5) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -434,15 +442,16 @@ a1<-z+theme_linedraw()+
         legend.box = "vertical",
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())+
-  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
-  geom_hline(yintercept = 0, linetype = 2) +
-  geom_label(
-    data = y$df_mean.ord,
-    aes(x = x, y = y, label=Group), 
-    label.padding = unit(0.15, "lines"),label.size = 0.5,
-    size=5,   check_overlap = TRUE
-  )+guides(
-    color=guide_legend(title="Sites"))+ylab("CAP2")+xlab("CAP1")+
+  geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") +
+ # geom_label(
+  #  data = y$df_mean.ord,
+   # aes(x = x, y = y, label=Group), 
+    #label.padding = unit(0.15, "lines"),label.size = 0.5,
+    #size=5,   check_overlap = TRUE
+  #)+
+  guides(
+    color=guide_legend(title="Sites"))+#ylab("CAP2")+xlab("CAP1")+
   theme(axis.text = element_text(size = 12))
 
 
@@ -452,18 +461,18 @@ map2<- map[match(rownames(spp_hell2), map$SampleID),]
 map2_type<- map2 %>% dplyr::select(Site, Type) %>% group_by(Site, Type) %>% count()
 
 y<-ggordiplots::gg_ordiplot(cap.env2_c, groups = map2$Site, ellipse =  F, 
-                            spiders = T, hull = F, plot = F )
+                            spiders = T, hull = F, plot = F, pt.size = 3.5 )
 z <- y$plot
 a2<-z+theme_linedraw()+
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.6, CAP2=CAP2*0.6) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -473,15 +482,16 @@ a2<-z+theme_linedraw()+
         legend.box = "vertical",
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())+
-  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
-  geom_hline(yintercept = 0, linetype = 2) +
-  geom_label(
-    data = y$df_mean.ord,
-    aes(x = x, y = y, label=Group), 
-    label.padding = unit(0.15, "lines"),label.size = 0.5,
-    size=5,   check_overlap = TRUE
-  )+guides(
-    color=guide_legend(title="Sites"))+ylab("CAP2")+xlab("CAP1")+
+  geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") +
+ # geom_label(
+  #  data = y$df_mean.ord,
+   # aes(x = x, y = y, label=Group), 
+  #  label.padding = unit(0.15, "lines"),label.size = 0.5,
+   # size=5,   check_overlap = TRUE
+  #)+
+  guides(
+    color=guide_legend(title="Sites"))+#ylab("CAP2")+xlab("CAP1")+
   theme(axis.text = element_text(size = 12))
 
 #a3
@@ -490,18 +500,18 @@ map3<- map[match(rownames(spp_hell3), map$SampleID),]
 map3_type<- map2 %>% dplyr::select(Site, Type) %>% group_by(Site, Type) %>% count()
 
 y<-ggordiplots::gg_ordiplot(cap.env3_c, groups = map3$Site, ellipse =  F, 
-                            spiders = T, hull = F, plot = F )
+                            spiders = T, hull = F, plot = F , pt.size = 3.5)
 z <- y$plot
 a3<-z+theme_linedraw()+
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.9, CAP2=CAP2*0.9) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -511,15 +521,16 @@ a3<-z+theme_linedraw()+
         legend.box = "vertical",
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())+
-  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
-  geom_hline(yintercept = 0, linetype = 2) +
-  geom_label(
-    data = y$df_mean.ord,
-    aes(x = x, y = y, label=Group), 
-    label.padding = unit(0.15, "lines"),label.size = 0.5,
-    size=5,   check_overlap = TRUE
-  )+guides(
-    color=guide_legend(title="Sites"))+ylab("CAP2")+xlab("CAP1")+
+  geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") +
+ # geom_label(
+  #  data = y$df_mean.ord,
+   # aes(x = x, y = y, label=Group), 
+    #label.padding = unit(0.15, "lines"),label.size = 0.5,
+    #size=5,   check_overlap = TRUE
+  #)+
+  guides(
+    color=guide_legend(title="Sites"))+#ylab("CAP2")+xlab("CAP1")+
   theme(axis.text = element_text(size = 12))
 
 
@@ -529,18 +540,18 @@ map4<- map[match(rownames(spp_hell4), map$SampleID),]
 map4_type<- map4 %>% dplyr::select(Site, Type) %>% group_by(Site, Type) %>% dplyr::count()
 
 y<-ggordiplots::gg_ordiplot(cap.env4_c, groups = map4$Site, ellipse =  F, 
-                            spiders = T, hull = F, plot = F )
+                            spiders = T, hull = F, plot = F, pt.size = 3.5 )
 z <- y$plot
 a4<-z+theme_linedraw()+
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
-      mutate(CAP1=CAP1*0.05, CAP2=CAP2*0.05) ,
+      mutate(CAP1=CAP1*0.2, CAP2=CAP2*0.2) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size =4.5)+
+    color="black", segment.color = NA, size =4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -550,19 +561,20 @@ a4<-z+theme_linedraw()+
         legend.box = "vertical",
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())+
-  geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
-  geom_hline(yintercept = 0, linetype = 2) +
-  geom_label(
-    data = y$df_mean.ord,
-    aes(x = x, y = y, label=Group), 
-    label.padding = unit(0.15, "lines"),label.size = 0.5,
-    size=5,   check_overlap = TRUE
-  )+guides(
-    color=guide_legend(title="Sites"))+ylab("CAP2")+xlab("CAP1")+
+  geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") +
+ # geom_label(
+  #  data = y$df_mean.ord,
+   # aes(x = x, y = y, label=Group), 
+    #label.padding = unit(0.15, "lines"),label.size = 0.5,
+    #size=5,   check_overlap = TRUE
+  #)+
+  guides(
+    color=guide_legend(title="Sites"))+#ylab("CAP2")+xlab("CAP1")+
   theme(axis.text = element_text(size = 12))
 
 
-
+leg=get_legend(a1)
 
 library(cowplot)
 as<-plot_grid(a1+theme(aspect.ratio =6/10, legend.position = "none"),
@@ -571,11 +583,13 @@ as<-plot_grid(a1+theme(aspect.ratio =6/10, legend.position = "none"),
               a4+theme(aspect.ratio =6/10, legend.position = "none"),
               nrow = 2, ncol = 2,  align = "v", rel_widths = c(1,1,1,1),
               label_size = 15,
-              labels = c("A) QIIME2", "B) SINGLE MICOP",
+              labels = c("A) GENEIOUS+UNITE", "B) SINGLE MICOP",
                          "C) PAIRED MICOP", "D) KRAKEN2"),hjust = 0)
 
-as
-ggsave("CAP_horn_ggplot.jpg",width = 12, height =8.5, dpi = 300, plot = as, device = "jpg")
+as2<- plot_grid(as,leg,ncol = 2, rel_widths = c(.93,.07), align = "hv")
+as2
+
+ggsave("CAP_horn_ggplot.jpg",width = 12, height =8.5, dpi = 300, plot = as2, device = "jpg")
 
 
 ```
@@ -602,11 +616,11 @@ a1<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-    ggrepel::geom_text_repel(data = fdat %>% filter(
+    ggrepel::geom_label_repel(data = fdat %>% filter(
   score=="biplot") %>%  
       mutate(CCA1=CCA1*1.9, CCA2=CCA2*1.9) ,
     aes(x=CCA1, y=CCA2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -624,7 +638,7 @@ a1<-z+theme_linedraw()+
     label.padding = unit(0.15, "lines"),label.size = 0.5,
     size=5,   check_overlap = TRUE
   )+guides(
-    color=guide_legend(title="Sites"))+ylab("CCA2")+xlab("CCA1")+
+    color=guide_legend(title="Sites"))+#ylab("CCA2")+xlab("CCA1")+
   theme(axis.text = element_text(size = 12))
   
 
@@ -641,11 +655,11 @@ a2<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CCA1=CCA1*0.6, CCA2=CCA2*0.6) ,
     aes(x=CCA1, y=CCA2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -663,7 +677,7 @@ a2<-z+theme_linedraw()+
     label.padding = unit(0.15, "lines"),label.size = 0.5,
     size=5,   check_overlap = TRUE
   )+guides(
-    color=guide_legend(title="Sites"))+ylab("CCA2")+xlab("CCA1")+
+    color=guide_legend(title="Sites"))+#ylab("CCA2")+xlab("CCA1")+
   theme(axis.text = element_text(size = 12))
 #a3
 fdat <- ggplot2::fortify(vares_cca3)
@@ -678,11 +692,11 @@ a3<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CCA1=CCA1*0.9, CCA2=CCA2*0.9) ,
     aes(x=CCA1, y=CCA2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -700,7 +714,7 @@ a3<-z+theme_linedraw()+
     label.padding = unit(0.15, "lines"),label.size = 0.5,
     size=5,   check_overlap = TRUE
   )+guides(
-    color=guide_legend(title="Sites"))+ylab("CCA2")+xlab("CCA1")+
+    color=guide_legend(title="Sites"))+#ylab("CCA2")+xlab("CCA1")+
   theme(axis.text = element_text(size = 12))
 
 
@@ -717,11 +731,11 @@ a4<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CCA1=CCA1*0.1, CCA2=CCA2*0.1) ,
     aes(x=CCA1, y=CCA2, label= label),
-    color="red", segment.color = NA, size =4.5)+
+    color="black", segment.color = NA, size =4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -739,7 +753,7 @@ a4<-z+theme_linedraw()+
     label.padding = unit(0.15, "lines"),label.size = 0.5,
     size=5,   check_overlap = TRUE
   )+guides(
-    color=guide_legend(title="Sites"))+ylab("CCA2")+xlab("CCA1")+
+    color=guide_legend(title="Sites"))+#ylab("CCA2")+xlab("CCA1")+
   theme(axis.text = element_text(size = 12))
 
 
@@ -751,10 +765,10 @@ as<-plot_grid(a1+theme(aspect.ratio =6/10, legend.position = "none"),
                    a4+theme(aspect.ratio =6/10, legend.position = "none"),
               nrow = 2, ncol = 2,  align = "v", rel_widths = c(1,1,1,1),
               label_size = 15,
-                  labels = c("A) QIIME2", "B) SINGLE MICOP",
+                  labels = c("A) GENEIOUS+UNITE", "B) SINGLE MICOP",
                              "C) PAIRED MICOP", "D) KRAKEN2"),hjust = 0)
 as
-ggsave("cca_ggplot.jpg",width = 12, height =8.5, dpi = 300, plot = as, device = "jpg")
+ggsave("Figure7.cca_ggplot_env.pdf",width = 12, height =8.5, dpi = 300, plot = as, device = "pdf")
 
 ```
 
@@ -905,11 +919,11 @@ a1<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.12, CAP2=CAP2*0.12) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -944,11 +958,11 @@ a2<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.6, CAP2=CAP2*0.6) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -982,11 +996,11 @@ a3<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.9, CAP2=CAP2*0.9) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1021,11 +1035,11 @@ a4<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.5, CAP2=CAP2*.5) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size =4.5)+
+    color="black", segment.color = NA, size =4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1083,11 +1097,11 @@ a1<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.12, CAP2=CAP2*0.12) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1122,11 +1136,11 @@ a2<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.6, CAP2=CAP2*0.6) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1160,11 +1174,11 @@ a3<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.9, CAP2=CAP2*0.9) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1199,11 +1213,11 @@ a4<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CAP1=CAP1*0.05, CAP2=CAP2*0.05) ,
     aes(x=CAP1, y=CAP2, label= label),
-    color="red", segment.color = NA, size =4.5)+
+    color="black", segment.color = NA, size =4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1265,11 +1279,11 @@ a1<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CCA1=CCA1*1.9, CCA2=CCA2*1.9) ,
     aes(x=CCA1, y=CCA2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1304,11 +1318,11 @@ a2<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CCA1=CCA1*0.6, CCA2=CCA2*0.6) ,
     aes(x=CCA1, y=CCA2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1341,11 +1355,11 @@ a3<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CCA1=CCA1*0.9, CCA2=CCA2*0.9) ,
     aes(x=CCA1, y=CCA2, label= label),
-    color="red", segment.color = NA, size=4.5)+
+    color="black", segment.color = NA, size=4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1380,11 +1394,11 @@ a4<-z+theme_linedraw()+
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
   scale_color_viridis_d(option ="turbo" )+#color of points +
-  ggrepel::geom_text_repel(data = fdat %>% filter(
+  ggrepel::geom_label_repel(data = fdat %>% filter(
     score=="biplot") %>%  
       mutate(CCA1=CCA1*0.1, CCA2=CCA2*0.1) ,
     aes(x=CCA1, y=CCA2, label= label),
-    color="red", segment.color = NA, size =4.5)+
+    color="black", segment.color = NA, size =4.5)+
   theme_linedraw() +
   theme(axis.text = element_text(colour = "black", size = 5),
         axis.title = element_text(colour = "black", size = 10),
@@ -1424,4 +1438,12 @@ ggsave("cca_ggplot.jpg",width = 12, height =8.5, dpi = 300, plot = as, device = 
 
 
 
+```{r}
+# partial mantel tests
+```{r}
+mantel.partial()
+mantel_test2 = mapply(mantel.b,distances, bc.dist2, SIMPLIFY = FALSE)
+
+```
+```
 

@@ -62,7 +62,7 @@ pcoa_eigval <- function (dist) {
   data.frame( PC = 1:length(eigval), Eigval = eigval, CumEigval = cumsum(eigval))
 }
 
-dist.tidy.filter.bray <-function(dist){ 
+dist.tidy.filter.bray <-function(dist, spatial){ 
   require(reshape2)
   dist[upper.tri(dist)] <- NA 
   
@@ -74,7 +74,7 @@ dist.tidy.filter.bray <-function(dist){
   
     dist.filt <- dist.tidy %>% 
     filter(Distance > 0)  %>% 
-    full_join(distance_dm) %>% dplyr::rename(SpatialDistance = value)  %>% 
+    full_join(spatial) %>% dplyr::rename(SpatialDistance = value)  %>% 
       full_join(env.dist.tidy) %>% 
       full_join(env.dist.tidy2) %>% 
     mutate(Similarity = 1 - Distance)
@@ -82,7 +82,7 @@ dist.tidy.filter.bray <-function(dist){
 }
 
 
-dist.tidy.filter.hill <-function(dist){ 
+dist.tidy.filter.hill <-function(dist, spatial){ 
   require(reshape2)
   bc.dist[upper.tri(dist)] <- NA 
     dist.tidy<-dist %>% melt(., varnames = c(
@@ -93,7 +93,7 @@ dist.tidy.filter.hill <-function(dist){
    
     dist.filt <-dist.tidy %>% 
     filter(Distance > 0)  %>% 
-    full_join(distance_dm) %>% dplyr::rename(SpatialDistance = value) %>% 
+    full_join(spatial) %>% dplyr::rename(SpatialDistance = value) %>% 
     full_join(env.dist.tidy) %>% 
     full_join(env.dist.tidy2) %>% 
     mutate(Similarity = 1 - Distance)
@@ -107,12 +107,11 @@ pcoa_plot<-function(pca){
                               spiders = TRUE,  ellipse = FALSE,   pt.size = 4,
                               plot =FALSE, label = FALSE)
   z <- y$plot
-  a<-z+#geom_label(
-    #data = y$df_mean.ord,
-    #aes(x = x, y = y, label=Group), 
-    #label.padding = unit(0.15, "lines"),label.size = 0.4,
-  #)+
-    guides(
+  a<-z+geom_label(
+    data = y$df_mean.ord,
+    aes(x = x, y = y, label=Group), 
+    label.padding = unit(0.15, "lines"),label.size = 0.4,
+  )+guides(
     color=guide_legend(title="Sites"))+theme_linedraw() +
     geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
     geom_hline(yintercept = 0, linetype = 2) +
@@ -372,12 +371,6 @@ cor.b <- function(x){
   cor.test(x$SpatialDistance,x$Similarity, method= "pearson", alternative = "two.sided") %>% tidy()
 }
 lm.b <- function(x){lm(Similarity ~ SpatialDistance, data = x) %>% tidy() %>% filter(term == "SpatialDistance")}
-
-mantel.b = function(xdis,ydis){
-  mantel(xdis, ydis, method="spearman", permutations=999, strata = NULL,
-         na.rm = FALSE, parallel = getOption("mc.cores"))
-  
-}
 
 bc.dist.tidy.filter <-function(bc.dist){ 
   require(reshape2)

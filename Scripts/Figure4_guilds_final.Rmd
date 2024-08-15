@@ -48,7 +48,7 @@ names_col<- read.delim(
 guild_qiime2<- read.delim(
   "../Data/tabla_qiime2_blast_OTUS.guilds.txt", 
   check.names = F, row.names = 1) %>% filter(
-  !Guild=="-",! `Confidence Ranking`=="Possible" , !Guild=="NULL") %>% mutate(Method="QIIME2")
+  !Guild=="-",! `Confidence Ranking`=="Possible" , !Guild=="NULL") %>% mutate(Method="GENEIOUS+UNITE")
 
 colnames(guild_qiime2)[1:36]<-names_col
 
@@ -80,11 +80,11 @@ relabunda<- function(x){(as.data.frame(t(t(x)/colSums(x)))*100)}
 
 g1<- guild_qiime2 %>% group_by(Guild) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
-    var = "Guild") %>% relabunda(.) %>% rownames_to_column(var = "Guild") %>% mutate(method="QIIME2") %>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total) %>% dplyr::select(-total)
+    var = "Guild") %>% relabunda(.) %>% rownames_to_column(var = "Guild") %>% mutate(method="GENEIOUS+UNITE") %>%  mutate(total = rowMeans(across(where(is.numeric)))) %>% top_n(n = 10, wt = total) %>% dplyr::select(-total)
 
 t1<- guild_qiime2 %>% group_by(`Trophic Mode`) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
-    var = "Trophic Mode") %>% relabunda(.) %>% rownames_to_column(var = "Trophic") %>% mutate(method="QIIME2")
+    var = "Trophic Mode") %>% relabunda(.) %>% rownames_to_column(var = "Trophic") %>% mutate(method="GENEIOUS+UNITE")
 
 g2<- guild_single %>% group_by(Guild) %>% summarise_if(
   is.numeric, sum) %>% column_to_rownames(
@@ -146,7 +146,7 @@ names(col_guild) <- as.character(cols_guild$Guilds)
   
 bar_data$method <- factor(
   bar_data$method,levels = c(
-    "QIIME2","SINGLE MICOP","PAIRED MICOP" , "KRAKEN2"))
+    "GENEIOUS+UNITE","SINGLE MICOP","PAIRED MICOP" , "KRAKEN2"))
 chose_guild<-unique(cols_guild$Guilds)  
 
 barplot_guild<-bar_data%>% filter(Guilds %in% chose_guild ) %>%
@@ -188,7 +188,7 @@ bar_data_t<- trophic_all %>% pivot_longer(cols = -c(Trophic,method), names_to = 
 
 bar_data_t$method <- factor(
   bar_data_t$method,levels = c(
-    "QIIME2","SINGLE MICOP","PAIRED MICOP" , "KRAKEN2"))
+    "GENEIOUS+UNITE","SINGLE MICOP","PAIRED MICOP" , "KRAKEN2"))
 cols_trophic<- bar_data_t %>% inner_join(trophic_colors) %>% arrange(Trophic)
 chose_trophic<-unique(cols_trophic$Trophic)  
 col_trophic <- as.character(cols_trophic$col)
@@ -233,7 +233,7 @@ library(cowplot)
 all<- plot_grid(
   barplot_guild+theme(legend.text = element_text(size = 8.49),   legend.title = element_text(face = "bold")),                  barplot_trophic+theme(legend.text = element_text(size = 8.5),  legend.title = element_text(face = "bold")), nrow = 2, rel_heights = c(1,1))
 all
-ggsave("guilds_finals.pdf",width = 11, height = 7, dpi = 600, plot = all, device = "pdf")
+ggsave("Figure4_guilds_finals.pdf",width = 12, height = 7, dpi = 600, plot = all, device = "pdf")
 
 ```
 
