@@ -76,6 +76,35 @@ maps<-ggplot() +
 
 maps
 ```
+```{r}
+library(maptools)  
+library(RColorBrewer) 
+library(readxl)
+library(leaflet)
+library(broom)
+library(dplyr)
+library(ggplot2)
+library(classInt) 
+library(sp)
+#library(rgdal)
+library(spdep) 
+library(ggpubr)
+library(faraway)
+
+
+
+belt  <- readShapePoly("../Data/Transmexican_Volcanic_Belt_province/Transmexican_Volcanic_Belt_province.shp")
+
+belt_tidy <- tidy(belt) 
+
+
+maps=maps+
+  geom_polygon(data = belt, aes( x= long, y = lat, group = group),
+               fill = "cornsilk",
+               color = "black",
+               size = 0.05)
+
+```
 
 - Setting sits map
 ```{r, warning=FALSE, message=FALSE}
@@ -139,7 +168,7 @@ wat2<- wat+theme(axis.text = element_text(colour = "black"))+ylab(
 wat2
 
 leg<- get_legend(wat)
-arrowA <- data.frame(x1 = 8, x2 = 20, y1 = 10, y2 = 14.5)
+arrowA <- data.frame(x1 = 5, x2 = 15, y1 = 9.3, y2 = 14.5)
 ```
 
 - Joinning figures

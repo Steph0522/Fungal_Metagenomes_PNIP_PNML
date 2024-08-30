@@ -507,11 +507,11 @@ sd_data<- data_qiime2_order%>% column_to_rownames(var = "gen") %>% mutate(all=ro
 
 
 ```{r}
-library(micrUBIfuns)
+library(QsRutils)
 
 tabla1=goods(t(table_qiime2))
-tabla2=goods(t(table_single))
-tabla3=goods(t(table_paired))
+tabla2=goods(t(table_single_micop))
+tabla3=goods(t(table_paired_micop))
 tabla4=goods(t(table_fungi))
 
 mean(tabla1$goods)
