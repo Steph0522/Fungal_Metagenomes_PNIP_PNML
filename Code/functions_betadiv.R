@@ -103,22 +103,23 @@ dist.tidy.filter.hill <-function(dist){
 
 
 pcoa_plot<-function(pca){
+  require(rcartocolor)
   y<-ggordiplots::gg_ordiplot(pca, map$Sites, hull = FALSE, 
                               spiders = TRUE,  ellipse = FALSE,   pt.size = 4,
                               plot =FALSE, label = FALSE)
   z <- y$plot
-  a<-z+#geom_label(
-    #data = y$df_mean.ord,
-    #aes(x = x, y = y, label=Group), 
-    #label.padding = unit(0.15, "lines"),label.size = 0.4,
-  #)+
+  a<-z+geom_label(
+    data = y$df_mean.ord,
+    aes(x = x, y = y, label=Group), colour="white", fill="black",
+    label.padding = unit(0.1, "lines"),label.size = 0.3,fontface = "bold",
+  )+
     guides(
     color=guide_legend(title="Sites"))+theme_linedraw() +
     geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
     geom_hline(yintercept = 0, linetype = 2) +
     theme_linedraw()+
-    scale_fill_viridis_d(option ="turbo", name="Sites")+#color of points 
-    scale_color_viridis_d(option ="turbo" )+#color of points +
+    rcartocolor::scale_color_carto_d(palette = "Safe") +
+  #  scale_color_viridis_d(option ="turbo" )+#color of points +
     #scale_y_continuous(limits = c(-0.2,0.2))+
     #scale_x_continuous(limits = c(-0.2,0.2))+
     theme(axis.text = element_text(colour = "black", size = 12),

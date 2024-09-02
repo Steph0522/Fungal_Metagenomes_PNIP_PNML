@@ -25,6 +25,7 @@ library(tidyverse)
 library(readxl)
 library(qiime2R)
 library(ggpubr)
+library(rcartocolor)
 ```
 
 - Loading data
@@ -135,7 +136,8 @@ aq0<- ggboxplot(alphadiv_qiime2_q0,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.title.x = element_blank())+ scale_y_continuous(labels=scaleFUN)
+           scale_fill_carto_d(name = "Sites", palette = "Safe") +
+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.title.x = element_blank())+ scale_y_continuous(labels=scaleFUN)
 
 aq1<- ggboxplot(alphadiv_qiime2_q1, 
                 x = "Sites", y = "value", fill = "Sites", facet.by = "order") + stat_compare_means(label.y = 62, label = "p.format")+
@@ -151,7 +153,8 @@ aq1<- ggboxplot(alphadiv_qiime2_q1,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
+            scale_fill_carto_d(name = "Sites", palette = "Safe") +
+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 aq2<- ggboxplot(alphadiv_qiime2_q2 %>% mutate(methodS="GENEIOUS+UNITE"), 
                 x = "Sites", y = "value", fill = "Sites", facet.by = "order") +
@@ -169,7 +172,8 @@ aq2<- ggboxplot(alphadiv_qiime2_q2 %>% mutate(methodS="GENEIOUS+UNITE"),
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
+            scale_fill_carto_d(name = "Sites", palette = "Safe") +
+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 qiime2al<-cowplot::plot_grid(aq0, aq1, aq2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
 ```
@@ -196,7 +200,8 @@ as0<- ggboxplot(alphadiv_single_micop_q0,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.title.x = element_blank())+ scale_y_continuous(labels=scaleFUN)
+           scale_fill_carto_d(name = "Sites", palette = "Safe") +
+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.title.x = element_blank())+ scale_y_continuous(labels=scaleFUN)
 
 as1<- ggboxplot(alphadiv_single_micop_q1, 
                 x = "Sites", y = "value", fill = "Sites") +
@@ -213,7 +218,8 @@ as1<- ggboxplot(alphadiv_single_micop_q1,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
+           scale_fill_carto_d(name = "Sites", palette = "Safe") +
+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 as2<- ggboxplot(alphadiv_single_micop_q2 %>% mutate(methodS="SINGLE MICOP"), x = "Sites", y = "value", fill = "Sites") +
   facet_grid( rows= vars(methodS))+
@@ -230,7 +236,8 @@ as2<- ggboxplot(alphadiv_single_micop_q2 %>% mutate(methodS="SINGLE MICOP"), x =
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
+           scale_fill_carto_d(name = "Sites", palette = "Safe") +
+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 singleal<-cowplot::plot_grid(as0, as1, as2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
 ```
@@ -259,7 +266,8 @@ ap0<- ggboxplot(alphadiv_paired_micop_q0,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+ylab("Efective number of features")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0),colour = "black", size = 12))+ scale_y_continuous(labels=scaleFUN)
+           scale_fill_carto_d(name = "Sites", palette = "Safe") +
+ylab("Efective number of features")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0),colour = "black", size = 12))+ scale_y_continuous(labels=scaleFUN)
 
 
 
@@ -279,7 +287,8 @@ ap1<- ggboxplot(alphadiv_paired_micop_q1,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+guides(fill=guide_legend(nrow =1))+
+          scale_fill_carto_d(name = "Sites", palette = "Safe") +
+scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+guides(fill=guide_legend(nrow =1))+
   theme(legend.text =element_text(size = 14), legend.title = element_text(size = 18))
 
 ap2<- ggboxplot(alphadiv_paired_micop_q2 %>% mutate(methodS="PAIRED MICOP"), x = "Sites", y = "value", fill = "Sites") +
@@ -298,7 +307,8 @@ ap2<- ggboxplot(alphadiv_paired_micop_q2 %>% mutate(methodS="PAIRED MICOP"), x =
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
+            scale_fill_carto_d(name = "Sites", palette = "Safe") +
+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")
 
 pairedal<-cowplot::plot_grid(ap0, ap1, ap2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
 ```
@@ -325,7 +335,8 @@ af0<- ggboxplot(alphadiv_fungi_q0,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.title.x = element_blank())+ scale_y_continuous(labels=scaleFUN2)+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+           scale_fill_carto_d(name = "Sites", palette = "Safe") +
+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.title.x = element_blank())+ scale_y_continuous(labels=scaleFUN2)+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
 af1<- ggboxplot(alphadiv_fungi_q1, 
                 x = "Sites", y = "value", fill = "Sites") +
@@ -341,7 +352,8 @@ af1<- ggboxplot(alphadiv_fungi_q1,
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+           scale_fill_carto_d(name = "Sites", palette = "Safe") +
+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
 af2<- ggboxplot(alphadiv_fungi_q2 %>% mutate(methodS="KRAKEN2"), 
                 x = "Sites", y = "value", fill = "Sites") +
@@ -358,7 +370,8 @@ af2<- ggboxplot(alphadiv_fungi_q2 %>% mutate(methodS="KRAKEN2"),
                          panel.grid.minor = element_line(
                            size = 0.25, linetype = 'solid',
                            colour = "#E5E8E8"))+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+           scale_fill_carto_d(name = "Sites", palette = "Safe") +
+ scale_y_continuous(labels=scaleFUN)+theme(axis.title.y = element_text(margin = margin(t = 0, r=20, b = 0, l = 0)))+ylab("")+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
 pairedfungi<-cowplot::plot_grid(af0, af1, af2, ncol = 3, align = "h", rel_widths = c(1,1,1.1))
 ```

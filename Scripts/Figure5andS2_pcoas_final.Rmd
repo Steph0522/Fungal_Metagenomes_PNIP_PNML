@@ -134,7 +134,9 @@ qiime2_pcoa <- pcoa_plot(pcoa[[1]])+
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
                        legend.key.size = unit(1, "cm"))+ guides(
-                         fill = guide_legend(override.aes = list(size = 8)))
+                         fill = guide_legend(override.aes = list(size = 8)))+
+   geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") 
 
 qiime2_pcoa2<- pcoa_plot(pcoa2[[1]])+
   #xlab(paste("PCo1 (", pcoa.eigval[[1]]$Eigval[1], "%)", sep = "")) +
@@ -150,7 +152,9 @@ qiime2_pcoa2<- pcoa_plot(pcoa2[[1]])+
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
                        legend.key.size = unit(1, "cm"))+ guides(
-                         fill = guide_legend(override.aes = list(size = 8)))
+                         fill = guide_legend(override.aes = list(size = 8)))+
+   geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") 
 
 
 single_pcoa <- pcoa_plot(pcoa[[2]])+
@@ -165,7 +169,9 @@ single_pcoa <- pcoa_plot(pcoa[[2]])+
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
                        legend.key.size = unit(2, "cm"))+ guides(
-                         fill = guide_legend(override.aes = list(size = 8)))
+                         fill = guide_legend(override.aes = list(size = 8)))+
+   geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") 
 
 single_pcoa2 <- pcoa_plot(pcoa2[[2]])+
    xlab(paste("DIM1 ", pcoa.eigval2[[2]]$Eigval[1], "%", sep = "")) +
@@ -179,7 +185,9 @@ single_pcoa2 <- pcoa_plot(pcoa2[[2]])+
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
                        legend.key.size = unit(2, "cm"))+ guides(
-                         fill = guide_legend(override.aes = list(size = 8)))
+                         fill = guide_legend(override.aes = list(size = 8)))+
+   geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") 
 
 paired_pcoa <- pcoa_plot(pcoa[[3]])+
   xlab(paste("DIM1 ", pcoa.eigval[[3]]$Eigval[2], "%", sep = "")) +
@@ -195,7 +203,9 @@ paired_pcoa <- pcoa_plot(pcoa[[3]])+
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
                        legend.key.size = unit(2, "cm"))+ guides(
-                         fill = guide_legend(override.aes = list(size = 8)))
+                         fill = guide_legend(override.aes = list(size = 8)))+
+   geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") 
 
   
 paired_pcoa2 <- pcoa_plot(pcoa2[[3]])+
@@ -212,7 +222,9 @@ paired_pcoa2 <- pcoa_plot(pcoa2[[3]])+
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
                        legend.key.size = unit(2, "cm"))+ guides(
-                         fill = guide_legend(override.aes = list(size = 8)))
+                         fill = guide_legend(override.aes = list(size = 8)))+
+   geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") 
 
 
 
@@ -231,7 +243,9 @@ kraken_pcoa <- pcoa_plot(pcoa[[4]])+
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
                        legend.key.size = unit(2, "cm"))+ guides(
-                         fill = guide_legend(override.aes = list(size = 8)))
+                         fill = guide_legend(override.aes = list(size = 8)))+
+   geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") 
 
 kraken_pcoa2 <- pcoa_plot(pcoa2[[4]])+
   #  scale_x_continuous(limits = c(-0.01,0.01))+
@@ -247,7 +261,9 @@ kraken_pcoa2 <- pcoa_plot(pcoa2[[4]])+
                        axis.title = element_text(size = 16),
                        plot.title = element_text(hjust = 1, size = 12),
                        legend.key.size = unit(2, "cm"))+ guides(
-                         fill = guide_legend(override.aes = list(size = 8)))
+                         fill = guide_legend(override.aes = list(size = 8)))+
+   geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b") 
     
 
 leg<- get_legend(qiime2_pcoa)
@@ -275,8 +291,8 @@ pcoas_plot <- plot_grid(first,leg,ncol = 2, rel_widths = c(.9,.1), align = "hv")
 pcoas_plot
 pcoas_plot2 <- plot_grid(second,leg,ncol = 2, rel_widths = c(.9,.1), align = "hv")
 pcoas_plot2
-ggsave("Figure5_pcoas_plot_horn_nolabels.pdf",width =11, height =7, dpi = 600, plot = pcoas_plot, device = "pdf")
-ggsave("FigureS2_pcoas_plot_bray_nolabels.png",width =11, height =7, dpi = 600, plot = pcoas_plot2, device = "png")
+ggsave("Figure5_pcoas_plot_horn_final.pdf",width =11, height =7, dpi = 600, plot = pcoas_plot, device = "pdf")
+ggsave("FigureS2_pcoas_plot_bray.png",width =11, height =7, dpi = 600, plot = pcoas_plot2, device = "png")
 ```
 
 #partial mantel tests

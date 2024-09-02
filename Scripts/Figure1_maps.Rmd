@@ -31,6 +31,8 @@ library("rnaturalearth")
 library("rnaturalearthdata")
 library(ggsn)
 library(cowplot)
+library(rcartocolor) #colorblind friendly palettes
+
 ```
 
 - Setting global map
@@ -112,6 +114,7 @@ maps=maps+
 sbbox <- make_bbox(lon = c(-98.7, -97.9), lat = c(19.13,19.5), f = .1)
 
 
+
 #watercolor
 sbbox <- make_bbox(lon = c(-98.7, -97.9), lat = c(19.13,19.6), f = .1)
 
@@ -144,7 +147,8 @@ wat<-ggmap(map) +
                           label =Site),
             size = 4, color = "black", box.padding = .3, segment.color = NA,
             fontface = "bold")+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+
+  #scale_fill_viridis_d(option ="turbo", name="Sites")+
+          scale_fill_carto_d(name = "Sites", palette = "Safe") +
   theme(legend.text = element_text(size = 12),
         legend.title = element_text(size = 12),
         axis.title = element_text(size = 16),
@@ -184,7 +188,7 @@ maps_final<-ggplot() +
     ymin =10,ymax =20) +
   annotation_custom(
     leg, xmin = 20, xmax = 28, 
-    ymin = 5, ymax = 7) +
+    ymin = 4, ymax = 7) +
   geom_segment(
     aes(x = x1, y = y1, xend = x2, yend = y2),
     data = arrowA,arrow = arrow(), lineend = "round") +
@@ -194,7 +198,7 @@ maps_final
 
 
 ```{r, warning=FALSE, message=FALSE, eval=TRUE}
-ggsave('map_sites_final_r1.pdf',device = "pdf",
+ggsave('Figure1.pdf',device = "pdf",
        width = 10, height = 6.5, dpi = 600, plot = maps_final)
 
 ```

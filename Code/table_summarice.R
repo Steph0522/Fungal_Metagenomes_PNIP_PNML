@@ -46,8 +46,8 @@ table_qiime2<- data.frame(
         meta) %>% dplyr::select(
           -id_metagenome:-Paired, -id_sequence:-id_fisicoq, -Sites, -Names, -Pol, -Site) %>% column_to_rownames(
             var="SampleID") %>% t() %>% as.data.frame() %>% mutate_all(as.numeric)
-table_fungi<- read.delim("Data/table_fungi_again.txt", 
-                         skip = 1, row.names = 1, check.names = F) %>% dplyr::select_if(
+table_fungi<- read.delim("Data/table_kraken.txt", 
+                          row.names = 1, check.names = F) %>% dplyr::select_if(
                            is.numeric)%>% t() %>% as.data.frame() %>% rownames_to_column(
                              var = "id_sequence") %>% separate(
                                ., "id_sequence", c("kraken", "fungi", "id_metagenome", "report", "bracken"), 

@@ -188,17 +188,13 @@ y<-ggordiplots::gg_ordiplot(pca_veg, metadatas_env$Sites, hull = FALSE,
                             spiders = TRUE,  ellipse = FALSE,   pt.size = 4,
                             plot =FALSE, label = FALSE)
 z <- y$plot
-a<-z+geom_label(
-  data = y$df_mean.ord,
-  aes(x = x, y = y, label=Group), 
-  label.padding = unit(0.15, "lines"),label.size = 0.4,
-)+guides(
+a<-z+guides(
   color=guide_legend(title="Sites"))+theme_linedraw() +
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+#color of points 
-  scale_color_viridis_d(option ="turbo" )+#color of points 
+          scale_color_carto_d(name = "Sites", palette = "Safe") +
+#  scale_color_viridis_d(option ="turbo" )+#color of points 
   theme(axis.text = element_text(colour = "black", size = 12),
         axis.title = element_text(colour = "black", size = 12),
         legend.text = element_text(size = 10),
@@ -211,22 +207,27 @@ a<-z+geom_label(
                               rownames_to_column(var = "Feature.ID")%>%
                               slice(-6) %>% 
                               mutate(a=sqrt(PC1^2+PC2^2)) %>% 
-                              mutate(PC1=PC1*8, PC2=PC2*8),
+                              mutate(PC1=PC1*6, PC2=PC2*6),
                             aes(x=PC1, y=PC2, label=Feature.ID ),
                             segment.colour = NA, col = 'black', 
-                            fill= "#EEEEEE",
-                            fontface="bold.italic", size=5) +theme(
+                            fill= "white",label.padding = 0.1, box.padding = 0.1,
+                            fontface="bold.italic", size=4.5) +theme(
                               legend.position = "right")  +
   guides(color = guide_legend(nrow =2 , title = "Sites"))+theme(
     legend.text = element_text(size = 12), legend.title = element_text(size = 14),
     axis.title = element_text(size = 16),
     plot.title = element_text(hjust = 1, size = 12))+
-  guides(color = guide_legend(ncol = 1, title = "Sites"))
+  guides(color = guide_legend(ncol = 1, title = "Sites"))+ geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b")+geom_label(
+  data = y$df_mean.ord,
+  aes(x = x, y = y, label=Group), 
+  label.padding = unit(0.1, "lines"),label.size = 0.4,color="white", fill="black",fontface="bold",
+)
 
 
 a
 
-#ggsave("pca_veg.png",width =8, height = 5, dpi = 300, plot = a, device = "png")
+ggsave("pca_veg.png",width =8, height = 5, dpi = 300, plot = a, device = "png")
 
 ```
 
@@ -234,14 +235,20 @@ a
 - plotting
 ```{r, warning=FALSE, message=FALSE}
 library(corrplot)
-png(filename = "cor_both.png", width = 830, height = 430, res = 100)
+library(rcartocolor)
+
+my_colors <- carto_pal(name = "PinkYl", n = 7)
+
+#png(filename = "cor_both.png", width = 830, height = 430, res = 100)
+png(filename = "cor_both.png", width = 3000, height = 1500, res = 300)
+
 par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
 corrplot(corss,  method = 'circle', type = 'lower', insig='blank',
          addCoef.col ='black', number.cex = 0.6, tl.cex = 0.8,
-         order = 'AOE',diag=FALSE)
+         order = 'AOE',diag=FALSE, col = my_colors)
 corrplot(corss2,  method = 'circle', type = 'lower', insig='blank',
         addCoef.col ='black', number.cex = 0.5, tl.cex=0.85,
-        order = 'AOE', diag=FALSE)
+        order = 'AOE', diag=FALSE,col = my_colors)
 dev.off()
 
 ```

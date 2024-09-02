@@ -25,7 +25,7 @@ output:
 library(tidyverse)
 library(readxl)
 library(ggpubr)
-getwd()
+library(rcartocolor)
 veget<- read_excel("../Data/vegetacion.xlsx") %>% dplyr::select(
   -DAP, -CopaNS, -CopaEW,-volumenamdera, -distanciacopas, -diamcopa, -basal_area )
 
@@ -90,6 +90,11 @@ data_prop <- prop %>% inner_join(prop_gen) %>% column_to_rownames(
   var = "SampleID") 
 
 
+
+library(rcartocolor)
+green_col= rcartocolor::carto_pal(n = 5, name = "Emrld")
+brown_col = rcartocolor::carto_pal(n = 7, name = "BrwnYl")
+
 plot_prop<-prop %>% pivot_longer(
   cols = -SampleID, names_to = "type", values_to = "prop") %>% inner_join(
     metadata  ) %>% ggbarplot(
@@ -107,7 +112,7 @@ plot_prop<-prop %>% pivot_longer(
         strip.text.x = element_text(size = 16),
         legend.box = "vertical")+ scale_fill_manual(name = "Type of \nvegetation",
                                                       labels = c("Broadleaf", "Conifers"),
-                                                        values = c("#ba4a00","#0b5345"))
+                                                        values = c("#A65461","#074050"))
 
 plot_prop_gen<-prop_gen %>% pivot_longer(
   cols = -SampleID, names_to = "type", values_to = "prop") %>% inner_join(
@@ -129,9 +134,12 @@ plot_prop_gen<-prop_gen %>% pivot_longer(
           labels = c("Abies", "Alnus", "Arbutus",
                      "Juniperus", "Pinus", "Prunus",
                      "Quercus", "Salix"),
-          values = c ("#229954", "#d35400",  "#ca6f1e",
-                     "#58d68d", "#0b5345", "#800000", 
-                     "#e59866", "#924d42"))+theme(legend.text = element_text(face = "italic"))
+          values = c ("#4C9B82", "#D39C83",  "#A65461" ,
+                   "#82D091" , "#074050", "#541F3F", 
+                    "#E0C2A2" , "#C1766F"))+theme(legend.text = element_text(face = "italic"))
+
+"#EDE5CF" "#E0C2A2" "#D39C83" "#C1766F" "#A65461" "#813753" "#541F3F"
+
 library(cowplot)
 all<-plot_grid(plot_prop+theme(
   axis.text.x = element_blank(), axis.title.x = element_blank(),
@@ -172,17 +180,13 @@ y<-ggordiplots::gg_ordiplot(pca_env, metadatas_env$Sites, hull = FALSE,
                             spiders = TRUE,  ellipse = FALSE,   pt.size = 4,
                             plot =FALSE, label = FALSE)
 z <- y$plot
-a<-z+geom_label(
-  data = y$df_mean.ord,
-  aes(x = x, y = y, label=Group), 
-  label.padding = unit(0.15, "lines"),label.size = 0.4,
-)+guides(
+a<-z+guides(
   color=guide_legend(title="Sites"))+theme_linedraw() +
   geom_vline(xintercept = 0, linetype = 2) +   #lines-cross
   geom_hline(yintercept = 0, linetype = 2) +
   theme_linedraw()+
-  scale_fill_viridis_d(option ="turbo", name="Sites")+#color of points 
-  scale_color_viridis_d(option ="turbo" )+#color of points 
+          scale_color_carto_d(name = "Sites", palette = "Safe") +
+#  scale_color_viridis_d(option ="turbo" )+#color of points 
   theme(axis.text = element_text(colour = "black", size = 12),
         axis.title = element_text(colour = "black", size = 12),
         legend.text = element_text(size = 10),
@@ -195,17 +199,24 @@ a<-z+geom_label(
                               rownames_to_column(var = "Feature.ID")%>%
                               slice(-6) %>% 
                               mutate(a=sqrt(PC1^2+PC2^2)) %>% 
-                              mutate(PC1=PC1*8, PC2=PC2*8),
+                              mutate(PC1=PC1*10, PC2=PC2*10),
                             aes(x=PC1, y=PC2, label=Feature.ID ),
-                            segment.colour = NA, col = 'red', 
-                            fill= "#EEEEEE",
+                            segment.colour = NA, col = 'black', 
+                            fill= "white",
                             fontface="bold.italic", size=5) +theme(
                               legend.position = "right")  +
   guides(color = guide_legend(nrow =2 , title = "Sites"))+theme(
     legend.text = element_text(size = 12), legend.title = element_text(size = 14),
     axis.title = element_text(size = 16),
     plot.title = element_text(hjust = 1, size = 12))+
-  guides(color = guide_legend(ncol = 1, title = "Sites"))
+  guides(color = guide_legend(ncol = 1, title = "Sites"))+geom_label(
+  data = y$df_mean.ord,
+  aes(x = x, y = y, label=Group), 
+  label.padding = unit(0.1, "lines"),label.size = 0.4,
+  color="white", fill="black",fontface="bold",
+)+
+  geom_vline(xintercept = 0, linetype = 2, color="#88929b") +   #lines-cross
+  geom_hline(yintercept = 0, linetype = 2, color="#88929b")
 
 
 a
