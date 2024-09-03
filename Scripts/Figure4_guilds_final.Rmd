@@ -26,6 +26,7 @@ library(tidyverse)
 library(ggpubr)
 library(RColorBrewer)
 library(ggh4x)
+library(rcartocolor)
 ```
 
 - Loading data and formatting
@@ -33,8 +34,8 @@ library(ggh4x)
 metadata<-read_excel("../Data/Metadatos.xlsx") %>% mutate_if(
   is.numeric, as.factor)
 meta<-metadata
-guild_colors<- read_csv("../Data/guilds_color_new")
-trophic_colors<- read_csv("../Data/trophic_color")
+guild_colors<- read_csv("../Data/guilds_color_final.txt")
+trophic_colors<- read_csv("../Data/trophic_color_final.txt")
 
 names_col<- read.delim(
   "../Data/tabla_qiime2_blast_OTUS.guilds.txt", 
@@ -165,8 +166,9 @@ barplot_guild<-bar_data%>% filter(Guilds %in% chose_guild ) %>%
         x = "Sites", y = "relab",add = "mean",
         facet.by = "method", fill="Guilds", 
         position = position_fill()) +facet_nested(
-          .~method, scales = "free_x")+scale_fill_manual(
-            name = "Guilds",values =col_guild )+
+          .~method, scales = "free_x")+
+  #scale_fill_manual(name = "Guilds",values =col_guild )+
+  scale_fill_carto_d(name="Guilds", palette = "Safe")+
 theme_linedraw()+ylab("Relative abundance")+
     xlab("")+theme(legend.text = element_text(face = "plain"))+
   #  guides(fill = guide_legend(nrow = 30))+
@@ -210,8 +212,9 @@ barplot_trophic<-bar_data_t%>% #filter(Trophic %in% chose_trophic ) %>%
         x = "Sites", y = "relab",add = "mean",
         facet.by = "method", fill="Trophic", 
         position = position_fill()) +facet_nested(
-          .~method, scales = "free_x")+scale_fill_manual(
-            name = "Trophic",values =col_trophic )+
+          .~method, scales = "free_x")+
+  #scale_fill_manual(name = "Trophic",values =col_trophic )+
+scale_fill_carto_d(name="Guilds", palette = "Safe")+
 theme_linedraw()+ylab("Relative abundance")+
     xlab("")+theme(legend.text = element_text(face = "plain"))+
   #  guides(fill = guide_legend(nrow = 30))+
@@ -233,7 +236,7 @@ library(cowplot)
 all<- plot_grid(
   barplot_guild+theme(legend.text = element_text(size = 8.49),   legend.title = element_text(face = "bold")),                  barplot_trophic+theme(legend.text = element_text(size = 8.5),  legend.title = element_text(face = "bold")), nrow = 2, rel_heights = c(1,1))
 all
-ggsave("Figure4_guilds_finals.pdf",width = 12, height = 7, dpi = 600, plot = all, device = "pdf")
+ggsave("Figure 4_2.pdf",width = 12, height = 7, dpi = 600, plot = all, device = "pdf")
 
 ```
 

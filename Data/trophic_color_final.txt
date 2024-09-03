@@ -1,0 +1,9 @@
+Trophic,col
+Pathotroph,#EE654A
+Pathotroph-Saprotroph,#541F3F
+Pathotroph-Symbiotroph,#EB4A40
+Saprotroph,#C88677
+Saprotroph-Symbiotroph,#EDE5CF
+Symbiotroph,#008000
+Unassigned,#85929e
+Pathotroph-Saprotroph-Symbiotroph,#E04572

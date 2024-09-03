@@ -42,5 +42,5 @@ output:
 ```
 
 
-```{r child = './Figure7and8_S8-S11_cca_rda_finals_nolabels.Rmd'}
+```{r child = './Figure7and8_S8-S11_cca_rda_finals_.Rmd'}
 ```

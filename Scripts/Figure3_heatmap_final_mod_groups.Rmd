@@ -230,9 +230,10 @@ merge_data<- data_qiime2_order %>% full_join(
 ```{r, warning=FALSE, message=FALSE}
 col_fun2 = colorRamp2(c(0,  1, 1+1e-5,10,50, 100), 
                       viridis(6, option = "F", direction = -1))
-my_palette <- viridis::viridis(n = 12, option = "F", direction = -1)
+#my_palette <- viridis::viridis(n = 12, option = "F", direction = -1)
 col_fun = colorRamp2(c(0,  1, 1+1e-5,5,5+1e-5,10,10+1e-5,50,50+1e-5, 75, 75+1e-5,100), 
                       viridis(12, option = "F", direction = -1))
+my_palette <- carto_pal(8, "SunsetDark")
 
 #annotation ids
 annotation_columns<- data.frame(id=colnames(merge_data)) 
@@ -462,6 +463,10 @@ anntro = HeatmapAnnotation("Trophic" = annotation_rows$Trophic,
 
 - Ploting heatmap
 ```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=11}
+my_palette <- carto_pal(8, "ag_Sunset")
+my_palette <- rev(my_palette)
+
+
 heats<-ComplexHeatmap::Heatmap(
   merge_data,
   col = my_palette,
@@ -523,7 +528,7 @@ heatm<-grid.grabExpr(draw(heats, heatmap_legend_side = "right",
                          annotation_legend_list = list(lgd1)))
                      
 heats
-ggsave('Figure3_heatmap_grouped.pdf', width = 8, height = 7, dpi = 600, plot =heatm, device = "pdf")
+ggsave('Figure3.pdf', width = 8, height = 7, dpi = 600, plot =heatm, device = "pdf")
 
 ```
 
