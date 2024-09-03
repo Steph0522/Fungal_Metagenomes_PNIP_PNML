@@ -17,7 +17,7 @@ output:
     toc_depth: '2'
 ---
 
-## Figure S7: corrplot
+# Figure S6 and S7: corrplot
 
 - Loading libraries 
 ```{r, warning=FALSE, message=FALSE}

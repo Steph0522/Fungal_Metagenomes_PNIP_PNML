@@ -17,7 +17,7 @@ output:
     toc_depth: '2'
 ---
 
-## Figure 3: Heatmap
+# Figure 3: Heatmap
 
 - Load packages and data
 ```{r, warning=FALSE, message=FALSE}

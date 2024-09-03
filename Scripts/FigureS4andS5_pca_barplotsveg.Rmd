@@ -17,7 +17,7 @@ output:
     toc_depth: '2'
 ---
 
-## Figures S5 and S6 : vegetation and pca
+# Figures S4 and S5 : vegetation and pca
 
 
 
@@ -138,7 +138,6 @@ plot_prop_gen<-prop_gen %>% pivot_longer(
                    "#82D091" , "#074050", "#541F3F", 
                     "#E0C2A2" , "#C1766F"))+theme(legend.text = element_text(face = "italic"))
 
-"#EDE5CF" "#E0C2A2" "#D39C83" "#C1766F" "#A65461" "#813753" "#541F3F"
 
 library(cowplot)
 all<-plot_grid(plot_prop+theme(

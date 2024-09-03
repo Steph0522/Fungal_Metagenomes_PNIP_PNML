@@ -17,7 +17,7 @@ output:
     toc_depth: '2'
 ---
 
-## Figures 5 and S6 : Spatial distance
+# Figures 6 and S3 : Spatial distance
 - Loading packages
 ```{r, warning=FALSE, message=FALSE}
 library(tidyverse)

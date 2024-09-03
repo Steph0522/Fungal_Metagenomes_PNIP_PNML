@@ -17,7 +17,7 @@ output:
     toc_depth: '2'
 ---
 
-## Figures 6 and 7: cca
+# Figures 7 and 8, S8-S11: cca
 - Loading packages and data
 ```{r, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = T, results = "hide")

@@ -17,7 +17,7 @@ output:
     toc_depth: '2'
 ---
 
-## Figure 5 and S2: PCoAs
+# Figure 5 and S2: PCoAs
 
 - Loading libraries, functions and data
 ```{r, warning=FALSE, message=FALSE}
@@ -369,9 +369,4 @@ mantel.partial(dist2[[4]], envs_dist, distance_complete, method = "spearman")
 mantel.partial(dist2[[4]], veg_dist, distance_complete, method = "spearman")
 ```
 
-# hierarchical partitioning
-
-```{r}
-
-```
 
