@@ -280,6 +280,17 @@ ho = HeatmapAnnotation("Sites" = c(rep(Sites, 4)),
                          col = "white", fontize=12), 
                        simple_anno_size = unit(0.25, "cm"),
                        show_annotation_name = T)
+
+
+tex = HeatmapAnnotation(
+  text = anno_text(rep(c(1:12), 4),
+    rot = 0,  
+   location = 0.6,
+   just = "center",
+    gp = gpar(fontsize = 6)))
+  
+
+
 #annotatio row (filas)
 #para hccer....cambiar el guidls_all.tsv con la nueva data
 guilds<- read_tsv("../Data/guilds_all.txt") %>% group_by(Taxon, Guild, `Trophic Mode`) %>% 
@@ -446,20 +457,17 @@ anntro = HeatmapAnnotation("Trophic" = annotation_rows$Trophic,
 
 #annotation_rows[is.na(annotation_rows)] <- "Unassigned"
 
-coln= rep(1:12, 4)
-merge_data2 = merge_data
-colnames(merge_data2) =coln
 
 ```
 
 - Ploting heatmap
 ```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=11}
 heats<-ComplexHeatmap::Heatmap(
-  merge_data2,
+  merge_data,
   col = my_palette,
    row_dend_width = unit(0.4, "cm"),
-  width = ncol(merge_data2)*unit(2, "mm"), 
-    height = nrow(merge_data2)*unit(2.4, "mm"),
+  width = ncol(merge_data)*unit(2, "mm"), 
+    height = nrow(merge_data)*unit(2.4, "mm"),
   heatmap_legend_param = list(direction = "horizontal",
                           title = "Relative abund(%)",
                              grid_height = unit(0.2, "cm"),
@@ -470,12 +478,15 @@ heats<-ComplexHeatmap::Heatmap(
                               at = c(0,1, 10,  50, 100), break_dist = 1),
   rect_gp = gpar(col = "white"), 
   cluster_columns = F, cluster_rows = T,show_row_dend = FALSE,
-  show_heatmap_legend = TRUE, top_annotation = c(ha, ho),
+  show_heatmap_legend = TRUE, top_annotation = c(ha,ho),
   right_annotation = c(anntro, annguild),
-  column_order = sort(colnames(merge_data2)),
+  column_order = sort(colnames(merge_data)),
   column_split = split, column_title = NULL,
 show_column_names = T,
 row_names_gp = gpar(fontsize=7.5, fontface="italic"),
+column_names_rot=90,
+column_labels = gt_render(rep(1:12, 4)),
+column_names_gp = gpar(fontsize = 6),
 column_title_gp = gpar(
   fill = c("#800000" ,"#808000" ,"#008000", "#D35400", "#2E4053" )))
 
@@ -483,8 +494,7 @@ column_title_gp = gpar(
 
 lgd1 = Legend(at = 1:12, title = "Sites", nrow = 1,
               title_position = "leftcenter",
-              legend_gp = gpar(fill = viridis(
-  n = 12, option = "H", direction = 1)),
+              legend_gp = gpar(fill = rcartocolor::carto_pal(n = 12, name = "Safe")),
   labels_gp = gpar(fontsize = 8),
   title_gp = gpar(fontsize = 9, fontface="bold"))
 
@@ -510,7 +520,7 @@ lgd3 = Legend(at = sort(unique(annotation_rows$Trophic)),
 heatm<-grid.grabExpr(draw(heats, heatmap_legend_side = "right",
                           annotation_legend_side = "top", 
                           merge_legend=F,
-                          annotation_legend_list = list(lgd1)))
+                         annotation_legend_list = list(lgd1)))
                      
 heats
 ggsave('Figure3_heatmap_grouped.pdf', width = 8, height = 7, dpi = 600, plot =heatm, device = "pdf")
